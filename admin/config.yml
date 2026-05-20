@@ -1,19 +1,21 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: kamranqafarsoy@gmail.com/isson-az-site
   branch: main
 
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "images"
+public_folder: "images"
 
 collections:
-  - name: "campaigns"
-    label: "Kampaniyalar və Reklamlar"
-    folder: "data/campaigns"
+  - name: "products"
+    label: "Bütün Məhsullar"
+    folder: "images"
     create: true
-    slug: "{{slug}}"
+    slug: "product-{{fields.id}}"
     fields:
-      - { label: "Kampaniyanın Adı", name: "title", widget: "string" }
-      - { label: "Reklam Banneri (Şəkil)", name: "image", widget: "image" }
-      - { label: "Endirim Linki", name: "link", widget: "string", required: false }
-      - { label: "Açıqlama / Qısa Mətn", name: "description", widget: "text" }
-      - { label: "Kampaniyanın Aktivlik Statusu", name: "active", widget: "boolean", default: true }
+      - { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" }
+      - label: "Məhsulun Kateqoriyası"
+        name: "category"
+        widget: "string"
+        hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
+      - { label: "Məhsul Şəkli", name: "image", widget: "image" }
