@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kombilər — ISSON GROUP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #f4f6f8; --dark-luxury: #0f1316; --accent-gold: #c5a880; --text-main: #2d3436; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        .top-bar { background-color: #080a0c; color: #fff; padding: 14px 8%; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; letter-spacing: 1px; font-weight: 300; border-bottom: 1px solid rgba(197, 168, 128, 0.2); }
+        .top-bar .phones { display: flex; gap: 20px; }
+        header { background-color: var(--dark-luxury); padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 999; }
+        .logo { color: #fff; font-family: 'Marcellus', serif; font-size: 1.9rem; letter-spacing: 3px; }
+        .logo span { color: var(--accent-gold); }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-weight: 500; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .nav-links .active { color: var(--accent-gold); font-weight: 700; }
+        .catalog-container { padding: 60px 8%; text-align: center; }
+        .main-title h2 { font-family: 'Marcellus', serif; font-size: 2.5rem; color: var(--dark-luxury); letter-spacing: 2px; margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card { background: #fff; border: 1px solid #eef2f5; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: all 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .img-box { width: 100%; height: 260px; margin-bottom: 20px; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .details { text-align: center; }
+        .title { font-family: 'Marcellus', serif; font-size: 1.1rem; margin-bottom: 20px; color: var(--dark-luxury); letter-spacing: 1px; }
+        .btn-container { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 5px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none; font-weight: 600; transition: 0.3s; flex: 1; }
+        .btn-tempra { background-color: #25D366; }
+        .btn-condo { background-color: #a38a67; }
+        .btn:hover { opacity: 0.85; }
+        footer { background-color: var(--dark-luxury); color: #fff; padding: 60px 8% 40px 8%; margin-top: 100px; border-top: 4px solid var(--accent-gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .shop-info-box { background-color: #14191d; padding: 30px; border-top: 3px solid var(--accent-gold); text-align: left; }
+        .shop-info-box h3 { font-family: 'Marcellus', serif; font-size: 1.3rem; margin-bottom: 15px; color: var(--accent-gold); }
+        .shop-info-box p { margin: 10px 0; color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+        .shop-info-box i { color: var(--accent-gold); margin-right: 10px; }
+        .footer-bottom { text-align: center; padding-top: 30px; color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div><span><i class="fa-solid fa-location-dot" style="color: var(--accent-gold);"></i> Bakı, Azərbaycan</span></div>
+        <div class="phones"><span>TEMPRA: +994 50 800 00 80</span> | <span>CONDO: +994 10 100 09 09</span></div>
+    </div>
+
+    <header>
+        <div class="logo">ISSON<span>GROUP</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Ana Səhifə</a></li>
+            <li><a href="kombiler.html" class="active">Kombilər</a></li>
+            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
+            <li><a href="laminat.html">Laminat</a></li>
+            <li><a href="qapilar.html">Qapılar</a></li>
+        </ul>
+    </header>
+
+    <section class="catalog-container">
+        <div class="main-title"><h2>Yüksək Keyfiyyətli Kombi Sistemləri</h2></div>
+        <div class="grid">
+            <!-- 1-dən 7-yə Kombilər -->
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(1).jpg" alt="Kombi 1"></div><div class="details"><h3 class="title">Kombi Modeli #1</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%201%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%201%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(2).jpg" alt="Kombi 2"></div><div class="details"><h3 class="title">Kombi Modeli #2</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%202%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%202%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(3).jpg" alt="Kombi 3"></div><div class="details"><h3 class="title">Kombi Modeli #3</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%203%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%203%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(4).jpg" alt="Kombi 4"></div><div class="details"><h3 class="title">Kombi Modeli #4</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%204%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%204%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(5).jpg" alt="Kombi 5"></div><div class="details"><h3 class="title">Kombi Modeli #5</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%205%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%205%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(6).jpg" alt="Kombi 6"></div><div class="details"><h3 class="title">Kombi Modeli #6</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%206%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%206%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+            <div class="card"><div class="img-box"><img src="images/kombi/kombi-%20(7).jpg" alt="Kombi 7"></div><div class="details"><h3 class="title">Kombi Modeli #7</h3><div class="btn-container"><a href="https://api.whatsapp.com/send?phone=994508000080&text=Kombi%20Modeli%207%20haqqinda" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a><a href="https://api.whatsapp.com/send?phone=994101000909&text=Kombi%20Modeli%207%20haqqinda" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a></div></div></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="shop-info-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-phone"></i> Əlaqə: +994 50 800 00 80</p></div>
+            <div class="shop-info-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-phone"></i> Əlaqə: +994 10 100 09 09</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP.</p></div>
+    </footer>
+</body>
+</html>

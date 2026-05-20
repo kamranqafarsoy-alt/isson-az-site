@@ -1,0 +1,60 @@
+/* Sadə və təmiz görünüş üçün CSS */
+.katalog-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mehsul-kart {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.mehsul-kart img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.etrafli-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}/* Mobil cihazlar üçün xüsusi kodlar (ekran genişliyi 768px-dən kiçik olanlar üçün) */
+@media (max-width: 768px) {
+    
+    /* 1. Flex və Grid strukturlarını alt-alta gətirmək üçün */
+    .konteyner, .Kataloq-bölməsi, .hero-section {
+        flex-direction: column;
+        display: flex;
+    }
+
+    /* 2. Şəkillərin ekrandan kənara çıxmaması üçün */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* 3. Yazı ölçülərini mobillərə uyğun kiçiltmək üçün */
+    h1 {
+        font-size: 24px;
+    }
+    p {
+        font-size: 16px;
+    }
+    
+    /* 4. Mağazaların ünvanları və ya kataloq blokları üçün */
+    .magaza-bloku {
+        width: 100%; /* Yan-yana deyil, tam en olaraq alt-alta düzülsünlər */
+        margin-bottom: 20px;
+    }
+}
