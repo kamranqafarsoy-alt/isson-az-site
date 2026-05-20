@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: kamranqafarsoy/isson-az-site
+  repo: kamranqafarsoy-alt/isson-az-site
   branch: main
 
 media_folder: "images"
