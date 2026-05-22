@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Isson Group - Admin Panel</title>
-    <!-- Giriş tənzimləmələrini daxildən oxumaq üçün xüsusi skript -->
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
@@ -13,7 +12,6 @@
   </head>
   <body>
     <script>
-      // CMS-i rəsmi manual üsulla başladırıq
       if (typeof window.CMS !== 'undefined') {
         window.CMS.init({
           config: {
@@ -21,7 +19,9 @@
               name: "github",
               repo: "kamranqafarsoy-alt/isson-az-site",
               branch: "main",
-              base_url: "https://cms-oauth-provider.vercel.app"
+              // Sənin şəxsi GitHub tətbiqin üzərindən doğrulama aparır
+              auth_type: "implicit",
+              app_id: "Ov23lio2l14H2kSuHlkS"
             },
             media_folder: "images",
             public_folder: "images",
