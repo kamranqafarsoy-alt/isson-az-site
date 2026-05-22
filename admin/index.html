@@ -8,5 +8,39 @@
   <body>
     <!-- Decap CMS Core Application -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      // Konfiqurasiyanı birbaşa JavaScript daxilində təyin edirik ki, 404 xətası tamamilə sıradan çıxsın
+      CMS.init({
+        config: {
+          backend: {
+            name: "github",
+            repo: "kamranqafarsoy-alt/isson-az-site",
+            branch: "main",
+            base_url: "https://cms-oauth-provider.vercel.app"
+          },
+          media_folder: "images",
+          public_folder: "images",
+          collections: [
+            {
+              name: "products",
+              label: "Bütün Məhsullar",
+              folder: "images",
+              create: true,
+              slug: "product-{{fields.id}}",
+              fields: [
+                { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
+                { 
+                  label: "Məhsulun Kateqoriyası", 
+                  name: "category", 
+                  widget: "string",
+                  hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
+                },
+                { label: "Məhsul Şəkli", name: "image", widget: "image" }
+              ]
+            }
+          ]
+        }
+      });
+    </script>
   </body>
 </html>
