@@ -1,52 +1,10 @@
 <!DOCTYPE html>
-<html lang="az">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Isson Group - İdarəetmə Paneli</title>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
-    <!-- Decap CMS Core Skripti -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </head>
-  <body>
-    <script>
-      if (typeof window.CMS !== 'undefined') {
-        window.CMS.init({
-          config: {
-            backend: {
-              name: "supabase",
-              repo: "kamranqafarsoy-alt/isson-az-site",
-              branch: "main",
-              api_url: "https://qcnkjmnywapgnkbttznv.supabase.co"
-            },
-            media_folder: "images",
-            public_folder: "images",
-            collections: [
-              {
-                name: "products",
-                label: "Bütün Məhsullar",
-                folder: "content/products",
-                create: true,
-                slug: "product-{{fields.id}}",
-                fields: [
-                  { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
-                  { label: "Məhsulun Adı / Modeli", name: "title", widget: "string" },
-                  { 
-                    label: "Məhsulun Kateqoriyası", 
-                    name: "category", 
-                    widget: "select",
-                    options: ["Moydadır", "Kombi", "Qapı", "Kafel", "Laminat", "Kondisioner"]
-                  },
-                  { label: "Məhsul Şəkli", name: "image", widget: "image" },
-                  { label: "Qiymət (İstəyə bağlı)", name: "price", widget: "string", required: false }
-                ]
-              }
-            ]
-          }
-        });
-      }
-    </script>
-  </body>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ISSON Admin</title>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</head>
+<body>
+</body>
 </html>

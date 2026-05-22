@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: kamranqafarsoy-alt/isson-az-site
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "products"
+    label: "Məhsullar"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+
+    fields:
+      - { label: "ID", name: "id", widget: "number" }
+
+      - { label: "Başlıq", name: "title", widget: "string" }
+
+      - label: "Kateqoriya"
+        name: "category"
+        widget: "select"
+        options:
+          - "Moydadır"
+          - "Kombi"
+          - "Qapı"
+          - "Kafel"
+          - "Laminat"
+          - "Kondisioner"
+
+      - { label: "Şəkil", name: "image", widget: "image" }
+
+      - { label: "Qiymət", name: "price", widget: "string", required: false }
