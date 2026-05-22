@@ -6,15 +6,18 @@
     <title>Isson Group - Admin Panel</title>
   </head>
   <body>
-    <!-- Decap CMS Core Application -->
+    <!-- Sadece Decap CMS qalır, digər ziddiyyət yaradan skripti sildik -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <!-- Netlify Identity Skripti (Giriş düyməsini birbaşa idarə etmək üçün) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
       CMS.init({
         config: {
           backend: {
-            name: "git-gateway"
+            name: "github",
+            repo: "kamranqafarsoy-alt/isson-az-site",
+            branch: "main",
+            auth_type: "implicit",
+            app_id: "Ov23lio2l14H2kSuHlkS",
+            clear_hash: true
           },
           media_folder: "images",
           public_folder: "images",
