@@ -4,44 +4,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Isson Group - Admin Panel</title>
+    <script>
+      // Brauzerin vaxtından əvvəl render edib çökməsinin qarşısını alır
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </head>
   <body>
-    <!-- Sadece Decap CMS qalır, digər ziddiyyət yaradan skripti sildik -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "kamranqafarsoy-alt/isson-az-site",
-            branch: "main",
-            auth_type: "implicit",
-            app_id: "Ov23lio2l14H2kSuHlkS",
-            clear_hash: true
-          },
-          media_folder: "images",
-          public_folder: "images",
-          collections: [
-            {
-              name: "products",
-              label: "Bütün Məhsullar",
-              folder: "images",
-              create: true,
-              slug: "product-{{fields.id}}",
-              fields: [
-                { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
-                { 
-                  label: "Məhsulun Kateqoriyası", 
-                  name: "category", 
-                  widget: "string",
-                  hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
-                },
-                { label: "Məhsul Şəkli", name: "image", widget: "image" }
-              ]
-            }
-          ]
-        }
-      });
+      if (typeof window.CMS !== 'undefined') {
+        window.CMS.init({
+          config: {
+            backend: {
+              name: "github",
+              repo: "kamranqafarsoy-alt/isson-az-site",
+              branch: "main",
+              auth_type: "implicit",
+              app_id: "Ov23lio2l14H2kSuHlkS",
+              clear_hash: true
+            },
+            media_folder: "images",
+            public_folder: "images",
+            collections: [
+              {
+                name: "products",
+                label: "Bütün Məhsullar",
+                folder: "images",
+                create: true,
+                slug: "product-{{fields.id}}",
+                fields: [
+                  { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
+                  { 
+                    label: "Məhsulun Kateqoriyası", 
+                    name: "category", 
+                    widget: "string",
+                    hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
+                  },
+                  { label: "Məhsul Şəkli", name: "image", widget: "image" }
+                ]
+              }
+            ]
+          }
+        });
+      }
     </script>
   </body>
 </html>
