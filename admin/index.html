@@ -4,41 +4,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Isson Group - Admin Panel</title>
-  </head>
-  <body>
     <!-- Decap CMS Core Application -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </head>
+  <body>
+    <!-- CMS-in vizual olaraq render olunacağı xüsusi boş sahə -->
+    <div id="nc-root"></div>
+
     <script>
-      // Konfiqurasiyanı birbaşa JavaScript daxilində təyin edirik ki, 404 xətası tamamilə sıradan çıxsın
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "kamranqafarsoy-alt/isson-az-site",
-            branch: "main",
-            base_url: "https://cms-oauth-provider.vercel.app"
-          },
-          media_folder: "images",
-          public_folder: "images",
-          collections: [
-            {
-              name: "products",
-              label: "Bütün Məhsullar",
-              folder: "images",
-              create: true,
-              slug: "product-{{fields.id}}",
-              fields: [
-                { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
-                { 
-                  label: "Məhsulun Kateqoriyası", 
-                  name: "category", 
-                  widget: "string",
-                  hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
-                },
-                { label: "Məhsul Şəkli", name: "image", widget: "image" }
+      // Səhifə tam yükləndikdən sonra CMS-i başladırıq ki, React elementləri tapmaqda çətinlik çəkməsin
+      window.addEventListener('DOMContentLoaded', () => {
+        if (typeof CMS !== 'undefined') {
+          CMS.init({
+            config: {
+              backend: {
+                name: "github",
+                repo: "kamranqafarsoy-alt/isson-az-site",
+                branch: "main",
+                base_url: "https://cms-oauth-provider.vercel.app"
+              },
+              media_folder: "images",
+              public_folder: "images",
+              collections: [
+                {
+                  name: "products",
+                  label: "Bütün Məhsullar",
+                  folder: "images",
+                  create: true,
+                  slug: "product-{{fields.id}}",
+                  fields: [
+                    { label: "Məhsul ID (Ardıcıl rəqəm)", name: "id", widget: "number" },
+                    { 
+                      label: "Məhsulun Kateqoriyası", 
+                      name: "category", 
+                      widget: "string",
+                      hint: "Bura hansı bölməyə aid olduğunu yazın (Məsələn: Moydadır, Kombi, Qapı, Kafel, Laminat)"
+                    },
+                    { label: "Məhsul Şəkli", name: "image", widget: "image" }
+                  ]
+                }
               ]
             }
-          ]
+          ]);
         }
       });
     </script>
