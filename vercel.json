@@ -1,13 +1,13 @@
 {
-  "version": 2,
-  "builds": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "**/*.html",
-      "use": "@vercel/static"
+      "source": "/admin/config.yml",
+      "destination": "/admin/config.yml"
     },
     {
-      "src": "images/**/*",
-      "use": "@vercel/static"
+      "source": "/admin/(.*)",
+      "destination": "/admin/index.html"
     }
   ]
 }
