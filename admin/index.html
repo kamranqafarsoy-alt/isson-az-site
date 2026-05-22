@@ -1,13 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="az">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ISSON Admin</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSON Admin Panel</title>
 </head>
-<body>
 
-<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<body style="font-family: Arial; padding: 20px;">
+
+  <h2>Admin Panel - Test Versiya</h2>
+
+  <button onclick="testInsert()" style="padding:10px 20px;">
+    TEST ADD PRODUCT
+  </button>
+
+  <script type="module">
+    import { supabase } from "../js/supabase.js";
+
+    window.testInsert = async function () {
+
+      const { data, error } = await supabase
+        .from("products")
+        .insert([
+          {
+            title: "Test Məhsul",
+            category: "Kombi",
+            price: "100",
+            image: "test.jpg"
+          }
+        ]);
+
+      if (error) {
+        alert("Xəta oldu: " + error.message);
+        console.log(error);
+      } else {
+        alert("Uğurla əlavə olundu!");
+        console.log(data);
+      }
+    };
+
+  </script>
 
 </body>
 </html>
