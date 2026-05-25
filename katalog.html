@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Məhsul Kataloqu — ISSON GROUP</title>
+    <title>Kataloq — ISSON GROUP</title>
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .filter-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background-color: transparent; border: 1px solid rgba(197, 168, 128, 0.4); color: var(--dark-luxury); padding: 12px 22px; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; }
-        .filter-btn:hover, .filter-btn.active { background-color: var(--dark-luxury); color: var(--white); border-color: var(--dark-luxury); }
-        .loading-box { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--accent-gold); font-weight: 500; letter-spacing: 1px; }
-    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="top-bar">
@@ -26,27 +22,27 @@
         <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Ana Səhifə</a></li>
-            <li><a href="katalog.html" class="active">Məhsul Kataloqu</a></li>
+            <li><a href="kombiler.html">Kombilər</a></li>
+            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
+            <li><a href="laminat.html">Laminat</a></li>
+            <li><a href="qapi.html">Qapılar</a></li>
+            <li><a href="seyfqapi.html">Seyf Qapılar</a></li>
+            <li><a href="moydadir.html">Moydadırlar</a></li>
+            <li><a href="katalog.html" class="active">Kataloq</a></li>
         </ul>
     </header>
+
     <section class="page-header">
-        <h1>Premium Məhsul Kataloqu</h1>
-        <p>Axtardığınız kateqoriyanı seçərək məhsullarımızı süzgəcdən keçirin</p>
+        <h1>Ümumi Kataloq</h1>
+        <p>Bütün məhsullarımız tək bir məkanda</p>
     </section>
+
     <section class="catalog-section">
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterCategory('all', this)">Hamısı</button>
-            <button class="filter-btn" onclick="filterCategory('kombi', this)">Kombilər</button>
-            <button class="filter-btn" onclick="filterCategory('kondisioner', this)">Kondisionerlər</button>
-            <button class="filter-btn" onclick="filterCategory('laminat', this)">Laminat</button>
-            <button class="filter-btn" onclick="filterCategory('qapi', this)">Otaq Qapıları</button>
-            <button class="filter-btn" onclick="filterCategory('seyfqapi', this)">Seyf Qapılar</button>
-            <button class="filter-btn" onclick="filterCategory('moydadir', this)">Moydadırlar</button>
-        </div>
-        <div class="products-grid" id="dynamic-catalog">
-            <div class="loading-box"><i class="fa-solid fa-spinner fa-spin"></i> Məhsullar yüklənir...</div>
+        <div class="products-grid" id="umumi-kataloq">
+            <p style="text-align: center; color: #888; width: 100%;">Məhsullar yüklənir...</p>
         </div>
     </section>
+
     <footer>
         <div class="footer-grid">
             <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
@@ -54,53 +50,50 @@
         </div>
         <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
+
     <script src="script.js"></script>
+    
     <script>
-        let allProducts = [];
-        document.addEventListener("DOMContentLoaded", async () => { await loadCatalog(); });
+        const kataloqKonteyner = document.getElementById('umumi-kataloq');
+
         async function loadCatalog() {
-            const catalogGrid = document.getElementById('dynamic-catalog');
-            if (typeof fetchProductsFromSupabase !== 'undefined') {
-                allProducts = await fetchProductsFromSupabase();
-                if (allProducts && allProducts.length > 0) { renderProducts(allProducts); } 
-                else { catalogGrid.innerHTML = `<div class="loading-box">Hazırda nümayiş olunacaq məhsul tapılmadı.</div>`; }
-            } else { catalogGrid.innerHTML = `<div class="loading-box">Sistem xətası bas verdi.</div>`; }
-        }
-        function renderProducts(productsList) {
-            const catalogGrid = document.getElementById('dynamic-catalog');
-            catalogGrid.innerHTML = '';
-            productsList.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                const title = product.title || 'Premium Məhsul';
-                const imgUrl = product.image_url || 'images/default.jpg';
-                const encodedTitle = encodeURIComponent(title);
-                card.innerHTML = `
-                    <div class="product-img-box"><img src="${imgUrl}" alt="${title}" loading="lazy"></div>
-                    <div class="product-info">
-                        <h3>${title}</h3>
-                        <div class="btn-container">
-                            <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                            <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                        </div>
-                    </div>
-                `;
-                catalogGrid.appendChild(card);
-            });
-        }
-        function filterCategory(category, buttonElement) {
-            const catalogGrid = document.getElementById('dynamic-catalog');
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
-            if (category === 'all') { renderProducts(allProducts); } 
-            else {
-                const filtered = allProducts.filter(p => p.category === category);
-                if(filtered.length === 0) { catalogGrid.innerHTML = `<div class="loading-box">Bu kateqoriyada hələ ki məhsul yoxdur.</div>`; } 
-                else { renderProducts(filtered); }
+            if (typeof fetchProductsFromSupabase === 'function') {
+                // Kateqoriya qoymuruq ki, bütün məhsulları (kombi, qapı və s.) bir yerə çəksin
+                const products = await fetchProductsFromSupabase(null);
+                
+                if (products && products.length > 0) {
+                    kataloqKonteyner.innerHTML = ''; 
+
+                    products.forEach(product => {
+                        const kart = document.createElement('div');
+                        kart.className = 'product-card';
+
+                        const sekilYolu = product.image_url.startsWith('/') ? product.image_url : '/' + product.image_url;
+                        const encodedTitle = encodeURIComponent(product.title);
+
+                        kart.innerHTML = `
+                            <div class="product-img-box">
+                                <img src="${sekilYolu}" alt="${product.title}" loading="lazy">
+                            </div>
+                            <div class="product-info">
+                                <h3>${product.title}</h3>
+                                <div class="btn-container">
+                                    <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                                    <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                                </div>
+                            </div>
+                        `;
+                        kataloqKonteyner.appendChild(kart);
+                    });
+                } else {
+                    kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Məhsul tapılmadı.</p>';
+                }
+            } else {
+                kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Sistem xətası: skript yüklənmədi.</p>';
             }
         }
+
+        document.addEventListener('DOMContentLoaded', loadCatalog);
     </script>
 </body>
 </html>
