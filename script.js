@@ -1,11 +1,11 @@
 // =========================================================================
-// 1. SUPABASE BAĞLANTI AYARLARI
+// 1. SUPABASE YENİ NƏSİL API BAĞLANTI AYARLARI
 // =========================================================================
-// Sizin verdiyiniz Anon Key əsasında düzgün layihə ID-si təyin edildi
-const SUPABASE_URL = 'https://dA9UQ5xGa1Zeqdit6gBI5A.supabase.co'; 
+// Sizin yeni nəsil təhlükəsiz açarınız və layihə linkiniz bura daxil edildi
+const SUPABASE_URL = 'https://da9uq5xga1zeqdit6gbi.supabase.co'; 
 const SUPABASE_ANON_KEY = 'sb_publishable_dA9UQ5xGa1Zeqdit6gBI5A_oUGoDwqa';
 
-// Supabase müştərisini qlobal olaraq yaradırıq ki, bütün səhifələr istifadə edə bilsin
+// Supabase müştərisini qlobal olaraq yaradırıq
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // =========================================================================
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initWhatsAppClickTracker();
 });
 
-// Menyuda hansı səhifədə olduğumuzu göstərən funksiya
+// Menyuda aktiv səhifəni təyin edən funksiya
 function setActiveNavLink() {
     const currentPath = window.location.pathname.split("/").pop();
     const navLinks = document.querySelectorAll(".nav-links a");
@@ -58,7 +58,7 @@ async function fetchProductsFromSupabase(category = null) {
             query = query.eq('category', category);
         }
         
-        // Məhsulları ID sırası ilə düzürük ki, qapı 1, qapı 2 ardıcıllığı pozulmasın
+        // Sıralamanı ID-yə görə düzürük
         query = query.order('id', { ascending: true });
 
         const { data, error } = await query;
