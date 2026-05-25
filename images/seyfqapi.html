@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seyf Qapılar — ISSON GROUP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div><i class="fa-solid fa-location-dot"></i> Bakı, Azərbaycan</div>
+        <div class="phones">
+            <div><i class="fa-solid fa-phone"></i> TEMPRA: +994 50 800 00 80</div>
+            <div><i class="fa-solid fa-phone"></i> CONDO: +994 10 100 09 09</div>
+        </div>
+    </div>
+    <header>
+        <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Ana Səhifə</a></li>
+            <li><a href="kombiler.html">Kombilər</a></li>
+            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
+            <li><a href="laminat.html">Laminat</a></li>
+            <li><a href="qapi.html">Qapılar</a></li>
+            <li><a href="seyfqapi.html" class="active">Seyf Qapılar</a></li>
+            <li><a href="moydadir.html">Moydadırlar</a></li>
+            <li><a href="katalog.html">Kataloq</a></li>
+        </ul>
+    </header>
+    <section class="page-header">
+        <h1>Premium Seyf Qapılar</h1>
+        <p>Yüksək təhlükəsizlik, zirehli struktur və estetik dizayn bir arada</p>
+    </section>
+    <section class="catalog-section">
+        <div class="products-grid" id="seyfqapi-kataloq"></div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
+            <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        const kataloqKonteyner = document.getElementById('seyfqapi-kataloq');
+        const toplamSeyfQapi = 24; 
+        
+        for (let i = 1; i <= toplamSeyfQapi; i++) {
+            const kart = document.createElement('div');
+            kart.className = 'product-card';
+            
+            // Dəqiq qovluq adı 'seyfqapilar' olaraq yeniləndi və boşluq problemi həll edildi
+            const sekilAdi = `seyfqapi- (${i}).jpg`;
+            const sekilYolu = `images/seyfqapilar/${encodeURIComponent(sekilAdi)}`;
+            
+            const modelAdi = `Seyf Qapı Model №${i}`;
+            const encodedTitle = encodeURIComponent(modelAdi);
+
+            kart.innerHTML = `
+                <div class="product-img-box"><img src="${sekilYolu}" alt="${modelAdi}" loading="lazy"></div>
+                <div class="product-info">
+                    <h3>${modelAdi}</h3>
+                    <div class="btn-container">
+                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                    </div>
+                </div>
+            `;
+            kataloqKonteyner.appendChild(kart);
+        }
+    </script>
+</body>
+</html>

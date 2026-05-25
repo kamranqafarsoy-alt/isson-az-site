@@ -30,6 +30,7 @@
             <li><a href="kondisionerler.html">Kondisionerlər</a></li>
             <li><a href="laminat.html">Laminat</a></li>
             <li><a href="qapi.html">Qapılar</a></li>
+            <li><a href="seyfqapi.html">Seyf Qapılar</a></li>
             <li><a href="moydadir.html">Moydadırlar</a></li>
             <li><a href="katalog.html" class="active">Kataloq</a></li>
         </ul>
@@ -45,6 +46,7 @@
             <button class="filter-btn" onclick="filterCategory('kondisioner', this)">Kondisionerlər</button>
             <button class="filter-btn" onclick="filterCategory('laminat', this)">Laminat</button>
             <button class="filter-btn" onclick="filterCategory('qapi', this)">Qapılar</button>
+            <button class="filter-btn" onclick="filterCategory('seyfqapi', this)">Seyf Qapılar</button>
             <button class="filter-btn" onclick="filterCategory('moydadir', this)">Moydadırlar</button>
         </div>
         <div class="products-grid" id="dynamic-catalog">
@@ -95,6 +97,7 @@
             });
         }
         function filterCategory(category, buttonElement) {
+            const catalogGrid = document.getElementById('dynamic-catalog');
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
             if (category === 'all') { renderProducts(allProducts); } 
