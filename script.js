@@ -1,12 +1,24 @@
 // =========================================================================
-// 1. SUPABASE YENİ NƏSİL API BAĞLANTI AYARLARI
+// 1. SUPABASE BAĞLANTI AYARLARI (GÖZLƏMƏ REJİMLİ)
 // =========================================================================
-// Sizin yeni nəsil təhlükəsiz açarınız və layihə linkiniz bura daxil edildi
 const SUPABASE_URL = 'https://da9uq5xga1zeqdit6gbi.supabase.co'; 
 const SUPABASE_ANON_KEY = 'sb_publishable_dA9UQ5xGa1Zeqdit6gBI5A_oUGoDwqa';
 
-// Supabase müştərisini qlobal olaraq yaradırıq
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabaseInstance = null;
+
+// Kitabxananın yüklənib-yüklənmədiyini yoxlayıb təhlükəsiz bağlantı qururuq
+function getSupabase() {
+    if (supabaseInstance) return supabaseInstance;
+    
+    if (typeof supabase !== 'undefined' && typeof supabase.createClient === 'function') {
+        supabaseInstance = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        return supabaseInstance;
+    } else if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
+        supabaseInstance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        return supabaseInstance;
+    }
+    return null;
+}
 
 // =========================================================================
 // 2. SİSTEM BAŞLADIQLA İCRA OLUNAN FUNKSİYALAR
@@ -17,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initWhatsAppClickTracker();
 });
 
-// Menyuda aktiv səhifəni təyin edən funksiya
 function setActiveNavLink() {
     const currentPath = window.location.pathname.split("/").pop();
     const navLinks = document.querySelectorAll(".nav-links a");
@@ -31,7 +42,6 @@ function setActiveNavLink() {
     });
 }
 
-// Mağazalar üzrə WhatsApp kliklərini konsolda izləyən funksiya
 function initWhatsAppClickTracker() {
     document.addEventListener("click", (e) => {
         const waButton = e.target.closest(".btn-tempra, .btn-condo");
@@ -45,27 +55,29 @@ function initWhatsAppClickTracker() {
 }
 
 // =========================================================================
-// 3. BAZADAN MƏLUMATLARI ÇƏKƏN ƏSAS FUNKSİYA (DİNAMİK)
+// 3. BAZADAN MƏLUMATLARI ÇƏKƏN ƏSAS FUNKSİYA
 // =========================================================================
 async function fetchProductsFromSupabase(category = null) {
-    if (typeof supabase === 'undefined') {
-        console.warn("Supabase hele proqrama daxil edilmeyib. Statik melumatlar gosterilir.");
+    const client = getSupabase();
+    
+    if (!client) {
+        console.warn("Supabase kitabxanası tapılmadı. Statik və ya köhnə məlumat rejimini yoxlayın.");
         return null;
     }
+    
     try {
-        let query = supabase.from('products').select('*');
+        let query = client.from('products').select('*');
         if (category) {
             query = query.eq('category', category);
         }
         
-        // Sıralamanı ID-yə görə düzürük
         query = query.order('id', { ascending: true });
 
         const { data, error } = await query;
         if (error) throw error;
         return data;
     } catch (err) {
-        console.error("Supabase-den mehsullar cekilerken xeta bas verdi:", err.message);
+        console.error("Məhsullar çəkilərkən xəta baş verdi:", err.message);
         return null;
     }
 }
