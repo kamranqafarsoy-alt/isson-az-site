@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background-color: transparent; border: 1px solid rgba(197, 168, 128, 0.4); color: var(--dark-luxury); padding: 10px 25px; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; }
+        .filter-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { background-color: transparent; border: 1px solid rgba(197, 168, 128, 0.4); color: var(--dark-luxury); padding: 12px 22px; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s ease; border-radius: 4px; }
         .filter-btn:hover, .filter-btn.active { background-color: var(--dark-luxury); color: var(--white); border-color: var(--dark-luxury); }
         .loading-box { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--accent-gold); font-weight: 500; letter-spacing: 1px; }
     </style>
@@ -26,18 +26,12 @@
         <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Ana Səhifə</a></li>
-            <li><a href="kombiler.html">Kombilər</a></li>
-            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
-            <li><a href="laminat.html">Laminat</a></li>
-            <li><a href="qapi.html">Qapılar</a></li>
-            <li><a href="seyfqapi.html">Seyf Qapılar</a></li>
-            <li><a href="moydadir.html">Moydadırlar</a></li>
-            <li><a href="katalog.html" class="active">Kataloq</a></li>
+            <li><a href="katalog.html" class="active">Məhsul Kataloqu</a></li>
         </ul>
     </header>
     <section class="page-header">
-        <h1>Ümumi Məhsul Kataloqu</h1>
-        <p>Bütün premium çeşidlərimiz tək bir məkanda</p>
+        <h1>Premium Məhsul Kataloqu</h1>
+        <p>Axtardığınız kateqoriyanı seçərək məhsullarımızı süzgəcdən keçirin</p>
     </section>
     <section class="catalog-section">
         <div class="filter-container">
@@ -45,7 +39,7 @@
             <button class="filter-btn" onclick="filterCategory('kombi', this)">Kombilər</button>
             <button class="filter-btn" onclick="filterCategory('kondisioner', this)">Kondisionerlər</button>
             <button class="filter-btn" onclick="filterCategory('laminat', this)">Laminat</button>
-            <button class="filter-btn" onclick="filterCategory('qapi', this)">Qapılar</button>
+            <button class="filter-btn" onclick="filterCategory('qapi', this)">Otaq Qapıları</button>
             <button class="filter-btn" onclick="filterCategory('seyfqapi', this)">Seyf Qapılar</button>
             <button class="filter-btn" onclick="filterCategory('moydadir', this)">Moydadırlar</button>
         </div>
@@ -58,7 +52,7 @@
             <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
             <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
+        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
@@ -72,7 +66,7 @@
                 allProducts = await fetchProductsFromSupabase();
                 if (allProducts && allProducts.length > 0) { renderProducts(allProducts); } 
                 else { catalogGrid.innerHTML = `<div class="loading-box">Hazırda nümayiş olunacaq məhsul tapılmadı.</div>`; }
-            } else { catalogGrid.innerHTML = `<div class="loading-box">Sistem xətası.</div>`; }
+            } else { catalogGrid.innerHTML = `<div class="loading-box">Sistem xətası bas verdi.</div>`; }
         }
         function renderProducts(productsList) {
             const catalogGrid = document.getElementById('dynamic-catalog');
@@ -103,7 +97,7 @@
             if (category === 'all') { renderProducts(allProducts); } 
             else {
                 const filtered = allProducts.filter(p => p.category === category);
-                if(filtered.length === 0) { catalogGrid.innerHTML = `<div class="loading-box">Məhsul tapılmadı.</div>`; } 
+                if(filtered.length === 0) { catalogGrid.innerHTML = `<div class="loading-box">Bu kateqoriyada hələ ki məhsul yoxdur.</div>`; } 
                 else { renderProducts(filtered); }
             }
         }
