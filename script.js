@@ -1,12 +1,12 @@
 // =========================================================================
-// 1. SUPABASE BAĞLANTI AYARLARI (GÖZLƏMƏ REJİMLİ)
+// 1. SUPABASE REAL API BAĞLANTI AYARLARI (YENİLƏNDİ ✅)
 // =========================================================================
-const SUPABASE_URL = 'https://da9uq5xga1zeqdit6gbi.supabase.co'; 
+const SUPABASE_URL = 'https://qcnkjmnywapgnkbttznv.supabase.co'; 
 const SUPABASE_ANON_KEY = 'sb_publishable_dA9UQ5xGa1Zeqdit6gBI5A_oUGoDwqa';
 
 let supabaseInstance = null;
 
-// Kitabxananın yüklənib-yüklənmədiyini yoxlayıb təhlükəsiz bağlantı qururuq
+// Təhlükəsiz bağlantı modulu
 function getSupabase() {
     if (supabaseInstance) return supabaseInstance;
     
@@ -61,7 +61,7 @@ async function fetchProductsFromSupabase(category = null) {
     const client = getSupabase();
     
     if (!client) {
-        console.warn("Supabase kitabxanası tapılmadı. Statik və ya köhnə məlumat rejimini yoxlayın.");
+        console.warn("Supabase kitabxanası tapılmadı.");
         return null;
     }
     
