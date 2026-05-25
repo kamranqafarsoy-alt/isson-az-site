@@ -1,41 +1,38 @@
 /* ==========================================================================
-   ISSON GROUP - Premium Universal CSS Stylesheet
+   1. ÜMUMİ AYARLAR VƏ RESET
    ========================================================================== */
-
-:root {
-    --bg-color: #fcfcfd;
-    --dark-luxury: #0b0e11;
-    --accent-gold: #c5a880;
-    --text-main: #2d3436;
-    --white: #ffffff;
-    --tempra-green: #25D366;
-    --condo-brown: #a38a67;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Sağa-sola lazımsız daşmaları və ağ boşluqları bloklayır */
     font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #111111;
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    line-height: 1.6;
-}
-
+/* ==========================================================================
+   2. TOP BAR (ƏN YUXARIDAKI ƏLAQƏ LENTİ)
+   ========================================================================== */
 .top-bar {
-    background-color: #050708;
-    color: var(--white);
-    padding: 12px 8%;
+    background-color: #111111;
+    color: #ffffff;
+    padding: 12px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    font-weight: 300;
-    border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.top-bar i {
+    color: #b8974a; /* Premium qızılı ton */
+    margin-right: 5px;
 }
 
 .top-bar .phones {
@@ -43,302 +40,201 @@ body {
     gap: 20px;
 }
 
-.top-bar i {
-    color: var(--accent-gold);
-    margin-right: 5px;
-}
-
+/* ==========================================================================
+   3. HEADER VƏ NAVİQASİYA (MENYU)
+   ========================================================================== */
 header {
-    background-color: var(--dark-luxury);
-    padding: 22px 8%;
+    background-color: #ffffff;
+    padding: 20px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     position: sticky;
     top: 0;
     z-index: 999;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .logo {
-    color: var(--white);
     font-family: 'Marcellus', serif;
-    font-size: 2rem;
-    letter-spacing: 4px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #111111;
     text-decoration: none;
+    letter-spacing: 2px;
 }
 
 .logo span {
-    color: var(--accent-gold);
+    color: #b8974a;
+    font-weight: 300;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 25px;
 }
 
-.nav-links a {
-    color: rgba(255,255,255,0.8);
+.nav-links li a {
     text-decoration: none;
+    color: #333333;
+    font-size: 15px;
     font-weight: 500;
-    font-size: 0.85rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    padding: 8px 0;
     transition: color 0.3s ease;
+    position: relative;
 }
 
-.nav-links a:hover, 
-.nav-links .active {
-    color: var(--accent-gold);
+.nav-links li a:hover,
+.nav-links li a.active {
+    color: #b8974a;
 }
 
+/* ==========================================================================
+   4. SƏHİFƏ BAŞLIQLARI (PAGE HEADER)
+   ========================================================================== */
 .page-header {
-    background: linear-gradient(rgba(11, 14, 17, 0.75), rgba(11, 14, 17, 0.75)), url('../images/hero-bg.jpg') no-repeat center center/cover;
-    padding: 60px 20px;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/page-bg.jpg') center/cover;
+    padding: 80px 5%;
     text-align: center;
-    color: var(--white);
+    color: #ffffff;
 }
 
 .page-header h1 {
     font-family: 'Marcellus', serif;
-    font-size: 2.5rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    font-size: 38px;
     margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 
 .page-header p {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 16px;
+    opacity: 0.9;
     font-weight: 300;
 }
 
+/* ==========================================================================
+   5. MƏHSUL KATALOQU (GRID VƏ KARTLAR)
+   ========================================================================== */
 .catalog-section {
-    padding: 60px 8%;
+    padding: 60px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
 .product-card {
-    background-color: var(--white);
-    border: 1px solid rgba(0,0,0,0.05);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.02);
-    transition: all 0.3s ease;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border-radius: 4px;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-    border-color: var(--accent-gold);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
 .product-img-box {
     width: 100%;
-    height: 320px;
-    background-color: var(--white);
+    height: 350px;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    background-color: #f5f5f5;
 }
 
 .product-img-box img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-img-box img {
-    transform: scale(1.04);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .product-info {
-    padding: 20px 15px;
+    padding: 20px;
     text-align: center;
-    background-color: #fafafa;
-    border-top: 1px solid #f1f2f6;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-info h3 {
-    font-family: 'Marcellus', serif;
-    font-size: 1.05rem;
+    font-size: 18px;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    color: var(--dark-luxury);
+    color: #111111;
     margin-bottom: 15px;
 }
 
+/* Düymə Konteyneri */
 .btn-container {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
 }
 
 .btn {
-    display: flex;
+    flex: 1;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 5px;
-    color: var(--white);
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-    flex: 1;
+    padding: 10px 0;
     border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s;
 }
 
-.btn-tempra { background-color: var(--tempra-green); }
-.btn-condo { background-color: var(--condo-brown); }
-.btn:hover { opacity: 0.85; }
+.btn:hover {
+    opacity: 0.9;
+}
 
+.btn-tempra {
+    background-color: #b8974a;
+    color: #ffffff;
+}
+
+.btn-condo {
+    background-color: #111111;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   6. FOOTER (SAYTIN AŞAĞI HİSSƏSİ)
+   ========================================================================== */
 footer {
-    background-color: var(--dark-luxury);
-    color: var(--white);
-    padding: 60px 8% 30px 8%;
-    border-top: 1px solid rgba(197, 168, 128, 0.2);
+    background-color: #111111;
+    color: #ffffff;
+    padding: 40px 5% 20px 5%;
     margin-top: 60px;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
-    margin-bottom: 45px;
-}
-
-.footer-box {
-    background-color: #12161a;
-    padding: 35px;
-    border-top: 2px solid var(--accent-gold);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .footer-box h3 {
     font-family: 'Marcellus', serif;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: var(--accent-gold);
-    text-transform: uppercase;
+    font-size: 18px;
+    color: #b8974a;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
 }
 
 .footer-box p {
-    margin: 12px 0;
-    color: rgba(255,255,255,0.65);
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.footer-box i {
-    color: var(--accent-gold);
-    width
-    /* ==========================================================================
-   ÜMUMİ SAYT ÜÇÜN MOBİL OPTİMALLAŞDIRMA (TELEFON GÖRÜNTÜSÜ)
-   ========================================================================== */
-
-@media (max-width: 768px) {
-    
-    /* 1. Ekrandan kənara daşmaların qarşısını almaq */
-    html, body {
-        width: 100%;
-        overflow-x: hidden; /* Sağa-sola lazımsız sürüşməni bağlayır */
-    }
-
-    /* 2. Naviqasiya və Header (Menyu hissəsi) */
-    header {
-        padding: 15px 20px;
-        flex-direction: column; /* Loqo və menyunu alt-alta salır */
-        gap: 15px;
-        text-align: center;
-    }
-
-    .nav-links {
-        flex-wrap: wrap; /* Menyu linkləri ekrana sığmayanda alta keçsin */
-        justify-content: center;
-        gap: 10px;
-        padding: 0;
-    }
-
-    .nav-links li a {
-        font-size: 14px; /* Telefonda menyu hərflərini bir az kiçildir */
-        padding: 5px 10px;
-    }
-
-    /* 3. Top Bar (Ən yuxarıdakı telefon və ünvan hissəsi) */
-    .top-bar {
-        flex-direction: column; /* Ünvan və telefonları alt-alta düzür */
-        gap: 8px;
-        text-align: center;
-        padding: 10px;
-        font-size: 12px;
-    }
-
-    .top-bar .phones {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    /* 4. Səhifə Başlıqları (Page Header) */
-    .page-header {
-        padding: 40px 15px;
-        text-align: center;
-    }
-
-    .page-header h1 {
-        font-size: 24px; /* Telefonda böyük başlıqları yığcamlaşdırır */
-    }
-
-    .page-header p {
-        font-size: 14px;
-    }
-
-    /* 5. Məhsul Toru (Grid sistemi - Kombi, Kondisioner, Qapı siyahıları üçün) */
-    .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important; /* Qutuları telefon eninə uyğunlaşdırır */
-        gap: 15px !important;
-        padding: 10px !important;
-    }
-
-    .product-card {
-        width: 100% !important; /* Qutuların ekrandan kənara çıxmasını əngəlləyir */
-        margin: 0 auto;
-    }
-
-    /* 6. Düymələr (WhatsApp və digər keçidlər) */
-    .btn-container {
-        flex-direction: column; /* Düymələri telefonda alt-alta edir ki, rahat kliklənsin */
-        gap: 8px;
-    }
-
-    .btn {
-        width: 100%; /* Düyməni telefon ekranı boyu uzadır */
-        text-align: center;
-        justify-content: center;
-    }
-
-    /* 7. Footer (Saytın ən aşağı hissəsi) */
-    .footer-grid {
-        grid-template-columns: 1fr !important; /* Mağaza ünvanlarını alt-alta salır */
-        text-align: center;
-        gap: 25px;
-        padding: 30px 15px;
-    }
-}
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: 10px;
+    line-height: 1.6
