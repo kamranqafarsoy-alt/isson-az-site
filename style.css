@@ -250,3 +250,95 @@ footer {
 .footer-box i {
     color: var(--accent-gold);
     width
+    /* ==========================================================================
+   ÜMUMİ SAYT ÜÇÜN MOBİL OPTİMALLAŞDIRMA (TELEFON GÖRÜNTÜSÜ)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    
+    /* 1. Ekrandan kənara daşmaların qarşısını almaq */
+    html, body {
+        width: 100%;
+        overflow-x: hidden; /* Sağa-sola lazımsız sürüşməni bağlayır */
+    }
+
+    /* 2. Naviqasiya və Header (Menyu hissəsi) */
+    header {
+        padding: 15px 20px;
+        flex-direction: column; /* Loqo və menyunu alt-alta salır */
+        gap: 15px;
+        text-align: center;
+    }
+
+    .nav-links {
+        flex-wrap: wrap; /* Menyu linkləri ekrana sığmayanda alta keçsin */
+        justify-content: center;
+        gap: 10px;
+        padding: 0;
+    }
+
+    .nav-links li a {
+        font-size: 14px; /* Telefonda menyu hərflərini bir az kiçildir */
+        padding: 5px 10px;
+    }
+
+    /* 3. Top Bar (Ən yuxarıdakı telefon və ünvan hissəsi) */
+    .top-bar {
+        flex-direction: column; /* Ünvan və telefonları alt-alta düzür */
+        gap: 8px;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .top-bar .phones {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    /* 4. Səhifə Başlıqları (Page Header) */
+    .page-header {
+        padding: 40px 15px;
+        text-align: center;
+    }
+
+    .page-header h1 {
+        font-size: 24px; /* Telefonda böyük başlıqları yığcamlaşdırır */
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    /* 5. Məhsul Toru (Grid sistemi - Kombi, Kondisioner, Qapı siyahıları üçün) */
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important; /* Qutuları telefon eninə uyğunlaşdırır */
+        gap: 15px !important;
+        padding: 10px !important;
+    }
+
+    .product-card {
+        width: 100% !important; /* Qutuların ekrandan kənara çıxmasını əngəlləyir */
+        margin: 0 auto;
+    }
+
+    /* 6. Düymələr (WhatsApp və digər keçidlər) */
+    .btn-container {
+        flex-direction: column; /* Düymələri telefonda alt-alta edir ki, rahat kliklənsin */
+        gap: 8px;
+    }
+
+    .btn {
+        width: 100%; /* Düyməni telefon ekranı boyu uzadır */
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* 7. Footer (Saytın ən aşağı hissəsi) */
+    .footer-grid {
+        grid-template-columns: 1fr !important; /* Mağaza ünvanlarını alt-alta salır */
+        text-align: center;
+        gap: 25px;
+        padding: 30px 15px;
+    }
+}
