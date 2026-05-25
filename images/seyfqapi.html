@@ -37,7 +37,7 @@
     </section>
     <section class="catalog-section">
         <div class="products-grid" id="seyfqapi-kataloq">
-            <p style="text-align: center; color: #888;">Məhsullar yüklənir...</p>
+            <p style="text-align: center; color: #888; width: 100%;">Məhsullar Supabase-dən yüklənir...</p>
         </div>
     </section>
     <footer>
@@ -54,17 +54,18 @@
         const kataloqKonteyner = document.getElementById('seyfqapi-kataloq');
 
         async function qapilariEkranaYaz() {
+            // Əgər script.js daxilində funksiyamız varsa işə salırıq
             if (typeof fetchProductsFromSupabase === 'function') {
                 const products = await fetchProductsFromSupabase('seyfqapi');
                 
                 if (products && products.length > 0) {
-                    kataloqKonteyner.innerHTML = ''; // Yüklənir yazısını silirik
+                    kataloqKonteyner.innerHTML = ''; 
 
                     products.forEach(product => {
                         const kart = document.createElement('div');
                         kart.className = 'product-card';
 
-                        // Şəkillərin Netlify/Vercel-də qüsursuz görünməsi üçün yol tənzimlənməsi
+                        // Kompüterinizdəki real boşluqlu adları birbaşa oxuyuruq
                         const sekilYolu = product.image_url.startsWith('/') ? product.image_url : '/' + product.image_url;
                         const encodedTitle = encodeURIComponent(product.title);
 
@@ -83,11 +84,10 @@
                         kataloqKonteyner.appendChild(kart);
                     });
                 } else {
-                    kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Məhsul tapılmadı və ya Supabase bağlantısı qurula bilmədi.</p>';
+                    kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Məhsul tapılmadı. Verilənlər bazasını və ya URL ünvanını yoxlayın.</p>';
                 }
             } else {
-                console.error("fetchProductsFromSupabase funksiyası tapılmadı!");
-                kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Sistem xətası baş verdi (Script tapılmadı).</p>';
+                kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Sistem xətası: fetch funksiyası tapılmadı.</p>';
             }
         }
 
