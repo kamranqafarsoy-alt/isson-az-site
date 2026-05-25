@@ -62,12 +62,12 @@
                 const title = `Seyf Qapı ${i}`;
                 const encodedTitle = encodeURIComponent(title);
 
-                // Serverdə mütləq ünvan tapmaq üçün başlanğıca "/" əlavə olundu
-                const path1 = `/images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
+                // Sənin şəklinin tam dəqiq boşluqlu ünvanı bura yazıldı (%20-dən sonra gələn boşluq bərpa olundu)
+                const imgSrc = `images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
 
                 card.innerHTML = `
                     <div class="product-img-box">
-                        <img src="${path1}" alt="${title}" loading="lazy" data-index="${i}" onerror="tryAlternativePaths(this);">
+                        <img src="${imgSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='images/seyfqapilar/seyfqapi-%20(${i}).JPG';">
                     </div>
                     <div class="product-info">
                         <h3>${title}</h3>
@@ -80,29 +80,6 @@
                 grid.appendChild(card);
             }
         });
-
-        // Alternativ yolları sırayla yoxlayan tək və optimallaşdırılmış funksiya
-        function tryAlternativePaths(img) {
-            const index = img.getAttribute('data-index');
-            
-            if (img.src.includes('.jpg') && !img.src.includes('.JPG')) {
-                // Ehtimal 2: Böyük uzantılı .JPG variantı
-                img.src = `/images/seyfqapilar/seyfqapi-%20(${index}).JPG`;
-            } else if (img.src.includes('.JPG') && img.src.includes('%20(')) {
-                // Ehtimal 3: Mötərizəsiz, düz balaca hərfli variant
-                img.src = `/images/seyfqapilar/seyfqapi-%20${index}.jpg`;
-            } else if (img.src.includes(`seyfqapi-%20${index}.jpg`)) {
-                // Ehtimal 4: Mötərizəsiz, düz böyük hərfli variant
-                img.src = `/images/seyfqapilar/seyfqapi-%20${index}.JPG`;
-            } else if (!img.src.includes('/Seyfqapilar/')) {
-                // Ehtimal 5: Qovluğun adının baş hərfi böyük ola bilər
-                img.src = `/images/Seyfqapilar/seyfqapi-%20(${index}).jpg`;
-            } else {
-                // Son çarə
-                img.alt = "Məhsul şəkli mövcud deyil";
-                img.style.opacity = "0.6";
-            }
-        }
     </script>
 </body>
 </html>
