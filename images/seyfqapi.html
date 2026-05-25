@@ -37,55 +37,7 @@
 
     <section class="catalog-section">
         <div class="products-grid">
-
-            <script>
-                const grid = document.querySelector('.products-grid');
-                for (let i = 1; i <= 24; i++) {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    
-                    const title = `Seyf Qapı ${i}`;
-                    const encodedTitle = encodeURIComponent(title);
-
-                    // Əsas yoxlanılacaq link (balaca hərflə .jpg və boşluq kodu ilə)
-                    const primarySrc = `images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
-
-                    card.innerHTML = `
-                        <div class="product-img-box">
-                            <img src="${primarySrc}" alt="${title}" loading="lazy" 
-                                 onerror="tryNextFormat(this, ${i});">
-                        </div>
-                        <div class="product-info">
-                            <h3>${title}</h3>
-                            <div class="btn-container">
-                                <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                                <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                }
-
-                // Şəkil yüklənməyəndə uzantıları tək-tək yoxlayan ağıllı funksiya
-                function tryNextFormat(img, index) {
-                    if (img.src.includes('.jpg') && !img.src.includes('.JPG')) {
-                        // 1. Böyük hərflə .JPG yoxla
-                        img.src = `images/seyfqapilar/seyfqapi-%20(${index}).JPG`;
-                    } else if (img.src.includes('.JPG')) {
-                        // 2. Əgər o da yoxdursa, mötərizəsiz düz variantı yoxla
-                        img.src = `images/seyfqapilar/seyfqapi-%20${index}.jpg`;
-                    } else if (img.src.includes(`seyfqapi-%20${index}.jpg`)) {
-                        // 3. O da yoxdursa, birbaşa mötərizəsiz böyük hərflə JPG yoxla
-                        img.src = `images/seyfqapilar/seyfqapi-%20${index}.JPG`;
-                    } else {
-                        // Son çarə: Şəkil tamamilə yoxdursa, qırılıb qalmamasın deyə boş qutu göstərmə
-                        img.alt = "Şəkil yüklənə bilmədi";
-                        img.style.opacity = "0.5";
-                    }
-                }
-            </script>
-
-        </div>
+            </div>
     </section>
 
     <footer>
@@ -97,5 +49,60 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.querySelector('.products-grid');
+            if (!grid) return;
+
+            for (let i = 1; i <= 24; i++) {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                const title = `Seyf Qapı ${i}`;
+                const encodedTitle = encodeURIComponent(title);
+
+                // Serverdə mütləq ünvan tapmaq üçün başlanğıca "/" əlavə olundu
+                const path1 = `/images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
+
+                card.innerHTML = `
+                    <div class="product-img-box">
+                        <img src="${path1}" alt="${title}" loading="lazy" data-index="${i}" onerror="tryAlternativePaths(this);">
+                    </div>
+                    <div class="product-info">
+                        <h3>${title}</h3>
+                        <div class="btn-container">
+                            <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                            <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        });
+
+        // Alternativ yolları sırayla yoxlayan tək və optimallaşdırılmış funksiya
+        function tryAlternativePaths(img) {
+            const index = img.getAttribute('data-index');
+            
+            if (img.src.includes('.jpg') && !img.src.includes('.JPG')) {
+                // Ehtimal 2: Böyük uzantılı .JPG variantı
+                img.src = `/images/seyfqapilar/seyfqapi-%20(${index}).JPG`;
+            } else if (img.src.includes('.JPG') && img.src.includes('%20(')) {
+                // Ehtimal 3: Mötərizəsiz, düz balaca hərfli variant
+                img.src = `/images/seyfqapilar/seyfqapi-%20${index}.jpg`;
+            } else if (img.src.includes(`seyfqapi-%20${index}.jpg`)) {
+                // Ehtimal 4: Mötərizəsiz, düz böyük hərfli variant
+                img.src = `/images/seyfqapilar/seyfqapi-%20${index}.JPG`;
+            } else if (!img.src.includes('/Seyfqapilar/')) {
+                // Ehtimal 5: Qovluğun adının baş hərfi böyük ola bilər
+                img.src = `/images/Seyfqapilar/seyfqapi-%20(${index}).jpg`;
+            } else {
+                // Son çarə
+                img.alt = "Məhsul şəkli mövcud deyil";
+                img.style.opacity = "0.6";
+            }
+        }
+    </script>
 </body>
 </html>
