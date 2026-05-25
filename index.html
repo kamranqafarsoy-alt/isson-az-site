@@ -7,8 +7,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Ana səhifədəki xəritə bölməsi üçün premium stillər */
+        .maps-section {
+            padding: 60px 8%;
+            background-color: #ffffff;
+        }
+        .maps-section h2 {
+            font-family: 'Marcellus', serif;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: var(--dark-luxury);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        .map-box {
+            background-color: #fafafa;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .map-box h3 {
+            font-family: 'Marcellus', serif;
+            color: var(--dark-luxury);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .map-box p {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-box p i {
+            color: var(--accent-gold);
+        }
+        .map-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Ekran Nisbəti */
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        .map-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
+
     <div class="top-bar">
         <div><i class="fa-solid fa-location-dot"></i> Bakı, Azərbaycan</div>
         <div class="phones">
@@ -16,6 +78,7 @@
             <div><i class="fa-solid fa-phone"></i> CONDO: +994 10 100 09 09</div>
         </div>
     </div>
+
     <header>
         <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
         <ul class="nav-links">
@@ -28,17 +91,52 @@
             <li><a href="katalog.html">Kataloq</a></li>
         </ul>
     </header>
+
     <section class="page-header">
         <h1>ISSON GROUP-a Xoş Gəlmisiniz</h1>
         <p>Tempra və Condo mağazalarımızla lüks və dözümlülüyün vəhdəti</p>
     </section>
+
+    <section class="maps-section">
+        <h2>Şourumlarımız Xəritədə</h2>
+        
+        <div class="footer-grid" style="margin-bottom: 0;">
+            <div class="map-box">
+                <h3>Tempra Showroom</h3>
+                <p><i class="fa-solid fa-map-location-dot"></i> Ünvan: Məmməd Cəfər Cəfərov</p>
+                <p><i class="fa-solid fa-phone"></i> Əlaqə: +994 50 800 00 80</p>
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.3129598276686!2d49.8143243!3d40.4019444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI0JzA3LjAiTiA0OcKwNDgnNTEuNiJF!5e0!3m2!1saz!2saz!4v1690000000000!5m2!1saz!2saz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <div class="map-box">
+                <h3>Condo Luxury Concept</h3>
+                <p><i class="fa-solid fa-map-location-dot"></i> Ünvan: Zivərbəy Əhmədbəyov</p>
+                <p><i class="fa-solid fa-phone"></i> Əlaqə: +994 10 100 09 09</p>
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.2925210767353!2d49.82872877532414!3d40.380208971445356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403063895c061ae3%3A0xf5548b6c04b4c7f6!2sCondo!5e0!3m2!1saz!2saz!4v1779710506694!5m2!1saz!2saz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-grid">
-            <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
-            <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
+            <div class="footer-box">
+                <h3>Tempra Showroom</h3>
+                <p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p>
+                <p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p>
+            </div>
+            <div class="footer-box">
+                <h3>Condo Luxury Concept</h3>
+                <p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p>
+                <p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
+        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
