@@ -1,60 +1,252 @@
-/* Sadə və təmiz görünüş üçün CSS */
-.katalog-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
+/* ==========================================================================
+   ISSON GROUP - Premium Universal CSS Stylesheet
+   ========================================================================== */
+
+:root {
+    --bg-color: #fcfcfd;
+    --dark-luxury: #0b0e11;
+    --accent-gold: #c5a880;
+    --text-main: #2d3436;
+    --white: #ffffff;
+    --tempra-green: #25D366;
+    --condo-brown: #a38a67;
 }
 
-.mehsul-kart {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 15px;
-  width: 250px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.mehsul-kart img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
 }
 
-.etrafli-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-}/* Mobil cihazlar üçün xüsusi kodlar (ekran genişliyi 768px-dən kiçik olanlar üçün) */
-@media (max-width: 768px) {
-    
-    /* 1. Flex və Grid strukturlarını alt-alta gətirmək üçün */
-    .konteyner, .Kataloq-bölməsi, .hero-section {
-        flex-direction: column;
-        display: flex;
-    }
-
-    /* 2. Şəkillərin ekrandan kənara çıxmaması üçün */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* 3. Yazı ölçülərini mobillərə uyğun kiçiltmək üçün */
-    h1 {
-        font-size: 24px;
-    }
-    p {
-        font-size: 16px;
-    }
-    
-    /* 4. Mağazaların ünvanları və ya kataloq blokları üçün */
-    .magaza-bloku {
-        width: 100%; /* Yan-yana deyil, tam en olaraq alt-alta düzülsünlər */
-        margin-bottom: 20px;
-    }
+.top-bar {
+    background-color: #050708;
+    color: var(--white);
+    padding: 12px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    font-weight: 300;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.15);
 }
+
+.top-bar .phones {
+    display: flex;
+    gap: 20px;
+}
+
+.top-bar i {
+    color: var(--accent-gold);
+    margin-right: 5px;
+}
+
+header {
+    background-color: var(--dark-luxury);
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.logo {
+    color: var(--white);
+    font-family: 'Marcellus', serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--accent-gold);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, 
+.nav-links .active {
+    color: var(--accent-gold);
+}
+
+.page-header {
+    background: linear-gradient(rgba(11, 14, 17, 0.75), rgba(11, 14, 17, 0.75)), url('../images/hero-bg.jpg') no-repeat center center/cover;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--white);
+}
+
+.page-header h1 {
+    font-family: 'Marcellus', serif;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.catalog-section {
+    padding: 60px 8%;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background-color: var(--white);
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    border-color: var(--accent-gold);
+}
+
+.product-img-box {
+    width: 100%;
+    height: 320px;
+    background-color: var(--white);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.product-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-img-box img {
+    transform: scale(1.04);
+}
+
+.product-info {
+    padding: 20px 15px;
+    text-align: center;
+    background-color: #fafafa;
+    border-top: 1px solid #f1f2f6;
+}
+
+.product-info h3 {
+    font-family: 'Marcellus', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--dark-luxury);
+    margin-bottom: 15px;
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 5px;
+    color: var(--white);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    flex: 1;
+    border-radius: 4px;
+}
+
+.btn-tempra { background-color: var(--tempra-green); }
+.btn-condo { background-color: var(--condo-brown); }
+.btn:hover { opacity: 0.85; }
+
+footer {
+    background-color: var(--dark-luxury);
+    color: var(--white);
+    padding: 60px 8% 30px 8%;
+    border-top: 1px solid rgba(197, 168, 128, 0.2);
+    margin-top: 60px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-bottom: 45px;
+}
+
+.footer-box {
+    background-color: #12161a;
+    padding: 35px;
+    border-top: 2px solid var(--accent-gold);
+}
+
+.footer-box h3 {
+    font-family: 'Marcellus', serif;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+}
+
+.footer-box p {
+    margin: 12px 0;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-box i {
+    color: var(--accent-gold);
+    width

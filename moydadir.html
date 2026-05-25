@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISSON GROUP — Premium Ev İnfrastrukturu</title>
+    <title>Moydadırlar və Hamam Mebelləri — ISSON GROUP</title>
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -19,18 +19,21 @@
     <header>
         <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">Ana Səhifə</a></li>
+            <li><a href="index.html">Ana Səhifə</a></li>
             <li><a href="kombiler.html">Kombilər</a></li>
             <li><a href="kondisionerler.html">Kondisionerlər</a></li>
             <li><a href="laminat.html">Laminat</a></li>
             <li><a href="qapi.html">Qapılar</a></li>
-            <li><a href="moydadir.html">Moydadırlar</a></li>
+            <li><a href="moydadir.html" class="active">Moydadırlar</a></li>
             <li><a href="katalog.html">Kataloq</a></li>
         </ul>
     </header>
     <section class="page-header">
-        <h1>ISSON GROUP-a Xoş Gəlmisiniz</h1>
-        <p>Tempra və Condo mağazalarımızla lüks və dözümlülüyün vəhdəti</p>
+        <h1>Moydadır və Hamam Mebelləri</h1>
+        <p>375 fərqli premium dizayn Tempra və Condo mağazalarımızda</p>
+    </section>
+    <section class="catalog-section">
+        <div class="products-grid" id="moydadir-kataloq"></div>
     </section>
     <footer>
         <div class="footer-grid">
@@ -40,5 +43,28 @@
         <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
     <script src="script.js"></script>
+    <script>
+        const kataloqKonteyner = document.getElementById('moydadir-kataloq');
+        const toplamMoydadir = 375; 
+        for (let i = 1; i <= toplamMoydadir; i++) {
+            const kart = document.createElement('div');
+            kart.className = 'product-card';
+            const sekilYolu = `images/moydadir/moydadir- (${i}).jpg`;
+            const modelAdi = `Moydadır Model №${i}`;
+            const encodedTitle = encodeURIComponent(modelAdi);
+
+            kart.innerHTML = `
+                <div class="product-img-box"><img src="${sekilYolu}" alt="${modelAdi}" loading="lazy"></div>
+                <div class="product-info">
+                    <h3>${modelAdi}</h3>
+                    <div class="btn-container">
+                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                    </div>
+                </div>
+            `;
+            kataloqKonteyner.appendChild(kart);
+        }
+    </script>
 </body>
 </html>
