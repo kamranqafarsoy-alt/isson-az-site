@@ -44,14 +44,16 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
-                    // Sizin kompüterdəki dəqiq ad formatı (boşluq və mötərizə təhlükəsiz formata salındı)
-                    const imgSrc = `images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
                     const title = `Seyf Qapı ${i}`;
                     const encodedTitle = encodeURIComponent(title);
 
+                    // Əsas yoxlanılacaq link (balaca hərflə .jpg və boşluq kodu ilə)
+                    const primarySrc = `images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
+
                     card.innerHTML = `
                         <div class="product-img-box">
-                            <img src="${imgSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='images/seyfqapilar/seyfqapi-%20${i}.jpg';">
+                            <img src="${primarySrc}" alt="${title}" loading="lazy" 
+                                 onerror="tryNextFormat(this, ${i});">
                         </div>
                         <div class="product-info">
                             <h3>${title}</h3>
@@ -62,6 +64,24 @@
                         </div>
                     `;
                     grid.appendChild(card);
+                }
+
+                // Şəkil yüklənməyəndə uzantıları tək-tək yoxlayan ağıllı funksiya
+                function tryNextFormat(img, index) {
+                    if (img.src.includes('.jpg') && !img.src.includes('.JPG')) {
+                        // 1. Böyük hərflə .JPG yoxla
+                        img.src = `images/seyfqapilar/seyfqapi-%20(${index}).JPG`;
+                    } else if (img.src.includes('.JPG')) {
+                        // 2. Əgər o da yoxdursa, mötərizəsiz düz variantı yoxla
+                        img.src = `images/seyfqapilar/seyfqapi-%20${index}.jpg`;
+                    } else if (img.src.includes(`seyfqapi-%20${index}.jpg`)) {
+                        // 3. O da yoxdursa, birbaşa mötərizəsiz böyük hərflə JPG yoxla
+                        img.src = `images/seyfqapilar/seyfqapi-%20${index}.JPG`;
+                    } else {
+                        // Son çarə: Şəkil tamamilə yoxdursa, qırılıb qalmamasın deyə boş qutu göstərmə
+                        img.alt = "Şəkil yüklənə bilmədi";
+                        img.style.opacity = "0.5";
+                    }
                 }
             </script>
 
