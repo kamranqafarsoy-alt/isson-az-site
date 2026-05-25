@@ -37,71 +37,45 @@
 
     <section class="catalog-section">
         <div class="products-grid">
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 1.jpg" alt="Seyf Qapı 1" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 1</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%201%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%201%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 2.jpg" alt="Seyf Qapı 2" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 2</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%202%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%202%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
+            <script>
+                const grid = document.querySelector('.products-grid');
+                for (let i = 1; i <= 24; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    
+                    // Sizin kompüterdəki dəqiq ad formatı (boşluq və mötərizə təhlükəsiz formata salındı)
+                    const imgSrc = `images/seyfqapilar/seyfqapi-%20(${i}).jpg`;
+                    const title = `Seyf Qapı ${i}`;
+                    const encodedTitle = encodeURIComponent(title);
 
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 3.jpg" alt="Seyf Qapı 3" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 3</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%203%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%203%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
+                    card.innerHTML = `
+                        <div class="product-img-box">
+                            <img src="${imgSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='images/seyfqapilar/seyfqapi-%20${i}.jpg';">
+                        </div>
+                        <div class="product-info">
+                            <h3>${title}</h3>
+                            <div class="btn-container">
+                                <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                                <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            </script>
 
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 4.jpg" alt="Seyf Qapı 4" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 4</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%204%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%204%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </section>
 
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 5.jpg" alt="Seyf Qapı 5" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 5</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%205%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%205%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
+            <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
+    </footer>
 
-            <div class="product-card">
-                <div class="product-img-box"><img src="/images/seyfqapilar/seyf qapi 6.jpg" alt="Seyf Qapı 6" loading="lazy"></div>
-                <div class="product-info">
-                    <h3>Seyf Qapı 6</h3>
-                    <div class="btn-container">
-                        <a href="https://api.whatsapp.com/send?phone=994508000080&text=Seyf%20Qapi%206%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                        <a href="https://api.whatsapp.com/send?phone=994101000909&text=Seyf%20Qapi%206%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img-box"><img src="/
+    <script src="script.js"></script>
+</body>
+</html>
