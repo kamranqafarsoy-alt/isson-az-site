@@ -49,25 +49,19 @@
     <script>
         const kataloqKonteyner = document.getElementById('seyfqapi-kataloq');
 
-        async function seyfQapilariniGetir() {
-            try {
-                // script.js-dəki Supabase müştərisini çağırırıq
-                const { data: products, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('category', 'seyfqapi')
-                    .order('id', { ascending: true });
-
-                if (error) throw error;
-
+        async function qapilariEkranaYaz() {
+            // script.js-də yazdığınız funksiyanı çağırırıq
+            if (typeof fetchProductsFromSupabase === 'function') {
+                const products = await fetchProductsFromSupabase('seyfqapi');
+                
                 if (products && products.length > 0) {
-                    kataloqKonteyner.innerHTML = ''; // Köhnə yazıları təmizləyirik
+                    kataloqKonteyner.innerHTML = ''; // Yüklənir yazısını təmizləyirik
 
                     products.forEach(product => {
                         const kart = document.createElement('div');
                         kart.className = 'product-card';
 
-                        // Şəkil yolunun server tərəfindən düzgün oxunması üçün korreksiya
+                        // Şəkil yolunun əvvəlinə mütləq '/' qoyuruq ki, Netlify/Vercel problemsiz oxusun
                         const sekilYolu = product.image_url.startsWith('/') ? product.image_url : '/' + product.image_url;
                         const encodedTitle = encodeURIComponent(product.title);
 
@@ -78,4 +72,24 @@
                             <div class="product-info">
                                 <h3>${product.title}</h3>
                                 <div class="btn-container">
-                                    <a href="
+                                    <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
+                                    <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
+                                </div>
+                            </div>
+                        `;
+                        kataloqKonteyner.appendChild(kart);
+                    });
+                } else {
+                    kataloqKonteyner.innerHTML = '<p>Məhsul tapılmadı və ya Supabase bağlantısı gözlənilir...</p>';
+                }
+            } else {
+                console.error("fetchProductsFromSupabase funksiyası tapılmadı!");
+                kataloqKonteyner.innerHTML = '<p>Sistem xətası baş verdi.</p>';
+            }
+        }
+
+        // Səhifə açılanda funksiyanı başladırıq
+        document.addEventListener('DOMContentLoaded', qapilariEkranaYaz);
+    </script>
+</body>
+</html>
