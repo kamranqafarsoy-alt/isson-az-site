@@ -113,13 +113,23 @@ async function loadProducts(){
 
     data.forEach(item=>{
 
-        list.innerHTML+=`
-        <div class="product">
-            <strong>${item.title || item.name}</strong><br>
-            ${item.price} ₼<br>
-            ${item.category || "-"}
-        </div>
-        `;
+      list.innerHTML+=`
+<div class="product">
+    <strong>${item.title || item.name}</strong><br>
+    ${item.price} ₼<br>
+    ${item.category || "-"}<br><br>
+
+    <button onclick="editProduct(${item.id})"
+        style="width:auto;padding:8px 15px;margin-right:10px;">
+        Redaktə et
+    </button>
+
+    <button onclick="deleteProduct(${item.id})"
+        style="width:auto;padding:8px 15px;background:#c0392b;color:white;">
+        Sil
+    </button>
+</div>
+`;
     });
 }
 
@@ -158,7 +168,44 @@ window.addProduct=async function(){
 }
 
 loadProducts();
+window.deleteProduct = async function(id){
 
+    if(!confirm("Məhsul silinsin?")) return;
+
+    const { error } = await supabase
+        .from("products")
+        .delete()
+        .eq("id", id);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    loadProducts();
+}
+
+window.editProduct = async function(id){
+
+    const yeniAd = prompt("Yeni məhsul adı:");
+
+    if(!yeniAd) return;
+
+    const { error } = await supabase
+        .from("products")
+        .update({
+            title: yeniAd,
+            name: yeniAd
+        })
+        .eq("id", id);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    loadProducts();
+}
 </script>
 
 </body>
