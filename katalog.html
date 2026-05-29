@@ -80,12 +80,22 @@ async function loadCatalog() {
 
     card.className = 'product-card'
 
-    card.innerHTML = `
-      <div class="product-info">
-        <h3>${product.title || product.name}</h3>
-        <p>${product.price}</p>
-      </div>
-    `
+   card.innerHTML = `
+  <img
+    src="${product.image_url || product.image || 'images/no-image.jpg'}"
+    alt="${product.title || product.name}"
+  >
+
+  <div class="product-overlay">
+    <h3>${product.title || product.name}</h3>
+
+    <p>${product.price} ₼</p>
+
+    <a href="#" class="btn btn-gold">
+      Ətraflı
+    </a>
+  </div>
+`
 
     kataloqKonteyner.appendChild(card)
 
