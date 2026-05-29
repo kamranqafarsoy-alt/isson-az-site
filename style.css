@@ -1,240 +1,215 @@
-/* ==========================================================================
-   1. ÜMUMİ AYARLAR VƏ RESET
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* PREMIUM LUXURY UPGRADE */
+
+/* BODY */
+
+body{
+    background:
+        radial-gradient(circle at top left, rgba(191,161,117,0.08), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(191,161,117,0.05), transparent 25%),
+        #07090d;
 }
 
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden; /* Sağa-sola lazımsız daşmaları və ağ boşluqları bloklayır */
-    font-family: 'Montserrat', sans-serif;
-    background-color: #ffffff;
-    color: #111111;
+/* HERO */
+
+.hero::before{
+    background:
+        linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.88)),
+        url('images/ana-sehife.jpg') center/cover;
 }
 
-/* ==========================================================================
-   2. TOP BAR (ƏN YUXARIDAKI ƏLAQƏ LENTİ)
-   ========================================================================== */
-.top-bar {
-    background-color: #111111;
-    color: #ffffff;
-    padding: 12px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 500;
+.hero h1{
+    font-size:6rem;
+    line-height:1;
+    letter-spacing:-2px;
+    text-shadow:0 10px 40px rgba(0,0,0,0.45);
 }
 
-.top-bar i {
-    color: #b8974a; /* Premium qızılı ton */
-    margin-right: 5px;
+.hero p{
+    font-size:1.15rem;
+    color:rgba(255,255,255,0.78);
 }
 
-.top-bar .phones {
-    display: flex;
-    gap: 20px;
+/* BUTTONS */
+
+.btn-gold{
+    background:linear-gradient(135deg,#d7b98c,#bfa175);
+    box-shadow:0 10px 35px rgba(191,161,117,0.25);
 }
 
-/* ==========================================================================
-   3. HEADER VƏ NAVİQASİYA (MENYU)
-   ========================================================================== */
-header {
-    background-color: #ffffff;
-    padding: 20px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 999;
+.btn-gold:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 18px 45px rgba(191,161,117,0.35);
 }
 
-.logo {
-    font-family: 'Marcellus', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: #111111;
-    text-decoration: none;
-    letter-spacing: 2px;
+.btn-dark{
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.04);
 }
 
-.logo span {
-    color: #b8974a;
-    font-weight: 300;
+/* STATS */
+
+.stats{
+    padding-top:90px;
+    padding-bottom:90px;
 }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 25px;
+.stat-card{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.05),
+            rgba(255,255,255,0.02)
+        );
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.04);
+
+    border:1px solid rgba(191,161,117,0.12);
 }
 
-.nav-links li a {
-    text-decoration: none;
-    color: #333333;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 8px 0;
-    transition: color 0.3s ease;
-    position: relative;
+.stat-card:hover{
+    transform:translateY(-12px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        0 0 30px rgba(191,161,117,0.08);
 }
 
-.nav-links li a:hover,
-.nav-links li a.active {
-    color: #b8974a;
+/* ABOUT */
+
+.about{
+    padding-top:140px;
+    padding-bottom:140px;
 }
 
-/* ==========================================================================
-   4. SƏHİFƏ BAŞLIQLARI (PAGE HEADER)
-   ========================================================================== */
-.page-header {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/page-bg.jpg') center/cover;
-    padding: 80px 5%;
-    text-align: center;
-    color: #ffffff;
+.about img{
+    border-radius:35px;
+    border:1px solid rgba(191,161,117,0.12);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.5);
 }
 
-.page-header h1 {
-    font-family: 'Marcellus', serif;
-    font-size: 38px;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+.about h2{
+    font-size:4.5rem;
+    line-height:1.1;
 }
 
-.page-header p {
-    font-size: 16px;
-    opacity: 0.9;
-    font-weight: 300;
+/* PRODUCTS */
+
+.products{
+    background:
+        linear-gradient(
+            to bottom,
+            #0d1117,
+            #080b10
+        );
 }
 
-/* ==========================================================================
-   5. MƏHSUL KATALOQU (GRID VƏ KARTLAR)
-   ========================================================================== */
-.catalog-section {
-    padding: 60px 5%;
-    max-width: 1400px;
-    margin: 0 auto;
+.product-card{
+    border:1px solid rgba(191,161,117,0.08);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.35);
+
+    transition:0.5s ease;
 }
 
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+.product-card:hover{
+    transform:translateY(-12px);
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.5),
+        0 0 40px rgba(191,161,117,0.08);
 }
 
-.product-card {
-    background: #ffffff;
-    border: 1px solid #eeeeee;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
+.product-overlay{
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,0.96)
+        );
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+/* SERVICES */
+
+.service-card{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.015)
+        );
+
+    border:1px solid rgba(191,161,117,0.08);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.25);
 }
 
-.product-img-box {
-    width: 100%;
-    height: 350px;
-    overflow: hidden;
-    background-color: #f5f5f5;
+.service-card:hover{
+    transform:translateY(-12px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        0 0 30px rgba(191,161,117,0.08);
 }
 
-.product-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+/* CONTACT */
+
+.cta{
+    background:
+        radial-gradient(circle at top, rgba(191,161,117,0.08), transparent 30%),
+        #080b10;
+
+    padding-top:140px;
+    padding-bottom:140px;
 }
 
-.product-info {
-    padding: 20px;
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.cta h2{
+    font-size:5rem;
+    margin-bottom:20px;
 }
 
-.product-info h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111111;
-    margin-bottom: 15px;
+.cta > div > div{
+    transition:0.5s ease;
 }
 
-/* Düymə Konteyneri */
-.btn-container {
-    display: flex;
-    gap: 10px;
+.cta > div > div:hover{
+    transform:translateY(-10px);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.5),
+        0 0 35px rgba(191,161,117,0.08);
 }
 
-.btn {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px 0;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: opacity 0.2s;
+/* FOOTER */
+
+footer{
+    background:#050608;
+    border-top:1px solid rgba(191,161,117,0.08);
 }
 
-.btn:hover {
-    opacity: 0.9;
+.footer-grid{
+    gap:80px;
 }
 
-.btn-tempra {
-    background-color: #b8974a;
-    color: #ffffff;
+.footer-grid h3{
+    font-size:1.2rem;
+    letter-spacing:2px;
 }
 
-.btn-condo {
-    background-color: #111111;
-    color: #ffffff;
+.footer-grid p{
+    color:rgba(255,255,255,0.6);
 }
 
-/* ==========================================================================
-   6. FOOTER (SAYTIN AŞAĞI HİSSƏSİ)
-   ========================================================================== */
-footer {
-    background-color: #111111;
-    color: #ffffff;
-    padding: 40px 5% 20px 5%;
-    margin-top: 60px;
+.footer-bottom{
+    color:rgba(255,255,255,0.35);
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* WHATSAPP */
+
+.whatsapp{
+    box-shadow:
+        0 15px 45px rgba(37,211,102,0.35);
 }
 
-.footer-box h3 {
-    font-family: 'Marcellus', serif;
-    font-size: 18px;
-    color: #b8974a;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+.whatsapp:hover{
+    transform:scale(1.08);
 }
-
-.footer-box p {
-    font-size: 14px;
-    color: #cccccc;
-    margin-bottom: 10px;
-    line-height: 1.6

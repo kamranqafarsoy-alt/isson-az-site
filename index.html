@@ -1,70 +1,708 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISSON GROUP — Premium Ev İnfrastrukturu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .maps-section { padding: 60px 8%; background-color: #ffffff; }
-        .maps-section h2 { font-family: 'Marcellus', serif; text-align: center; font-size: 2rem; letter-spacing: 3px; color: var(--dark-luxury); margin-bottom: 40px; text-transform: uppercase; }
-        .map-box { background-color: #fafafa; border: 1px solid rgba(0,0,0,0.05); padding: 20px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-        .map-box h3 { font-family: 'Marcellus', serif; color: var(--dark-luxury); font-size: 1.2rem; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 2px solid var(--accent-gold); padding-bottom: 8px; display: inline-block; }
-        .map-box p { font-size: 0.9rem; color: var(--text-main); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .map-box p i { color: var(--accent-gold); }
-        .map-wrapper { position: relative; overflow: hidden; padding-top: 56.25%; border-radius: 4px; border: 1px solid #e0e0e0; }
-        .map-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ISSON GROUP | TEMPRA HOME & CONDO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+:root{
+    --gold:#bfa175;
+    --dark:#07090d;
+    --dark2:#10141a;
+    --text:rgba(255,255,255,0.72);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left, rgba(191,161,117,0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(191,161,117,0.05), transparent 25%),
+    var(--dark);
+
+    color:white;
+    overflow-x:hidden;
+}
+
+section{
+    padding:120px 10%;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:999;
+    padding:28px 10%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(7,9,13,0.82);
+    backdrop-filter:blur(12px);
+
+    border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:2.2rem;
+    font-family:'Marcellus',serif;
+    letter-spacing:6px;
+}
+
+.logo span{
+    color:var(--gold);
+}
+
+nav{
+    display:flex;
+    gap:35px;
+}
+
+nav a{
+    color:rgba(255,255,255,0.7);
+    text-decoration:none;
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:2px;
+    transition:0.4s;
+}
+
+nav a:hover{
+    color:var(--gold);
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.72),rgba(0,0,0,0.86)),
+    url('images/ana-sehife.jpg') center/cover;
+
+    transform:scale(1.04);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+}
+
+.hero-sub{
+    color:var(--gold);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:6rem;
+    line-height:1;
+    font-family:'Marcellus',serif;
+    margin-bottom:30px;
+}
+
+.hero p{
+    color:var(--text);
+    line-height:2;
+    font-size:1.1rem;
+    margin-bottom:45px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 34px;
+    border-radius:100px;
+    text-decoration:none;
+    transition:0.4s ease;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+.btn-gold{
+    background:linear-gradient(135deg,#d7b98c,#bfa175);
+    color:black;
+    font-weight:600;
+
+    box-shadow:0 10px 35px rgba(191,161,117,0.25);
+}
+
+.btn-dark{
+    border:1px solid rgba(255,255,255,0.15);
+    color:white;
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.03);
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+}
+
+/* STATS */
+
+.stats{
+    background:var(--dark2);
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.stat-card{
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02));
+
+    border:1px solid rgba(191,161,117,0.12);
+
+    border-radius:30px;
+
+    padding:45px;
+
+    text-align:center;
+
+    transition:0.5s ease;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.35);
+}
+
+.stat-card:hover{
+    transform:translateY(-12px);
+}
+
+.stat-card h2{
+    color:var(--gold);
+    font-size:3rem;
+    margin-bottom:12px;
+    font-family:'Marcellus',serif;
+}
+
+.stat-card p{
+    color:rgba(255,255,255,0.6);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+/* TITLES */
+
+.section-tag{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:4px;
+    font-size:12px;
+}
+
+.section-title{
+    font-size:4.5rem;
+    font-family:'Marcellus',serif;
+    margin:25px 0;
+}
+
+/* PRODUCTS */
+
+.products{
+    background:
+    linear-gradient(to bottom,#0d1117,#080b10);
+}
+
+.products-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.product-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:35px;
+    min-height:500px;
+
+    border:1px solid rgba(191,161,117,0.08);
+
+    box-shadow:
+    0 15px 45px rgba(0,0,0,0.35);
+
+    transition:0.5s ease;
+}
+
+.product-card:hover{
+    transform:translateY(-12px);
+}
+
+.product-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    transition:0.7s ease;
+}
+
+.product-card:hover img{
+    transform:scale(1.08);
+}
+
+.product-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(transparent,rgba(0,0,0,0.95));
+
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+
+    padding:40px;
+}
+
+.product-overlay h3{
+    font-size:2rem;
+    font-family:'Marcellus',serif;
+    margin-bottom:15px;
+}
+
+.product-overlay p{
+    color:rgba(255,255,255,0.72);
+    margin-bottom:25px;
+}
+
+/* SHOWROOMS */
+
+.showrooms{
+    background:var(--dark2);
+}
+
+.showroom-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:35px;
+}
+
+.showroom-card{
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02));
+
+    border:1px solid rgba(191,161,117,0.12);
+
+    border-radius:35px;
+
+    padding:35px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.35);
+}
+
+.showroom-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.showroom-top h3{
+    font-size:2rem;
+    font-family:'Marcellus',serif;
+    color:var(--gold);
+}
+
+.badge{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+.showroom-card p{
+    margin-bottom:10px;
+    color:rgba(255,255,255,0.72);
+}
+
+.showroom-card iframe{
+    width:100%;
+    height:240px;
+    border:0;
+    border-radius:22px;
+    margin-top:20px;
+}
+
+.whatsapp-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    margin-top:20px;
+
+    padding:15px 30px;
+
+    background:#25d366;
+
+    color:white;
+    text-decoration:none;
+
+    border-radius:100px;
+
+    font-size:12px;
+    font-weight:600;
+
+    box-shadow:
+    0 10px 30px rgba(37,211,102,0.25);
+}
+
+/* FOOTER */
+
+footer{
+    background:#050608;
+    padding:90px 10%;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:70px;
+}
+
+.footer-grid h3{
+    color:var(--gold);
+    margin-bottom:25px;
+}
+
+.footer-grid p{
+    color:rgba(255,255,255,0.6);
+    line-height:2;
+}
+
+.footer-bottom{
+    margin-top:60px;
+    padding-top:30px;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+
+    text-align:center;
+
+    color:rgba(255,255,255,0.4);
+}
+
+/* FLOATING */
+
+.whatsapp{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+
+    width:65px;
+    height:65px;
+
+    background:#25d366;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+    font-size:1.7rem;
+
+    text-decoration:none;
+
+    z-index:999;
+
+    box-shadow:
+    0 15px 45px rgba(37,211,102,0.35);
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+.stats,
+.products-grid,
+.showroom-grid,
+.footer-grid{
+    grid-template-columns:1fr;
+}
+
+.hero h1,
+.section-title{
+    font-size:3.2rem;
+}
+
+nav{
+    display:none;
+}
+
+section{
+    padding:90px 7%;
+}
+
+header{
+    padding:25px 7%;
+}
+
+}
+
+</style>
+
 </head>
 <body>
-    <div class="top-bar">
-        <div><i class="fa-solid fa-location-dot"></i> Bakı, Azərbaycan</div>
-        <div class="phones">
-            <div><i class="fa-solid fa-phone"></i> TEMPRA: +994 50 800 00 80</div>
-            <div><i class="fa-solid fa-phone"></i> CONDO: +994 10 100 09 09</div>
-        </div>
-    </div>
-    <header>
-        <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Ana Səhifə</a></li>
-            <li><a href="katalog.html">Məhsul Kataloqu</a></li>
-        </ul>
-    </header>
-    <section class="page-header">
-        <h1>ISSON GROUP-a Xoş Gəlmisiniz</h1>
-        <p>Tempra və Condo mağazalarımızla lüks və dözümlülüyün vəhdəti</p>
-    </section>
-    <section class="maps-section">
-        <h2>Şourumlarımız Xəritədə</h2>
-        <div class="footer-grid" style="margin-bottom: 0;">
-            <div class="map-box">
-                <h3>Tempra Showroom</h3>
-                <p><i class="fa-solid fa-map-location-dot"></i> Ünvan: Məmməd Cəfər Cəfərov</p>
-                <p><i class="fa-solid fa-phone"></i> Əlaqə: +994 50 800 00 80</p>
-                <div class="map-wrapper">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.3129598276686!2d49.8143243!3d40.4019444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI0JzA3LjAiTiA0OcKwNDgnNTEuNiJF!5e0!3m2!1saz!2saz!4v1690000000000!5m2!1saz!2saz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-            <div class="map-box">
-                <h3>Condo Luxury Concept</h3>
-                <p><i class="fa-solid fa-map-location-dot"></i> Ünvan: Zivərbəy Əhmədbəyov</p>
-                <p><i class="fa-solid fa-phone"></i> Əlaqə: +994 10 100 09 09</p>
-                <div class="map-wrapper">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.2925210767353!2d49.82872877532414!3d40.380208971445356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403063895c061ae3%3A0xf5548b6c04b4c7f6!2sCondo!5e0!3m2!1saz!2saz!4v1779710506694!5m2!1saz!2saz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
-            <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
-        </div>
-        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
-    </footer>
-    <script src="script.js"></script>
+
+<header>
+
+<a href="#" class="logo">
+ISS<span>ON</span>
+</a>
+
+<nav>
+<a href="#">Ana Səhifə</a>
+<a href="#products">Məhsullar</a>
+<a href="#contact">Əlaqə</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="hero-sub">
+TEMPRA HOME & CONDO
+</div>
+
+<h1>
+Premium Ev və İnteryer Həlləri
+</h1>
+
+<p>
+Kombi, kondisioner, laminat,
+hamam aksesuarları,
+otaq qapıları və seyf qapıları üzrə
+premium məhsullar təqdim edirik.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#products" class="btn btn-gold">
+Məhsullara Bax
+</a>
+
+<a href="#contact" class="btn btn-dark">
+Əlaqə
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat-card">
+<h2>5000+</h2>
+<p>Müştəri</p>
+</div>
+
+<div class="stat-card">
+<h2>2</h2>
+<p>Premium Showroom</p>
+</div>
+
+<div class="stat-card">
+<h2>24/7</h2>
+<p>Dəstək</p>
+</div>
+
+<div class="stat-card">
+<h2>Premium</h2>
+<p>Xidmət</p>
+</div>
+
+</section>
+
+<section class="products" id="products">
+
+<span class="section-tag">
+Məhsullar
+</span>
+
+<h2 class="section-title">
+Premium Kateqoriyalar
+</h2>
+
+<div class="products-grid" id="products-container">
+
+</div>
+
+</section>
+
+<section class="showrooms" id="contact">
+
+<span class="section-tag">
+SHOWROOMLAR
+</span>
+
+<h2 class="section-title">
+TEMPRA HOME & CONDO
+</h2>
+
+<div class="showroom-grid">
+
+<div class="showroom-card">
+
+<div class="showroom-top">
+
+<h3>TEMPRA HOME</h3>
+
+<span class="badge">
+Premium
+</span>
+
+</div>
+
+<p><strong>Əlaqə:</strong> +994 50 800 00 80</p>
+<p><strong>WhatsApp:</strong> +994 55 200 00 80</p>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.0317295265572!2d49.810067675325946!3d40.408147871440974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403087ef57382225%3A0x57aa837c37afb2c8!2sTempra%20Home!5e0!3m2!1saz!2saz!4v1779873471389!5m2!1saz!2saz"></iframe>
+
+<a href="https://wa.me/994552000080" class="whatsapp-btn">
+<i class="fab fa-whatsapp"></i>
+WhatsAppda Yaz
+</a>
+
+</div>
+
+<div class="showroom-card">
+
+<div class="showroom-top">
+
+<h3>CONDO</h3>
+
+<span class="badge">
+Premium
+</span>
+
+</div>
+
+<p><strong>Əlaqə:</strong> +994 10 100 09 09</p>
+<p><strong>WhatsApp:</strong> +994 55 900 09 09</p>
+
+<iframe src="https://www.google.com/maps?q=40.4095,49.8671&hl=az&z=16&output=embed"></iframe>
+
+<a href="https://wa.me/994559000909" class="whatsapp-btn">
+<i class="fab fa-whatsapp"></i>
+WhatsAppda Yaz
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h3>ISSON GROUP</h3>
+
+<p>
+TEMPRA HOME və CONDO mağazaları ilə
+premium interyer həlləri təqdim edirik.
+</p>
+
+</div>
+
+<div>
+
+<h3>Kateqoriyalar</h3>
+
+<p>Kombi</p>
+<p>Kondisioner</p>
+<p>Hamam Aksesuarları</p>
+<p>Otaq Qapıları</p>
+<p>Seyf Qapıları</p>
+
+</div>
+
+<div>
+
+<h3>Sosial Şəbəkə</h3>
+
+<p>Instagram</p>
+<p>Facebook</p>
+<p>TikTok</p>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 ISSON GROUP — All Rights Reserved
+</div>
+
+</footer>
+
+<a href="https://wa.me/994552000080" class="whatsapp">
+<i class="fab fa-whatsapp"></i>
+</a>
+
+<script type="module" src="./js/products.js"></script>
+
 </body>
 </html>

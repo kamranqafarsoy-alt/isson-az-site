@@ -4,39 +4,121 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ISSON Admin Panel</title>
+
+  <style>
+
+    body{
+      font-family: Arial;
+      background:#f5f5f5;
+      padding:40px;
+    }
+
+    .box{
+      max-width:500px;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2{
+      margin-bottom:20px;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      margin-bottom:15px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:16px;
+      box-sizing:border-box;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      background:black;
+      color:white;
+      font-size:16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      opacity:0.9;
+    }
+
+    #result{
+      margin-top:20px;
+      font-weight:bold;
+    }
+
+  </style>
 </head>
 
-<body style="font-family: Arial; padding: 20px;">
+<body>
 
-  <h2>Admin Panel - Test Versiya</h2>
+  <div class="box">
 
-  <button onclick="testInsert()" style="padding:10px 20px;">
-    TEST ADD PRODUCT
-  </button>
+    <h2>ISSON Admin Panel</h2>
+
+    <input type="text" id="title" placeholder="Məhsul adı">
+
+    <input type="text" id="price" placeholder="Qiymət">
+
+    <input type="text" id="image" placeholder="Şəkil adı">
+
+    <button onclick="addProduct()">
+      Məhsul əlavə et
+    </button>
+
+    <div id="result"></div>
+
+  </div>
 
   <script type="module">
+
     import { supabase } from "../js/supabase.js";
 
-    window.testInsert = async function () {
+    window.addProduct = async function () {
+
+      const title = document.getElementById("title").value;
+
+      const price = document.getElementById("price").value;
+
+      const image = document.getElementById("image").value;
+
+      const result = document.getElementById("result");
 
       const { data, error } = await supabase
         .from("products")
         .insert([
           {
-            title: "Test Məhsul",
-            category: "Kombi",
-            price: "100",
-            image: "test.jpg"
+            name: title,
+            price: price,
+            image: image
           }
-        ]);
+        ])
+        .select();
 
       if (error) {
-        alert("Xəta oldu: " + error.message);
+
+        result.innerHTML = "Xəta: " + error.message;
+        result.style.color = "red";
+
         console.log(error);
+
       } else {
-        alert("Uğurla əlavə olundu!");
+
+        result.innerHTML = "Məhsul uğurla əlavə edildi";
+        result.style.color = "green";
+
         console.log(data);
+
       }
+
     };
 
   </script>
