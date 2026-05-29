@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISSON Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#0b0f14;
+    color:white;
+}
+
+.header{
+    background:#111827;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#d7b98c;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.logout{
+    background:#c0392b;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.container{
+    padding:30px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#111827;
+    padding:25px;
+    border-radius:15px;
+    border:1px solid rgba(191,161,117,.15);
+}
+
+.card h3{
+    color:#d7b98c;
+    margin-bottom:10px;
+}
+
+.menu{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    text-decoration:none;
+    background:#d7b98c;
+    color:black;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+ISSON ADMIN PANEL
+</div>
+
+<button class="logout" onclick="logout()">
+Çıxış
+</button>
+
+</div>
+
+<div class="container">
+
+<div class="cards">
+
+<div class="card">
+<h3>Ümumi Məhsul</h3>
+<h1 id="totalProducts">0</h1>
+</div>
+
+<div class="card">
+<h3>Kombilər</h3>
+<h1 id="kombiCount">0</h1>
+</div>
+
+<div class="card">
+<h3>Kondisionerlər</h3>
+<h1 id="kondisionerCount">0</h1>
+</div>
+
+</div>
+
+<div class="menu">
+
+<a href="products.html">
+Məhsulları idarə et
+</a>
+
+<a href="../katalog.html" target="_blank">
+Saytı aç
+</a>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { supabase } from "../js/supabase.js";
+
+if(
+    localStorage.getItem("isson_admin")
+    !== "true"
+){
+    location.href="index.html";
+}
+
+window.logout=function(){
+
+    localStorage.removeItem(
+        "isson_admin"
+    );
+
+    location.href="index.html";
+}
+
+async function loadStats(){
+
+    const { data } =
+        await supabase
+        .from("products")
+        .select("*");
+
+    if(!data) return;
+
+    document.getElementById(
+        "totalProducts"
+    ).innerText = data.length;
+
+    document.getElementById(
+        "kombiCount"
+    ).innerText =
+        data.filter(
+            x=>x.category==="kombi"
+        ).length;
+
+    document.getElementById(
+        "kondisionerCount"
+    ).innerText =
+        data.filter(
+            x=>x.category==="kondisioner"
+        ).length;
+}
+
+loadStats();
+
+</script>
+
+</body>
+</html>

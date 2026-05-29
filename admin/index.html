@@ -4,34 +4,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISSON Admin Panel</title>
+<title>ISSON Admin Login</title>
 
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#0b0f14;
-    color:white;
-    padding:40px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.box{
-    max-width:700px;
-    margin:auto;
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0b0f14;
+    font-family:Arial,sans-serif;
+}
+
+.login-box{
+    width:400px;
     background:#111827;
-    padding:30px;
-    border-radius:15px;
+    padding:40px;
+    border-radius:20px;
+    border:1px solid rgba(191,161,117,.2);
 }
 
 h2{
-    margin-bottom:20px;
+    text-align:center;
+    color:#d7b98c;
+    margin-bottom:30px;
 }
 
-input,select{
+input{
     width:100%;
-    padding:12px;
+    padding:14px;
     margin-bottom:15px;
-    border-radius:8px;
-    border:1px solid #333;
+    border:none;
+    border-radius:10px;
     background:#1f2937;
     color:white;
 }
@@ -40,22 +50,17 @@ button{
     width:100%;
     padding:14px;
     border:none;
-    border-radius:8px;
-    background:#c9a86a;
+    border-radius:10px;
+    background:#d7b98c;
     color:black;
     font-weight:bold;
     cursor:pointer;
 }
 
-#result{
+#error{
     margin-top:15px;
-}
-
-.product{
-    margin-top:15px;
-    padding:15px;
-    border:1px solid #333;
-    border-radius:10px;
+    text-align:center;
+    color:#ff6b6b;
 }
 </style>
 
@@ -63,34 +68,19 @@ button{
 
 <body>
 
-<div class="box">
+<div class="login-box">
 
-<h2>ISSON Admin Panel</h2>
+<h2>ISSON ADMIN</h2>
 
-<input type="text" id="title" placeholder="Məhsul adı">
+<input type="text" id="username" placeholder="İstifadəçi adı">
 
-<input type="text" id="price" placeholder="Qiymət">
+<input type="password" id="password" placeholder="Şifrə">
 
-<select id="category">
-    <option value="kombi">Kombi</option>
-    <option value="kondisioner">Kondisioner</option>
-    <option value="laminat">Laminat</option>
-    <option value="qapi">Qapı</option>
-    <option value="moydadir">Moydadır</option>
-    <option value="seyfqapilar">Seyf Qapı</option>
-</select>
-
-<input type="text" id="image" placeholder="Şəkil yolu (məs: images/kombi/kombi- (1).jpg)">
-
-<button onclick="addProduct()">
-Məhsul əlavə et
+<button onclick="login()">
+Daxil ol
 </button>
 
-<div id="result"></div>
-
-<h3 style="margin-top:40px">Məhsullar</h3>
-
-<div id="products"></div>
+<div id="error"></div>
 
 </div>
 
@@ -98,140 +88,39 @@ Məhsul əlavə et
 
 import { supabase } from "../js/supabase.js";
 
-async function loadProducts(){
+window.login = async function(){
 
-    const list=document.getElementById("products");
+    const username =
+        document.getElementById("username").value;
 
-    const {data,error}=await supabase
-    .from("products")
-    .select("*")
-    .order("id",{ascending:false});
+    const password =
+        document.getElementById("password").value;
 
-    if(error) return;
+    const errorBox =
+        document.getElementById("error");
 
-    list.innerHTML="";
+    const { data, error } = await supabase
+        .from("admins")
+        .select("*")
+        .eq("username", username)
+        .eq("password", password)
+        .single();
 
-    data.forEach(item=>{
+    if(error || !data){
 
-      list.innerHTML+=`
-<div class="product">
-    <strong>${item.title || item.name}</strong><br>
-    ${item.price} ₼<br>
-    ${item.category || "-"}<br><br>
+        errorBox.innerHTML =
+            "İstifadəçi adı və ya şifrə yanlışdır";
 
-    <button onclick="editProduct(${item.id})"
-        style="width:auto;padding:8px 15px;margin-right:10px;">
-        Redaktə et
-    </button>
-
-    <button onclick="deleteProduct(${item.id})"
-        style="width:auto;padding:8px 15px;background:#c0392b;color:white;">
-        Sil
-    </button>
-</div>
-`;
-    });
-}
-
-window.addProduct=async function(){
-
-    const title=document.getElementById("title").value;
-    const price=document.getElementById("price").value;
-    const image=document.getElementById("image").value;
-    const category=document.getElementById("category").value;
-
-    const result=document.getElementById("result");
-
-    const {error}=await supabase
-    .from("products")
-    .insert([{
-        name:title,
-        title:title,
-        price:price,
-        image:image,
-        image_url:image,
-        category:category
-    }]);
-
-    if(error){
-
-        result.innerHTML="Xəta: "+error.message;
-        result.style.color="red";
-
-    }else{
-
-        result.innerHTML="Məhsul əlavə edildi";
-        result.style.color="lightgreen";
-
-        loadProducts();
-    }
-}
-
-loadProducts();
-window.deleteProduct = async function(id){
-
-    if(!confirm("Məhsul silinsin?")) return;
-
-    const { error } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", id);
-
-    if(error){
-        alert(error.message);
         return;
     }
 
-    loadProducts();
-}
+    localStorage.setItem(
+        "isson_admin",
+        "true"
+    );
 
-window.editProduct = async function(id){
-
-    const yeniAd = prompt("Yeni məhsul adı:");
-
-    if(yeniAd === null) return;
-
-    const yeniQiymet = prompt("Yeni qiymət:");
-
-    if(yeniQiymet === null) return;
-
-    const { error } = await supabase
-        .from("products")
-        .update({
-            title: yeniAd,
-            name: yeniAd,
-            price: yeniQiymet
-        })
-        .eq("id", id);
-
-    if(error){
-        alert(error.message);
-        return;
-    }
-
-    alert("Məhsul yeniləndi");
-
-    loadProducts();
-}
-
-    const yeniAd = prompt("Yeni məhsul adı:");
-
-    if(!yeniAd) return;
-
-    const { error } = await supabase
-        .from("products")
-        .update({
-            title: yeniAd,
-            name: yeniAd
-        })
-        .eq("id", id);
-
-    if(error){
-        alert(error.message);
-        return;
-    }
-
-    loadProducts();
+    window.location.href =
+        "dashboard.html";
 }
 </script>
 
