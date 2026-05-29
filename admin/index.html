@@ -1,130 +1,165 @@
 <!DOCTYPE html>
+
 <html lang="az">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ISSON Admin Panel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISSON Admin Panel</title>
 
-  <style>
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#0b0f14;
+    color:white;
+    padding:40px;
+}
 
-    body{
-      font-family: Arial;
-      background:#f5f5f5;
-      padding:40px;
-    }
+.box{
+    max-width:700px;
+    margin:auto;
+    background:#111827;
+    padding:30px;
+    border-radius:15px;
+}
 
-    .box{
-      max-width:500px;
-      background:white;
-      padding:30px;
-      border-radius:12px;
-      box-shadow:0 0 10px rgba(0,0,0,0.1);
-    }
+h2{
+    margin-bottom:20px;
+}
 
-    h2{
-      margin-bottom:20px;
-    }
+input,select{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    border:1px solid #333;
+    background:#1f2937;
+    color:white;
+}
 
-    input{
-      width:100%;
-      padding:12px;
-      margin-bottom:15px;
-      border:1px solid #ccc;
-      border-radius:8px;
-      font-size:16px;
-      box-sizing:border-box;
-    }
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#c9a86a;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-    button{
-      width:100%;
-      padding:14px;
-      border:none;
-      background:black;
-      color:white;
-      font-size:16px;
-      border-radius:8px;
-      cursor:pointer;
-    }
+#result{
+    margin-top:15px;
+}
 
-    button:hover{
-      opacity:0.9;
-    }
+.product{
+    margin-top:15px;
+    padding:15px;
+    border:1px solid #333;
+    border-radius:10px;
+}
+</style>
 
-    #result{
-      margin-top:20px;
-      font-weight:bold;
-    }
-
-  </style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="box">
 
-    <h2>ISSON Admin Panel</h2>
+<h2>ISSON Admin Panel</h2>
 
-    <input type="text" id="title" placeholder="Məhsul adı">
+<input type="text" id="title" placeholder="Məhsul adı">
 
-    <input type="text" id="price" placeholder="Qiymət">
+<input type="text" id="price" placeholder="Qiymət">
 
-    <input type="text" id="image" placeholder="Şəkil adı">
+<select id="category">
+    <option value="kombi">Kombi</option>
+    <option value="kondisioner">Kondisioner</option>
+    <option value="laminat">Laminat</option>
+    <option value="qapi">Qapı</option>
+    <option value="moydadir">Moydadır</option>
+    <option value="seyfqapilar">Seyf Qapı</option>
+</select>
 
-    <button onclick="addProduct()">
-      Məhsul əlavə et
-    </button>
+<input type="text" id="image" placeholder="Şəkil yolu (məs: images/kombi/kombi- (1).jpg)">
 
-    <div id="result"></div>
+<button onclick="addProduct()">
+Məhsul əlavə et
+</button>
 
-  </div>
+<div id="result"></div>
 
-  <script type="module">
+<h3 style="margin-top:40px">Məhsullar</h3>
 
-    import { supabase } from "../js/supabase.js";
+<div id="products"></div>
 
-    window.addProduct = async function () {
+</div>
 
-      const title = document.getElementById("title").value;
+<script type="module">
 
-      const price = document.getElementById("price").value;
+import { supabase } from "../js/supabase.js";
 
-      const image = document.getElementById("image").value;
+async function loadProducts(){
 
-      const result = document.getElementById("result");
+    const list=document.getElementById("products");
 
-      const { data, error } = await supabase
-        .from("products")
-        .insert([
-  {
-    name: title,
-    title: title,
-    price: price,
-    image: image,
-    image_url: image
-  }
-])
-      
-        .select();
+    const {data,error}=await supabase
+    .from("products")
+    .select("*")
+    .order("id",{ascending:false});
 
-      if (error) {
+    if(error) return;
 
-        result.innerHTML = "Xəta: " + error.message;
-        result.style.color = "red";
+    list.innerHTML="";
 
-        console.log(error);
+    data.forEach(item=>{
 
-      } else {
+        list.innerHTML+=`
+        <div class="product">
+            <strong>${item.title || item.name}</strong><br>
+            ${item.price} ₼<br>
+            ${item.category || "-"}
+        </div>
+        `;
+    });
+}
 
-        result.innerHTML = "Məhsul uğurla əlavə edildi";
-        result.style.color = "green";
+window.addProduct=async function(){
 
-        console.log(data);
+    const title=document.getElementById("title").value;
+    const price=document.getElementById("price").value;
+    const image=document.getElementById("image").value;
+    const category=document.getElementById("category").value;
 
-      }
+    const result=document.getElementById("result");
 
-    };
+    const {error}=await supabase
+    .from("products")
+    .insert([{
+        name:title,
+        title:title,
+        price:price,
+        image:image,
+        image_url:image,
+        category:category
+    }]);
 
-  </script>
+    if(error){
+
+        result.innerHTML="Xəta: "+error.message;
+        result.style.color="red";
+
+    }else{
+
+        result.innerHTML="Məhsul əlavə edildi";
+        result.style.color="lightgreen";
+
+        loadProducts();
+    }
+}
+
+loadProducts();
+
+</script>
 
 </body>
 </html>
