@@ -95,12 +95,15 @@
       const { data, error } = await supabase
         .from("products")
         .insert([
-          {
-            name: title,
-            price: price,
-            image: image
-          }
-        ])
+  {
+    name: title,
+    title: title,
+    price: price,
+    image: image,
+    image_url: image
+  }
+])
+      
         .select();
 
       if (error) {

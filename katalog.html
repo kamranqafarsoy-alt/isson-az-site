@@ -43,57 +43,57 @@
         </div>
     </section>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-box"><h3>Tempra Showroom</h3><p><i class="fa-solid fa-map-location-dot"></i> Məmməd Cəfər Cəfərov</p><p><i class="fa-solid fa-mobile-button"></i> +994 50 800 00 80</p></div>
-            <div class="footer-box"><h3>Condo Luxury Concept</h3><p><i class="fa-solid fa-map-location-dot"></i> Zivərbəy Əhmədbəyov</p><p><i class="fa-solid fa-mobile-button"></i> +994 10 100 09 09</p></div>
-        </div>
-        <div class="footer-bottom"><p>© 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
-    </footer>
+       <script src="script.js"></script>
 
-    <script src="script.js"></script>
-    
-    <script>
-        const kataloqKonteyner = document.getElementById('umumi-kataloq');
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-        async function loadCatalog() {
-            if (typeof fetchProductsFromSupabase === 'function') {
-                // Kateqoriya qoymuruq ki, bütün məhsulları (kombi, qapı və s.) bir yerə çəksin
-                const products = await fetchProductsFromSupabase(null);
-                
-                if (products && products.length > 0) {
-                    kataloqKonteyner.innerHTML = ''; 
+const supabase = createClient(
+  'https://qcnkjmnywapgnkbttznv.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjbmtqbW55d2FwZ25rYnR0em52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDE3NDEsImV4cCI6MjA5NTAxNzc0MX0.fYZ-ectEYZ5RnHraTn1IsiB2OA8sks-JcnUJ6grXHzQ'
+)
+const kataloqKonteyner = document.getElementById('umumi-kataloq')
 
-                    products.forEach(product => {
-                        const kart = document.createElement('div');
-                        kart.className = 'product-card';
+async function loadCatalog() {
 
-                        const sekilYolu = product.image_url.startsWith('/') ? product.image_url : '/' + product.image_url;
-                        const encodedTitle = encodeURIComponent(product.title);
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('id', { ascending: false })
 
-                        kart.innerHTML = `
-                            <div class="product-img-box">
-                                <img src="${sekilYolu}" alt="${product.title}" loading="lazy">
-                            </div>
-                            <div class="product-info">
-                                <h3>${product.title}</h3>
-                                <div class="btn-container">
-                                    <a href="https://api.whatsapp.com/send?phone=994508000080&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-tempra"><i class="fa-brands fa-whatsapp"></i> Tempra</a>
-                                    <a href="https://api.whatsapp.com/send?phone=994101000909&text=${encodedTitle}%20haqqinda%20etrafli%20melumat%20almaq%20isteyirem" target="_blank" class="btn btn-condo"><i class="fa-brands fa-whatsapp"></i> Condo</a>
-                                </div>
-                            </div>
-                        `;
-                        kataloqKonteyner.appendChild(kart);
-                    });
-                } else {
-                    kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Məhsul tapılmadı.</p>';
-                }
-            } else {
-                kataloqKonteyner.innerHTML = '<p style="text-align: center; width: 100%;">Sistem xətası: skript yüklənmədi.</p>';
-            }
-        }
+  if (error) {
+    console.error(error)
+    kataloqKonteyner.innerHTML = '<p>Xəta baş verdi</p>'
+    return
+  }
 
-        document.addEventListener('DOMContentLoaded', loadCatalog);
-    </script>
+  kataloqKonteyner.innerHTML = ''
+
+  if (!data || data.length === 0) {
+    kataloqKonteyner.innerHTML = '<p>Məhsul tapılmadı</p>'
+    return
+  }
+
+  data.forEach(product => {
+
+    const card = document.createElement('div')
+
+    card.className = 'product-card'
+
+    card.innerHTML = `
+      <div class="product-info">
+        <h3>${product.title || product.name}</h3>
+        <p>${product.price}</p>
+      </div>
+    `
+
+    kataloqKonteyner.appendChild(card)
+
+  })
+}
+
+loadCatalog()
+</script>
+
 </body>
 </html>
