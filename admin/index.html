@@ -189,6 +189,33 @@ window.editProduct = async function(id){
 
     const yeniAd = prompt("Yeni məhsul adı:");
 
+    if(yeniAd === null) return;
+
+    const yeniQiymet = prompt("Yeni qiymət:");
+
+    if(yeniQiymet === null) return;
+
+    const { error } = await supabase
+        .from("products")
+        .update({
+            title: yeniAd,
+            name: yeniAd,
+            price: yeniQiymet
+        })
+        .eq("id", id);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    alert("Məhsul yeniləndi");
+
+    loadProducts();
+}
+
+    const yeniAd = prompt("Yeni məhsul adı:");
+
     if(!yeniAd) return;
 
     const { error } = await supabase
