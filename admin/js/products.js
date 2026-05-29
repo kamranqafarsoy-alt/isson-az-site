@@ -10,7 +10,7 @@ async function loadProducts() {
         .order('id', { ascending: false })
 
     if (error) {
-        console.error(error)
+        console.error('Xəta:', error)
         return
     }
 
@@ -23,21 +23,16 @@ async function loadProducts() {
         card.className = 'product-card'
 
         card.innerHTML = `
-        
-        <img src="${product.image}" alt="${product.title}">
+            <img src="${product.image || ''}" alt="${product.name}">
 
-        <div class="product-overlay">
+            <div class="product-overlay">
+                <h3>${product.name}</h3>
+                <p>${product.price}</p>
 
-            <h3>${product.title}</h3>
-
-            <p>${product.price} ₼</p>
-
-            <a href="#" class="btn btn-gold">
-            Ətraflı
-            </a>
-
-        </div>
-        
+                <a href="#" class="btn btn-gold">
+                    Ətraflı
+                </a>
+            </div>
         `
 
         container.appendChild(card)
