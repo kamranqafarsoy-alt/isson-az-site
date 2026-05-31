@@ -23,11 +23,11 @@ async function loadProducts() {
         card.className = 'product-card'
 
         card.innerHTML = `
-            <img src="${product.image || ''}" alt="${product.name}">
+           <img src="${product.image || 'images/no-image.jpg'}" alt="${product.name}">
 
             <div class="product-overlay">
                 <h3>${product.name}</h3>
-                <p>${product.price}</p>
+              <p>${product.price} ₼</p>
 
                 <a href="#" class="btn btn-gold">
                     Ətraflı
