@@ -211,8 +211,8 @@ footer{
 }
 .products-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:35px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
     padding:40px 0;
 }
 
@@ -221,7 +221,7 @@ footer{
     overflow:hidden;
     border-radius:30px;
     background:#111827;
-    height:500px;
+    height:400px;
 
     border:1px solid rgba(191,161,117,0.12);
 
@@ -252,7 +252,7 @@ footer{
     right:0;
     bottom:0;
 
-    padding:30px;
+    padding:20px;
 
     background:
         linear-gradient(
@@ -264,13 +264,13 @@ footer{
 }
 
 .product-overlay h3{
-    font-size:28px;
+    font-size:22px;
     margin-bottom:12px;
 }
 
 .product-overlay p{
     color:#d7b98c;
-    font-size:20px;
+   font-size:16px;
     font-weight:600;
     margin-bottom:18px;
 }
