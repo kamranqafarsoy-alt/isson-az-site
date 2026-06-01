@@ -112,12 +112,6 @@ id="name"
 placeholder="Məhsul adı"
 style="margin-right:10px;margin-bottom:10px;">
 
-<input
-type="text"
-id="price"
-placeholder="Qiymət"
-style="margin-right:10px;margin-bottom:10px;">
-
 <select id="category">
 <option value="kombi">Kombi</option>
 <option value="kondisioner">Kondisioner</option>
@@ -168,7 +162,6 @@ onkeyup="loadProducts()">
 <tr>
 <th>Şəkil</th>
 <th>Ad</th>
-<th>Qiymət</th>
 <th>Kateqoriya</th>
 <th>Əməliyyat</th>
 </tr>
@@ -215,21 +208,16 @@ window.addProduct = async function(){
     const name =
         document.getElementById("name").value;
 
-    const price =
-        document.getElementById("price").value;
-
     const category =
         document.getElementById("category").value;
 
     const file =
         document.getElementById("productImage")
         .files[0];
-
-    if(!name || !price){
-        alert("Məhsul adı və qiymət daxil edin");
-        return;
-    }
-
+if(!name){
+alert("Məhsul adı daxil edin");
+return;
+}
     let imageUrl = "";
 
     if(file){
@@ -266,15 +254,13 @@ if(uploadError){
     const { error } =
         await supabase
         .from("products")
-        .insert([{
-            name:name,
-            title:name,
-            price:price,
-            category:category,
-            image:imageUrl,
-            image_url:imageUrl
-        }]);
-
+    .insert([{
+    name:name,
+    title:name,
+    category:category,
+    image:imageUrl,
+    image_url:imageUrl
+}]);
     if(error){
         alert(error.message);
         return;
@@ -343,10 +329,6 @@ ${item.name || item.title}
 </td>
 
 <td>
-${item.price}
-</td>
-
-<td>
 ${item.category || '-'}
 </td>
 
@@ -393,17 +375,11 @@ prompt("Yeni ad");
 
 if(!ad) return;
 
-const qiymet =
-prompt("Yeni qiymət");
-
-if(!qiymet) return;
-
 await supabase
 .from("products")
 .update({
 name:ad,
-title:ad,
-price:qiymet
+title:ad
 })
 .eq("id",id);
 

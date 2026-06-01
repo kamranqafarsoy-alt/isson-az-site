@@ -78,20 +78,50 @@
         </div>
         <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
+<script type="module">
 
-    <script>
-        const kataloqKonteyner = document.getElementById('qapi-kataloq');
-        const toplamQapi = 155;
-        for (let i = 1; i <= toplamQapi; i++) {
-            const qapiKarti = document.createElement('div');
-            qapiKarti.className = 'product-card';
-            const sekilYolu = `images/qapi/qapi- (${i}).jpg`;
-            qapiKarti.innerHTML = `
-                <div class="product-img-box"><img src="${sekilYolu}" alt="Premium Qapı Model ${i}" loading="lazy"></div>
-                <div class="product-info"><h3>Model №${i}</h3></div>
-            `;
-            kataloqKonteyner.appendChild(qapiKarti);
-        }
-    </script>
+import { supabase } from "./js/supabase.js";
+
+async function loadDoors() {
+
+    const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category", "qapi")
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const container =
+        document.getElementById("qapi-kataloq");
+
+    container.innerHTML = "";
+
+    data.forEach(item => {
+
+        container.innerHTML += `
+            <div class="product-card">
+
+                <div class="product-img-box">
+                    <img
+                        src="${item.image || item.image_url}"
+                        alt="${item.name}">
+                </div>
+
+                <div class="product-info">
+                    <h3>${item.name}</h3>
+                </div>
+
+            </div>
+        `;
+    });
+}
+
+loadDoors();
+
+</script>
 </body>
 </html>
