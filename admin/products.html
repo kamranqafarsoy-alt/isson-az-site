@@ -120,7 +120,13 @@ style="margin-right:10px;margin-bottom:10px;">
 <option value="moydadir">Moydadır</option>
 <option value="seyfqapilar">Seyf Qapı</option>
 </select>
+<br><br>
 
+<select id="subcategory">
+<option value="">Alt Kateqoriya Seçin</option>
+<option value="otaq-qapisi">Otaq Qapısı</option>
+<option value="seyf-qapisi">Seyf Qapısı</option>
+</select>
 <br><br>
 
 <input
@@ -209,6 +215,8 @@ window.addProduct = async function(){
         document.getElementById("name").value;
 
     const category =
+    const subcategory =
+    document.getElementById("subcategory").value;
         document.getElementById("category").value;
 
     const file =
