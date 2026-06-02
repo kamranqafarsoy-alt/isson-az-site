@@ -77,7 +77,46 @@ margin-top:20px;
 grid-template-columns:1fr;
 }
 }
+.gallery{
+display:flex;
+gap:12px;
+margin-top:15px;
+flex-wrap:wrap;
+}
 
+.thumb{
+width:90px;
+height:90px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+cursor:pointer;
+
+border:2px solid rgba(191,161,117,.15);
+
+transition:.3s;
+}
+
+.thumb:hover{
+transform:scale(1.05);
+
+border-color:#bfa175;
+}
+
+#mainImage{
+width:100%;
+height:600px;
+
+object-fit:contain;
+
+background:#111827;
+
+border-radius:30px;
+
+padding:10px;
+}
 </style>
 </head>
 
@@ -110,10 +149,47 @@ data.image_url ||
 "images/no-image.jpg";
 
 document.getElementById("product").innerHTML = `
+document
+.querySelectorAll(".thumb")
+.forEach(img=>{
+
+img.addEventListener("click",()=>{
+
+document
+.getElementById("mainImage")
+.src = img.src;
+
+});
+
+});
 <div class="product">
 
 <div>
-<img src="${image}">
+
+<img
+id="mainImage"
+src="${image}">
+
+<div class="gallery">
+
+${data.image ?
+`<img class="thumb" src="${data.image}">`
+: ''}
+
+${data.image2 ?
+`<img class="thumb" src="${data.image2}">`
+: ''}
+
+${data.image3 ?
+`<img class="thumb" src="${data.image3}">`
+: ''}
+
+${data.image4 ?
+`<img class="thumb" src="${data.image4}">`
+: ''}
+
+</div>
+
 </div>
 
 <div>
