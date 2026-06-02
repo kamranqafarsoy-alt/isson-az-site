@@ -271,3 +271,7 @@ footer{
     padding:10px 16px;
     font-size:11px;
 }
+.product-card{
+text-decoration:none;
+color:white;
+}

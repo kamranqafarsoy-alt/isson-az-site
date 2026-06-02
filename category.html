@@ -169,17 +169,18 @@ item.image_url ||
 "images/no-image.jpg";
 
 grid.innerHTML += `
-<div class="product-card">
+<a href="product.html?id=${item.id}" class="product-card">
 
 <img src="${image}" alt="${item.name}">
 
 <div class="product-info">
 <h3>${item.name}</h3>
-</div>
+${item.price ? `<p>${item.price} ₼</p>` : ""}
 
 </div>
+
+</a>
 `;
-
 });
 
 }

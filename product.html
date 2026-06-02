@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Məhsul</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--gold:#bfa175;
+--dark:#07090d;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:var(--dark);
+color:white;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:60px 20px;
+}
+
+.product{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+
+.product img{
+width:100%;
+border-radius:25px;
+}
+
+h1{
+font-family:'Marcellus',serif;
+font-size:3rem;
+margin-bottom:20px;
+}
+
+.price{
+font-size:2rem;
+color:#bfa175;
+margin-bottom:20px;
+}
+
+.meta{
+margin-bottom:15px;
+color:#bbb;
+}
+
+.btn{
+display:inline-block;
+padding:15px 30px;
+background:#25d366;
+color:white;
+text-decoration:none;
+border-radius:50px;
+margin-top:20px;
+}
+
+@media(max-width:900px){
+.product{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="product"></div>
+
+</div>
+
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const { data,error } = await supabase
+.from("products")
+.select("*")
+.eq("id",id)
+.single();
+
+if(data){
+
+const image =
+data.image ||
+data.image_url ||
+"images/no-image.jpg";
+
+document.getElementById("product").innerHTML = `
+<div class="product">
+
+<div>
+<img src="${image}">
+</div>
+
+<div>
+
+<h1>${data.name}</h1>
+
+${data.price ?
+`<div class="price">${data.price} ₼</div>`
+: ''}
+
+<div class="meta">
+Kateqoriya: ${data.category || '-'}
+</div>
+
+<div class="meta">
+Alt Kateqoriya: ${data.subcategory || '-'}
+</div>
+
+<a
+class="btn"
+href="https://wa.me/994552000080?text=Salam,%20${encodeURIComponent(data.name)}%20məhsulu ilə maraqlanıram"
+target="_blank">
+WhatsApp ilə soruş
+</a>
+
+</div>
+
+</div>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
