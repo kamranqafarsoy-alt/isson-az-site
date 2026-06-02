@@ -1,9 +1,6 @@
-
-</div>
 <!DOCTYPE html>
-
 <html lang="az">
-
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Məhsullar - ISSON Admin</title>
@@ -89,18 +86,13 @@ background:#c0392b;
 color:white;
 }
 </style>
-
 </head>
 
 <body>
 
 <h1>Məhsulların İdarə Edilməsi</h1>
-<div style="
-background:#111827;
-padding:20px;
-border-radius:12px;
-margin-bottom:25px;
-">
+
+<div style="background:#111827;padding:20px;border-radius:12px;margin-bottom:25px;">
 
 <h3 style="margin-bottom:15px;color:#d7b98c">
 Yeni Məhsul
@@ -109,8 +101,9 @@ Yeni Məhsul
 <input
 type="text"
 id="name"
-placeholder="Məhsul adı"
-style="margin-right:10px;margin-bottom:10px;">
+placeholder="Məhsul adı">
+
+<br><br>
 
 <select id="category">
 <option value="kombi">Kombi</option>
@@ -120,6 +113,7 @@ style="margin-right:10px;margin-bottom:10px;">
 <option value="moydadir">Moydadır</option>
 <option value="seyfqapilar">Seyf Qapı</option>
 </select>
+
 <br><br>
 
 <select id="subcategory">
@@ -127,6 +121,7 @@ style="margin-right:10px;margin-bottom:10px;">
 <option value="otaq-qapisi">Otaq Qapısı</option>
 <option value="seyf-qapisi">Seyf Qapısı</option>
 </select>
+
 <br><br>
 
 <input
@@ -137,8 +132,9 @@ id="productImage">
 
 <button
 class="add"
-onclick="addProduct()">
-Məhsul əlavə et </button>
+id="addBtn">
+Məhsul əlavə et
+</button>
 
 </div>
 
@@ -147,10 +143,9 @@ Məhsul əlavə et </button>
 <input
 type="text"
 id="search"
-placeholder="Məhsul axtar..."
-onkeyup="loadProducts()">
+placeholder="Məhsul axtar...">
 
-<select id="filter" onchange="loadProducts()">
+<select id="filter">
 <option value="">Bütün kateqoriyalar</option>
 <option value="kombi">Kombi</option>
 <option value="kondisioner">Kondisioner</option>
@@ -169,6 +164,7 @@ onkeyup="loadProducts()">
 <th>Şəkil</th>
 <th>Ad</th>
 <th>Kateqoriya</th>
+<th>Alt Kateqoriya</th>
 <th>Əməliyyat</th>
 </tr>
 </thead>
@@ -178,110 +174,14 @@ onkeyup="loadProducts()">
 </table>
 
 <script type="module">
-    async function uploadImage(file) {
-
-    const fileName =
-        Date.now() + "-" + file.name;
-
-    const { error } = await supabase
-        .storage
-        .from("products")
-        .upload(fileName, file);
-
-    if (error) {
-        alert(error.message);
-        return null;
-    }
-
-    const { data } = supabase
-        .storage
-        .from("products")
-        .getPublicUrl(fileName);
-
-    return data.publicUrl;
-}
 
 import { supabase } from "../js/supabase.js";
 
-if(
-localStorage.getItem("isson_admin")
-!== "true"
-){
+if(localStorage.getItem("isson_admin") !== "true"){
 location.href="index.html";
 }
-window.addProduct = async function(){
 
-    const name =
-        document.getElementById("name").value;
-
-    const category =
-    const subcategory =
-    document.getElementById("subcategory").value;
-        document.getElementById("category").value;
-
-    const file =
-        document.getElementById("productImage")
-        .files[0];
-if(!name){
-alert("Məhsul adı daxil edin");
-return;
-}
-    let imageUrl = "";
-
-    if(file){
-
-        const fileName =
-            Date.now() + "-" + file.name;
-
-     const { data: uploadData, error: uploadError } =
-    await supabase
-    .storage
-    .from("products")
-    .upload(fileName, file, {
-        upsert: true
-    });
-
-console.log("UPLOAD DATA:", uploadData);
-console.log("UPLOAD ERROR:", uploadError);
-
-if(uploadError){
-    alert(JSON.stringify(uploadError));
-    return;
-}
-
-        const { data } =
-            supabase
-            .storage
-            .from("products")
-            .getPublicUrl(fileName);
-
-        imageUrl =
-            data.publicUrl;
-    }
-
-    const { error } =
-        await supabase
-        .from("products")
-    .insert([{
-    name:name,
-    title:name,
-    category:category,
-    image:imageUrl,
-    image_url:imageUrl
-}]);
-    if(error){
-        alert(error.message);
-        return;
-    }
-
-    alert("Məhsul əlavə edildi");
-
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-
-    loadProducts();
-}
-window.loadProducts = async function(){
+async function loadProducts(){
 
 const search =
 document.getElementById("search")
@@ -292,11 +192,13 @@ const filter =
 document.getElementById("filter")
 .value;
 
-const { data } =
+const { data,error } =
 await supabase
 .from("products")
 .select("*")
 .order("id",{ascending:false});
+
+if(error) return;
 
 const table =
 document.getElementById("productsTable");
@@ -325,20 +227,14 @@ table.innerHTML += `
 <tr>
 
 <td>
-<img src="${
-item.image ||
-item.image_url ||
-''
-}">
+<img src="${item.image || item.image_url || ''}">
 </td>
 
-<td>
-${item.name || item.title}
-</td>
+<td>${item.name || ''}</td>
 
-<td>
-${item.category || '-'}
-</td>
+<td>${item.category || ''}</td>
+
+<td>${item.subcategory || '-'}</td>
 
 <td>
 
@@ -358,11 +254,86 @@ Sil
 
 </tr>
 `;
+
 });
+
 }
 
-window.deleteProduct =
-async function(id){
+window.addProduct = async function(){
+
+const name =
+document.getElementById("name").value;
+
+const category =
+document.getElementById("category").value;
+
+const subcategory =
+document.getElementById("subcategory").value;
+
+const file =
+document.getElementById("productImage").files[0];
+
+if(!name){
+alert("Məhsul adı daxil edin");
+return;
+}
+
+let imageUrl="";
+
+if(file){
+
+const fileName =
+Date.now() + "-" + file.name;
+
+const { error: uploadError } =
+await supabase
+.storage
+.from("products")
+.upload(fileName,file,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase
+.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl =
+data.publicUrl;
+}
+
+const { error } =
+await supabase
+.from("products")
+.insert([{
+name:name,
+title:name,
+category:category,
+subcategory:subcategory,
+image:imageUrl,
+image_url:imageUrl
+}]);
+
+if(error){
+alert(error.message);
+return;
+}
+
+alert("Məhsul əlavə edildi");
+
+document.getElementById("name").value="";
+document.getElementById("productImage").value="";
+
+loadProducts();
+}
+
+window.deleteProduct = async function(id){
 
 if(!confirm("Silinsin?"))
 return;
@@ -375,8 +346,7 @@ await supabase
 loadProducts();
 }
 
-window.editProduct =
-async function(id){
+window.editProduct = async function(id){
 
 const ad =
 prompt("Yeni ad");
@@ -393,6 +363,18 @@ title:ad
 
 loadProducts();
 }
+
+document
+.getElementById("addBtn")
+.addEventListener("click", window.addProduct);
+
+document
+.getElementById("search")
+.addEventListener("input", loadProducts);
+
+document
+.getElementById("filter")
+.addEventListener("change", loadProducts);
 
 loadProducts();
 
