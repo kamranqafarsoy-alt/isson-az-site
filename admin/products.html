@@ -361,15 +361,78 @@ imageUrl =
 data.publicUrl;
 }
 if(file2){
-...
+
+const fileName =
+Date.now() + "-2-" + file2.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file2,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl2 = data.publicUrl;
 }
 
 if(file3){
-...
+
+const fileName =
+Date.now() + "-3-" + file3.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file3,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl3 = data.publicUrl;
 }
 
 if(file4){
-...
+
+const fileName =
+Date.now() + "-4-" + file4.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file4,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl4 = data.publicUrl;
 }
 const { error } =
 await supabase
