@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ISSON Məhsullar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--gold:#bfa175;
+--dark:#07090d;
+--dark2:#10141a;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:30px 10%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+text-decoration:none;
+font-size:2rem;
+color:white;
+font-family:'Marcellus',serif;
+}
+
+.logo span{
+color:var(--gold);
+}
+
+.back-btn{
+color:var(--gold);
+text-decoration:none;
+}
+
+.hero{
+padding:70px 10% 30px;
+}
+
+.hero h1{
+font-size:3rem;
+font-family:'Marcellus',serif;
+color:var(--gold);
+}
+
+.products-grid{
+padding:30px 10% 80px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.product-card{
+background:#111827;
+border-radius:25px;
+overflow:hidden;
+transition:.3s;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.product-card:hover{
+transform:translateY(-8px);
+}
+
+.product-card img{
+width:100%;
+height:280px;
+object-fit:cover;
+}
+
+.product-info{
+padding:20px;
+}
+
+.product-info h3{
+font-size:1.2rem;
+margin-bottom:10px;
+}
+
+.empty{
+text-align:center;
+padding:80px;
+color:#999;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<a href="index.html" class="logo">ISS<span>ON</span></a>
+<a href="index.html" class="back-btn">← Ana Səhifə</a>
+</header>
+
+<section class="hero">
+<h1 id="pageTitle">Məhsullar</h1>
+</section>
+
+<div class="products-grid" id="productsGrid"></div>
+
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+const params = new URLSearchParams(window.location.search);
+const category = params.get("cat");
+
+const names = {
+kombi:"Kombilər",
+kondisioner:"Kondisionerlər",
+laminat:"Laminatlar",
+qapi:"Otaq Qapıları",
+moydadir:"Moydadırlar",
+seyfqapilar:"Seyf Qapıları"
+};
+
+document.getElementById("pageTitle").textContent =
+names[category] || "Məhsullar";
+
+async function loadProducts(){
+
+const { data, error } = await supabase
+.from("products")
+.select("*")
+.eq("category", category)
+.order("id",{ascending:false});
+
+if(error){
+console.error(error);
+return;
+}
+
+const grid =
+document.getElementById("productsGrid");
+
+if(!data || data.length===0){
+grid.innerHTML =
+'<div class="empty">Bu kateqoriyada məhsul yoxdur</div>';
+return;
+}
+
+grid.innerHTML = "";
+
+data.forEach(item=>{
+
+const image =
+item.image ||
+item.image_url ||
+"images/no-image.jpg";
+
+grid.innerHTML += `
+<div class="product-card">
+
+<img src="${image}" alt="${item.name}">
+
+<div class="product-info">
+<h3>${item.name}</h3>
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+loadProducts();
+
+</script>
+
+</body>
+</html>
