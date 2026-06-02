@@ -151,6 +151,45 @@ text-decoration:none;
 color:#bfa175;
 font-weight:600;
 }
+.related-title{
+font-size:2rem;
+font-family:'Marcellus',serif;
+margin:80px 0 30px;
+color:#bfa175;
+}
+
+.related-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.related-card{
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+text-decoration:none;
+color:white;
+border:1px solid rgba(191,161,117,.08);
+transition:.3s;
+}
+
+.related-card:hover{
+transform:translateY(-8px);
+}
+
+.related-card img{
+width:100%;
+height:220px;
+object-fit:contain;
+background:#111827;
+padding:10px;
+}
+
+.related-card h3{
+padding:15px;
+font-size:16px;
+}
 </style>
 </head>
 
@@ -171,7 +210,7 @@ ISS<span>ON</span>
 <div class="container">
 
 <div id="product"></div>
-
+<div id="relatedProducts"></div>
 </div>
 
 <script type="module">
@@ -273,8 +312,43 @@ document
 
 });
 
-}
+const { data: related } = await supabase
+.from("products")
+.select("*")
+.eq("category", data.category)
+.neq("id", data.id)
+.limit(4);
 
+if(related && related.length){
+
+document.getElementById("relatedProducts").innerHTML = `
+
+<h2 class="related-title">
+Oxşar Məhsullar
+</h2>
+
+<div class="related-grid">
+
+${related.map(item => `
+
+<a
+href="product.html?id=${item.id}"
+class="related-card">
+
+<img
+src="${item.image || item.image_url}"
+alt="${item.name}">
+
+<h3>${item.name}</h3>
+
+</a>
+
+`).join("")}
+
+</div>
+`;
+}
+}
 </script>
 
 <footer style="
