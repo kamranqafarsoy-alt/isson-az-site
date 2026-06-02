@@ -127,13 +127,19 @@ ${data.price ?
 <div class="meta">
 Kateqoriya: ${data.category || '-'}
 </div>
-
 <div class="meta">
 Alt Kateqoriya: ${data.subcategory || '-'}
 </div>
 
+${data.description ? `
+<div class="meta">
+${data.description}
+</div>
+` : ''}
+
 <a
 class="btn"
+
 href="https://wa.me/994552000080?text=Salam,%20${encodeURIComponent(data.name)}%20məhsulu ilə maraqlanıram"
 target="_blank">
 WhatsApp ilə soruş

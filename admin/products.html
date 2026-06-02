@@ -130,12 +130,26 @@ id="productImage">
 
 <br><br>
 
+<textarea
+id="description"
+placeholder="Məhsul haqqında məlumat"
+style="
+width:100%;
+height:120px;
+padding:12px;
+background:#1f2937;
+color:white;
+border:none;
+border-radius:8px;">
+</textarea>
+
+<br><br>
+
 <button
 class="add"
 id="addBtn">
 Məhsul əlavə et
 </button>
-
 </div>
 
 <div class="top">
@@ -270,6 +284,9 @@ document.getElementById("category").value;
 const subcategory =
 document.getElementById("subcategory").value;
 
+const description =
+document.getElementById("description").value;
+
 const file =
 document.getElementById("productImage").files[0];
 
@@ -316,6 +333,7 @@ name:name,
 title:name,
 category:category,
 subcategory:subcategory,
+description:description,
 image:imageUrl,
 image_url:imageUrl
 }]);
