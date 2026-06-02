@@ -198,7 +198,10 @@ grid.innerHTML += `
 
 <div class="product-info">
 <h3>${item.name}</h3>
-${item.price ? `<p>${item.price} ₼</p>` : ""}
+${item.price
+? `<p>${item.price} ₼</p>`
+: `<p>Qiymət üçün əlaqə saxlayın</p>`
+}
 
 </div>
 

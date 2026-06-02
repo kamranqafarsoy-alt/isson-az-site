@@ -122,8 +122,9 @@ document.getElementById("product").innerHTML = `
 
 ${data.price ?
 `<div class="price">${data.price} ₼</div>`
-: ''}
-
+:
+`<div class="price">Qiymət üçün əlaqə saxlayın</div>`
+}
 <div class="meta">
 Kateqoriya: ${data.category || '-'}
 </div>
