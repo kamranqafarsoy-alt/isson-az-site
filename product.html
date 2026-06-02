@@ -149,19 +149,6 @@ data.image_url ||
 "images/no-image.jpg";
 
 document.getElementById("product").innerHTML = `
-document
-.querySelectorAll(".thumb")
-.forEach(img=>{
-
-img.addEventListener("click",()=>{
-
-document
-.getElementById("mainImage")
-.src = img.src;
-
-});
-
-});
 <div class="product">
 
 <div>
@@ -226,6 +213,19 @@ WhatsApp ilə soruş
 
 </div>
 `;
+document
+.querySelectorAll(".thumb")
+.forEach(img=>{
+
+img.addEventListener("click",()=>{
+
+document
+.getElementById("mainImage")
+.src = img.src;
+
+});
+
+});
 
 }
 
