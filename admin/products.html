@@ -121,12 +121,35 @@ placeholder="Məhsul adı">
 <option value="otaq-qapisi">Otaq Qapısı</option>
 <option value="seyf-qapisi">Seyf Qapısı</option>
 </select>
+<br><br>
 
+<input
+type="number"
+id="price"
+placeholder="Qiymət (istəyə bağlı)">
 <br><br>
 
 <input
 type="file"
 id="productImage">
+
+<br><br>
+
+<input
+type="file"
+id="productImage2">
+
+<br><br>
+
+<input
+type="file"
+id="productImage3">
+
+<br><br>
+
+<input
+type="file"
+id="productImage4">
 
 <br><br>
 
@@ -284,19 +307,32 @@ document.getElementById("category").value;
 const subcategory =
 document.getElementById("subcategory").value;
 
+const price =
+document.getElementById("price").value;
+
 const description =
 document.getElementById("description").value;
 
 const file =
 document.getElementById("productImage").files[0];
 
+const file2 =
+document.getElementById("productImage2").files[0];
+
+const file3 =
+document.getElementById("productImage3").files[0];
+
+const file4 =
+document.getElementById("productImage4").files[0];
 if(!name){
 alert("Məhsul adı daxil edin");
 return;
 }
 
 let imageUrl="";
-
+let imageUrl2="";
+let imageUrl3="";
+let imageUrl4="";
 if(file){
 
 const fileName =
@@ -324,7 +360,17 @@ supabase
 imageUrl =
 data.publicUrl;
 }
+if(file2){
+...
+}
 
+if(file3){
+...
+}
+
+if(file4){
+...
+}
 const { error } =
 await supabase
 .from("products")
@@ -333,9 +379,14 @@ name:name,
 title:name,
 category:category,
 subcategory:subcategory,
+price: price || null,
 description:description,
 image:imageUrl,
-image_url:imageUrl
+image_url:imageUrl,
+
+image2:imageUrl2,
+image3:imageUrl3,
+image4:imageUrl4
 }]);
 
 if(error){
@@ -346,8 +397,12 @@ return;
 alert("Məhsul əlavə edildi");
 
 document.getElementById("name").value="";
+document.getElementById("price").value="";
+document.getElementById("description").value="";
 document.getElementById("productImage").value="";
-
+document.getElementById("productImage2").value="";
+document.getElementById("productImage3").value="";
+document.getElementById("productImage4").value="";
 loadProducts();
 }
 
