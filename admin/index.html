@@ -72,7 +72,7 @@ button{
 
 <h2>ISSON ADMIN</h2>
 
-<input type="text" id="username" placeholder="İstifadəçi adı">
+<input type="email" id="username" placeholder="Email">
 
 <input type="password" id="password" placeholder="Şifrə">
 
@@ -99,14 +99,13 @@ window.login = async function(){
     const errorBox =
         document.getElementById("error");
 
-    const { data, error } = await supabase
-        .from("admins")
-        .select("*")
-        .eq("username", username)
-        .eq("password", password)
-        .single();
+   const { data, error } =
+await supabase.auth.signInWithPassword({
+    email: username,
+    password: password
+});
 
-    if(error || !data){
+    if(error){
 
         errorBox.innerHTML =
             "İstifadəçi adı və ya şifrə yanlışdır";
