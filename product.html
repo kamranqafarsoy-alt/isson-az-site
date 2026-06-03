@@ -83,7 +83,21 @@ gap:12px;
 margin-top:15px;
 flex-wrap:wrap;
 }
+.image-counter{
+position:absolute;
+top:20px;
+right:20px;
+background:rgba(0,0,0,.7);
+color:white;
+padding:8px 14px;
+border-radius:20px;
+font-size:14px;
+z-index:2;
+}
 
+.image-wrapper{
+position:relative;
+}
 .thumb{
 width:90px;
 height:90px;
@@ -265,7 +279,11 @@ data.image_url ||
 document.getElementById("product").innerHTML = `
 <div class="product">
 
-<div>
+<div class="image-wrapper">
+
+<div class="image-counter" id="imageCounter">
+1 / 1
+</div>
 
 <img
 id="mainImage"
@@ -327,6 +345,20 @@ WhatsApp ilə soruş
 
 </div>
 `;
+const images = [
+data.image,
+data.image2,
+data.image3,
+data.image4
+].filter(Boolean);
+
+const imageCounter =
+document.getElementById("imageCounter");
+
+let currentIndex = 0;
+
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
 document
 .querySelectorAll(".thumb")
 .forEach(img=>{
@@ -336,7 +368,11 @@ img.addEventListener("click",()=>{
 document
 .getElementById("mainImage")
 .src = img.src;
+currentIndex =
+images.indexOf(img.src);
 
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
 });
 
 });
