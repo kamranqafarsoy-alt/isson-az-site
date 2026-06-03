@@ -232,6 +232,24 @@ font-size:45px;
 color:white;
 cursor:pointer;
 }
+.lightbox-arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+font-size:60px;
+color:white;
+cursor:pointer;
+user-select:none;
+padding:20px;
+}
+
+.lightbox-prev{
+left:20px;
+}
+
+.lightbox-next{
+right:20px;
+}
 </style>
 
 </head>
@@ -351,7 +369,12 @@ data.image2,
 data.image3,
 data.image4
 ].filter(Boolean);
+function updateLightbox(){
 
+lightboxImage.src =
+images[currentIndex];
+
+}
 const imageCounter =
 document.getElementById("imageCounter");
 
@@ -391,7 +414,8 @@ lightbox.classList.add("active");
 
 lightboxImage.src =
 mainImage.src;
-
+currentIndex =
+images.indexOf(mainImage.src);
 });
 
 document
@@ -409,6 +433,38 @@ if(e.target === lightbox){
 lightbox.classList.remove("active");
 
 }
+
+});
+document
+.getElementById("prevImage")
+.addEventListener("click",()=>{
+
+currentIndex--;
+
+if(currentIndex < 0){
+
+currentIndex =
+images.length - 1;
+
+}
+
+updateLightbox();
+
+});
+
+document
+.getElementById("nextImage")
+.addEventListener("click",()=>{
+
+currentIndex++;
+
+if(currentIndex >= images.length){
+
+currentIndex = 0;
+
+}
+
+updateLightbox();
 
 });
 const { data: related } = await supabase
@@ -466,7 +522,19 @@ id="closeLightbox">
 ×
 </span>
 
+<span
+class="lightbox-arrow lightbox-prev"
+id="prevImage">
+❮
+</span>
+
 <img id="lightboxImage">
+
+<span
+class="lightbox-arrow lightbox-next"
+id="nextImage">
+❯
+</span>
 
 </div>
 </body>
