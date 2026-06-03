@@ -467,6 +467,47 @@ currentIndex = 0;
 updateLightbox();
 
 });
+document.addEventListener("keydown",(e)=>{
+
+if(!lightbox.classList.contains("active"))
+return;
+
+if(e.key === "ArrowLeft"){
+
+currentIndex--;
+
+if(currentIndex < 0){
+
+currentIndex =
+images.length - 1;
+
+}
+
+updateLightbox();
+
+}
+
+if(e.key === "ArrowRight"){
+
+currentIndex++;
+
+if(currentIndex >= images.length){
+
+currentIndex = 0;
+
+}
+
+updateLightbox();
+
+}
+
+if(e.key === "Escape"){
+
+lightbox.classList.remove("active");
+
+}
+
+});
 const { data: related } = await supabase
 .from("products")
 .select("*")
