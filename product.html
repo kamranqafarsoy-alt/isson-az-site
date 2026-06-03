@@ -190,7 +190,36 @@ padding:10px;
 padding:15px;
 font-size:16px;
 }
+.lightbox{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.lightbox.active{
+display:flex;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+object-fit:contain;
+}
+
+.close-lightbox{
+position:absolute;
+top:25px;
+right:35px;
+font-size:45px;
+color:white;
+cursor:pointer;
+}
 </style>
+
 </head>
 
 <body>
@@ -311,7 +340,41 @@ document
 });
 
 });
+const mainImage =
+document.getElementById("mainImage");
 
+const lightbox =
+document.getElementById("lightbox");
+
+const lightboxImage =
+document.getElementById("lightboxImage");
+
+mainImage.addEventListener("click",()=>{
+
+lightbox.classList.add("active");
+
+lightboxImage.src =
+mainImage.src;
+
+});
+
+document
+.getElementById("closeLightbox")
+.addEventListener("click",()=>{
+
+lightbox.classList.remove("active");
+
+});
+
+lightbox.addEventListener("click",(e)=>{
+
+if(e.target === lightbox){
+
+lightbox.classList.remove("active");
+
+}
+
+});
 const { data: related } = await supabase
 .from("products")
 .select("*")
@@ -359,6 +422,16 @@ border-top:1px solid rgba(191,161,117,.08);
 margin-top:80px;">
 © 2026 ISSON. Bütün hüquqlar qorunur.
 </footer>
+<div class="lightbox" id="lightbox">
 
+<span
+class="close-lightbox"
+id="closeLightbox">
+×
+</span>
+
+<img id="lightboxImage">
+
+</div>
 </body>
 </html>

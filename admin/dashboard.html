@@ -132,24 +132,20 @@ Saytı aç
 
 </div>
 
-<script type="module">
-
 import { supabase } from "../js/supabase.js";
 
-if(
-    localStorage.getItem("isson_admin")
-    !== "true"
-){
-    location.href="index.html";
+const { data: { user } } =
+await supabase.auth.getUser();
+
+if(!user){
+    location.href = "index.html";
 }
 
-window.logout=function(){
+window.logout = async function(){
 
-    localStorage.removeItem(
-        "isson_admin"
-    );
+    await supabase.auth.signOut();
 
-    location.href="index.html";
+    location.href = "index.html";
 }
 
 async function loadStats(){
@@ -169,19 +165,18 @@ async function loadStats(){
         "kombiCount"
     ).innerText =
         data.filter(
-            x=>x.category==="kombi"
+            x => x.category === "kombi"
         ).length;
 
     document.getElementById(
         "kondisionerCount"
     ).innerText =
         data.filter(
-            x=>x.category==="kondisioner"
+            x => x.category === "kondisioner"
         ).length;
 }
 
 loadStats();
-
 </script>
 
 </body>
