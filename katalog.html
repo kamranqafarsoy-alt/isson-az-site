@@ -9,6 +9,30 @@
     <link rel="stylesheet" href="style.css">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+.catalog-search{
+max-width:1200px;
+margin:0 auto 30px;
+padding:0 20px;
+}
+
+.catalog-search input{
+width:100%;
+padding:18px 22px;
+border:none;
+border-radius:50px;
+background:#111827;
+color:white;
+font-size:16px;
+outline:none;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.catalog-search input:focus{
+border-color:#bfa175;
+box-shadow:0 0 20px rgba(191,161,117,.15);
+}
+</style>
 </head>
 <body>
     <div class="top-bar">
@@ -38,6 +62,12 @@
     </section>
 
     <section class="catalog-section">
+      <div class="catalog-search">
+    <input
+        type="text"
+        id="catalogSearch"
+        placeholder="Məhsul axtar...">
+</div>
         <div class="products-grid" id="umumi-kataloq">
             <p style="text-align: center; color: #888; width: 100%;">Məhsullar yüklənir...</p>
         </div>
@@ -74,28 +104,44 @@ async function loadCatalog() {
     return
   }
 
-  data.forEach(product => {
+ window.allProducts = data
 
-    const card = document.createElement('div')
+showProducts(data)
 
-    card.className = 'product-card'
+const searchInput =
+document.getElementById('catalogSearch')
 
-   card.innerHTML = `
-  <img
-    src="${product.image_url || product.image || 'images/no-image.jpg'}"
-    alt="${product.title || product.name}"
-  >
+searchInput.addEventListener('input', () => {
 
-  <div class="product-overlay">
-    <h3>${product.title || product.name}</h3>
+const value =
+searchInput.value.toLowerCase()
 
-    <p>${product.price} ₼</p>
+const filtered =
+window.allProducts.filter(product =>
 
-    <a href="#" class="btn btn-gold">
-      Ətraflı
-    </a>
-  </div>
-`
+(product.name || '')
+.toLowerCase()
+.includes(value)
+
+||
+
+(product.title || '')
+.toLowerCase()
+.includes(value)
+
+||
+
+(product.category || '')
+.toLowerCase()
+.includes(value)
+
+)
+
+showProducts(filtered)
+
+})
+
+}
 
     kataloqKonteyner.appendChild(card)
 
@@ -103,6 +149,48 @@ async function loadCatalog() {
 }
 
 loadCatalog()
+function showProducts(products){
+
+kataloqKonteyner.innerHTML = ''
+
+if(products.length === 0){
+
+kataloqKonteyner.innerHTML =
+'<p style="text-align:center;width:100%">Məhsul tapılmadı</p>'
+
+return
+}
+
+products.forEach(product => {
+
+const card = document.createElement('div')
+
+card.className = 'product-card'
+
+card.innerHTML = `
+<img
+src="${product.image_url || product.image || 'images/no-image.jpg'}"
+alt="${product.title || product.name}">
+
+<div class="product-overlay">
+<h3>${product.title || product.name}</h3>
+
+<p>${product.price || ''} ₼</p>
+
+<a
+href="product.html?id=${product.id}"
+class="btn btn-gold">
+Ətraflı
+</a>
+
+</div>
+`
+
+kataloqKonteyner.appendChild(card)
+
+})
+
+}
 </script>
 
 </body>
