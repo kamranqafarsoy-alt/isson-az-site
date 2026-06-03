@@ -63,57 +63,63 @@ color:#bbb;
 }
 
 .btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:15px 30px;
+background:linear-gradient(135deg,#25d366,#1faa52);
+color:white;
+text-decoration:none;
+border-radius:50px;
+font-weight:700;
+transition:.35s;
+box-shadow:0 10px 25px rgba(37,211,102,.25);
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 15px 35px rgba(37,211,102,.45);
+}
+
 .share-btn{
 display:inline-flex;
 align-items:center;
+justify-content:center;
 gap:10px;
-
 padding:15px 28px;
-
-background:linear-gradient(
-135deg,
-#bfa175,
-#d7b98c
-);
-
+background:linear-gradient(135deg,#bfa175,#d7b98c);
 color:#07090d;
-
 font-weight:700;
-
 border:none;
-
 border-radius:50px;
-
 cursor:pointer;
-
-margin-top:20px;
-margin-left:10px;
-
 transition:.35s;
-
-box-shadow:
-0 10px 25px rgba(191,161,117,.25);
+box-shadow:0 10px 25px rgba(191,161,117,.25);
 }
 
 .share-btn:hover{
 transform:translateY(-3px);
-
-box-shadow:
-0 15px 35px rgba(191,161,117,.45);
+box-shadow:0 15px 35px rgba(191,161,117,.45);
 }
 
 .share-btn:active{
 transform:scale(.97);
 }
-display:inline-block;
-padding:15px 30px;
-background:#25d366;
-color:white;
-text-decoration:none;
-border-radius:50px;
-margin-top:20px;
+
+.action-buttons{
+display:flex;
+gap:12px;
+margin-top:25px;
+flex-wrap:wrap;
 }
 
+.action-buttons .btn,
+.action-buttons .share-btn{
+margin:0;
+flex:1;
+min-width:180px;
+justify-content:center;
+}
 @media(max-width:900px){
 .product{
 grid-template-columns:1fr;
@@ -403,18 +409,21 @@ ${data.description}
 </div>
 ` : ''}
 
+<div class="action-buttons">
+
 <a
 class="btn"
-
 href="https://wa.me/994552000080?text=Salam,%20${encodeURIComponent(data.name)}%20məhsulu ilə maraqlanıram"
 target="_blank">
-WhatsApp ilə soruş
+💬 WhatsApp
 </a>
+
 <button
 class="share-btn"
 id="shareBtn">
 🔗 Paylaş
 </button>
+
 </div>
 
 </div>
