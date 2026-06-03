@@ -374,6 +374,12 @@ function updateLightbox(){
 lightboxImage.src =
 images[currentIndex];
 
+mainImage.src =
+images[currentIndex];
+
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
+
 }
 const imageCounter =
 document.getElementById("imageCounter");
@@ -410,12 +416,23 @@ document.getElementById("lightboxImage");
 
 mainImage.addEventListener("click",()=>{
 
+currentIndex = 0;
+
+const currentSrc = mainImage.src;
+
+const foundIndex =
+images.findIndex(img =>
+currentSrc.includes(img)
+);
+
+if(foundIndex >= 0){
+currentIndex = foundIndex;
+}
+
 lightbox.classList.add("active");
 
-lightboxImage.src =
-mainImage.src;
-currentIndex =
-images.indexOf(mainImage.src);
+updateLightbox();
+
 });
 
 document
