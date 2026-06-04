@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="az">
 <head>
 <meta charset="UTF-8">
@@ -80,7 +79,6 @@ body{
     font-weight:bold;
 }
 </style>
-
 </head>
 
 <body>
@@ -132,51 +130,50 @@ Saytı aç
 
 </div>
 
+<script type="module">
+
 import { supabase } from "../js/supabase.js";
 
-const { data: { user } } =
-await supabase.auth.getUser();
+const {
+    data: { user }
+} = await supabase.auth.getUser();
 
-if(!user){
+if (!user) {
     location.href = "index.html";
 }
 
-window.logout = async function(){
-
+window.logout = async function () {
     await supabase.auth.signOut();
-
     location.href = "index.html";
-}
+};
 
-async function loadStats(){
+async function loadStats() {
 
-    const { data } =
-        await supabase
+    const { data, error } = await supabase
         .from("products")
         .select("*");
 
-    if(!data) return;
+    if (error) {
+        console.error(error);
+        return;
+    }
 
-    document.getElementById(
-        "totalProducts"
-    ).innerText = data.length;
+    document.getElementById("totalProducts").innerText =
+        data.length;
 
-    document.getElementById(
-        "kombiCount"
-    ).innerText =
+    document.getElementById("kombiCount").innerText =
         data.filter(
             x => x.category === "kombi"
         ).length;
 
-    document.getElementById(
-        "kondisionerCount"
-    ).innerText =
+    document.getElementById("kondisionerCount").innerText =
         data.filter(
             x => x.category === "kondisioner"
         ).length;
 }
 
 loadStats();
+
 </script>
 
 </body>

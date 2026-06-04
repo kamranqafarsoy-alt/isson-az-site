@@ -74,123 +74,109 @@ box-shadow:0 0 20px rgba(191,161,117,.15);
     </section>
 
        <script src="script.js"></script>
-
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabase = createClient(
   'https://qcnkjmnywapgnkbttznv.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjbmtqbW55d2FwZ25rYnR0em52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDE3NDEsImV4cCI6MjA5NTAxNzc0MX0.fYZ-ectEYZ5RnHraTn1IsiB2OA8sks-JcnUJ6grXHzQ'
+  'SENIN_ANON_KEY'
 )
-const kataloqKonteyner = document.getElementById('umumi-kataloq')
 
-async function loadCatalog() {
+const kataloqKonteyner =
+document.getElementById('umumi-kataloq')
 
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('id', { ascending: false })
-
-  if (error) {
-    console.error(error)
-    kataloqKonteyner.innerHTML = '<p>Xəta baş verdi</p>'
-    return
-  }
+function showProducts(products){
 
   kataloqKonteyner.innerHTML = ''
 
-  if (!data || data.length === 0) {
-    kataloqKonteyner.innerHTML = '<p>Məhsul tapılmadı</p>'
+  if(products.length === 0){
+    kataloqKonteyner.innerHTML =
+    '<p style="text-align:center;width:100%">Məhsul tapılmadı</p>'
     return
   }
 
- window.allProducts = data
+  products.forEach(product => {
 
-showProducts(data)
+    const card = document.createElement('div')
 
-const searchInput =
-document.getElementById('catalogSearch')
+    card.className = 'product-card'
 
-searchInput.addEventListener('input', () => {
+    card.innerHTML = `
+      <img
+      src="${product.image_url || product.image || 'images/no-image.jpg'}"
+      alt="${product.title || product.name}">
 
-const value =
-searchInput.value.toLowerCase()
+      <div class="product-overlay">
+        <h3>${product.title || product.name}</h3>
 
-const filtered =
-window.allProducts.filter(product =>
+        <p>${product.price || ''} ₼</p>
 
-(product.name || '')
-.toLowerCase()
-.includes(value)
-
-||
-
-(product.title || '')
-.toLowerCase()
-.includes(value)
-
-||
-
-(product.category || '')
-.toLowerCase()
-.includes(value)
-
-)
-
-showProducts(filtered)
-
-})
-
-}
+        <a
+        href="product.html?id=${product.id}"
+        class="btn btn-gold">
+        Ətraflı
+        </a>
+      </div>
+    `
 
     kataloqKonteyner.appendChild(card)
 
   })
 }
 
+async function loadCatalog(){
+
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('id',{ ascending:false })
+
+  if(error){
+    kataloqKonteyner.innerHTML =
+    '<p>Xəta baş verdi</p>'
+    return
+  }
+
+  window.allProducts = data || []
+
+  showProducts(window.allProducts)
+
+  const searchInput =
+  document.getElementById('catalogSearch')
+
+  searchInput.addEventListener('input', () => {
+
+    const value =
+    searchInput.value.toLowerCase()
+
+    const filtered =
+    window.allProducts.filter(product =>
+
+      (product.name || '')
+      .toLowerCase()
+      .includes(value)
+
+      ||
+
+      (product.title || '')
+      .toLowerCase()
+      .includes(value)
+
+      ||
+
+      (product.category || '')
+      .toLowerCase()
+      .includes(value)
+
+    )
+
+    showProducts(filtered)
+
+  })
+
+}
+
 loadCatalog()
-function showProducts(products){
-
-kataloqKonteyner.innerHTML = ''
-
-if(products.length === 0){
-
-kataloqKonteyner.innerHTML =
-'<p style="text-align:center;width:100%">Məhsul tapılmadı</p>'
-
-return
-}
-
-products.forEach(product => {
-
-const card = document.createElement('div')
-
-card.className = 'product-card'
-
-card.innerHTML = `
-<img
-src="${product.image_url || product.image || 'images/no-image.jpg'}"
-alt="${product.title || product.name}">
-
-<div class="product-overlay">
-<h3>${product.title || product.name}</h3>
-
-<p>${product.price || ''} ₼</p>
-
-<a
-href="product.html?id=${product.id}"
-class="btn btn-gold">
-Ətraflı
-</a>
-
-</div>
-`
-
-kataloqKonteyner.appendChild(card)
-
-})
-
-}
 </script>
 
 </body>
