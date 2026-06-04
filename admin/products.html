@@ -96,6 +96,34 @@ color:white;
 
 <h3 style="margin-bottom:15px;color:#d7b98c">
 Yeni Məhsul
+<hr style="margin:30px 0;border-color:#333;">
+
+<h3 style="margin-bottom:15px;color:#d7b98c">
+Toplu Məhsul Əlavə Et
+</h3>
+
+<select id="bulkCategory">
+    <option value="moydadir">Moydadır</option>
+    <option value="laminat">Laminat</option>
+    <option value="kombi">Kombi</option>
+    <option value="kondisioner">Kondisioner</option>
+</select>
+
+<br><br>
+
+<input
+type="file"
+id="bulkImages"
+multiple
+accept="image/*">
+
+<br><br>
+
+<button
+class="add"
+onclick="bulkUploadProducts()">
+Toplu Yüklə
+</button>
 </h3>
 
 <input
@@ -188,7 +216,6 @@ placeholder="Məhsul axtar...">
 <option value="laminat">Laminat</option>
 <option value="qapi">Qapı</option>
 <option value="moydadir">Moydadır</option>
-<option value="seyfqapilar">Seyf Qapı</option>
 </select>
 
 </div>
@@ -512,6 +539,73 @@ document
 .addEventListener("change", loadProducts);
 
 loadProducts();
+
+window.bulkUploadProducts = async function(){
+
+    const files =
+    document.getElementById("bulkImages").files;
+
+    const category =
+    document.getElementById("bulkCategory").value;
+
+    if(files.length === 0){
+        alert("Şəkil seçin");
+        return;
+    }
+
+    let successCount = 0;
+
+    for(const file of files){
+
+        const fileName =
+        Date.now() + "-" + file.name;
+
+        const { error: uploadError } =
+        await supabase.storage
+        .from("products")
+        .upload(fileName,file,{
+            upsert:true
+        });
+
+        if(uploadError){
+            console.log(uploadError);
+            continue;
+        }
+
+        const { data } =
+        supabase.storage
+        .from("products")
+        .getPublicUrl(fileName);
+
+        const imageUrl =
+        data.publicUrl;
+
+        const productName =
+        file.name
+        .replace(".jpg","")
+        .replace(".jpeg","")
+        .replace(".png","");
+
+        const { error } =
+        await supabase
+        .from("products")
+        .insert([{
+            name: productName,
+            title: productName,
+            category: category,
+            image: imageUrl,
+            image_url: imageUrl
+        }]);
+
+        if(!error){
+            successCount++;
+        }
+    }
+
+    alert(successCount + " məhsul əlavə edildi");
+
+    loadProducts();
+}
 
 </script>
 
