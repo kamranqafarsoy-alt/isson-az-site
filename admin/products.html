@@ -227,6 +227,12 @@ placeholder="Məhsul axtar...">
 <option value="moydadir">Moydadır</option>
 </select>
 
+<button
+class="delete"
+onclick="deleteCategoryProducts()">
+Kateqoriyanı Sil
+</button>
+
 </div>
 
 <table>
@@ -547,6 +553,36 @@ document
 .addEventListener("change", loadProducts);
 
 loadProducts();
+
+window.deleteCategoryProducts = async function(){
+
+    const category =
+    document.getElementById("filter").value;
+
+    if(!category){
+        alert("Əvvəl kateqoriya seçin");
+        return;
+    }
+
+    if(!confirm(category + " kateqoriyasındakı bütün məhsullar silinsin?")){
+        return;
+    }
+
+    const { error } =
+    await supabase
+    .from("products")
+    .delete()
+    .eq("category", category);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    alert("Kateqoriyadakı məhsullar silindi");
+
+    loadProducts();
+}
 
 window.bulkUploadProducts = async function(){
 
