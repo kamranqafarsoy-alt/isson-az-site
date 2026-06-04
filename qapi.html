@@ -84,13 +84,12 @@ import { supabase } from "./js/supabase.js";
 
 async function loadDoors() {
 
-    const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", "qapi")
-.eq("subcategory", "otaq-qapisi")
-        .order("id", { ascending: false });
-
+ const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("category", "qapi")
+    .eq("subcategory", "otaq-qapisi")
+    .order("id", { ascending: false });
     if (error) {
         console.error(error);
         return;
