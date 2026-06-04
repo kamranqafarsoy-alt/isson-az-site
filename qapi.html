@@ -88,6 +88,7 @@ async function loadDoors() {
         .from("products")
         .select("*")
         .eq("category", "qapi")
+.eq("subcategory", "otaq-qapisi")
         .order("id", { ascending: false });
 
     if (error) {
