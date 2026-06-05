@@ -424,7 +424,15 @@ footer{
     color:rgba(255,255,255,0.6);
     line-height:2;
 }
+.footer-grid a{
+    color:rgba(255,255,255,0.6);
+    text-decoration:none;
+    transition:.3s;
+}
 
+.footer-grid a:hover{
+    color:#bfa175;
+}
 .footer-bottom{
     margin-top:60px;
     padding-top:30px;
@@ -668,22 +676,22 @@ premium interyer həlləri təqdim edirik.
 
 <h3>Kateqoriyalar</h3>
 
-<p>Kombi</p>
-<p>Kondisioner</p>
-<p>Hamam Aksesuarları</p>
-<p>Otaq Qapıları</p>
-<p>Seyf Qapıları</p>
-
+<p><a href="category.html?cat=kombi">Kombi</a></p>
+<p><a href="category.html?cat=kondisioner">Kondisioner</a></p>
+<p><a href="category.html?cat=laminat">Laminat</a></p>
+<p><a href="category.html?cat=qapi">Otaq Qapıları</a></p>
+<p><a href="category.html?cat=seyfqapilar">Seyf Qapıları</a></p>
 </div>
 
 <div>
 
 <h3>Sosial Şəbəkə</h3>
 
-<p>Instagram</p>
-<p>Facebook</p>
-<p>TikTok</p>
+<p><a href="INSTAGRAM_LINK" target="_blank">Instagram</a></p>
 
+<p><a href="FACEBOOK_LINK" target="_blank">Facebook</a></p>
+
+<p><a href="TIKTOK_LINK" target="_blank">TikTok</a></p>
 </div>
 
 </div>
@@ -708,8 +716,7 @@ async function loadCategories(){
     .from("categories")
     .select("*")
     .order("id");
-console.log("INDEX DATA:", data);
-console.log("INDEX ERROR:", error);
+
     if(error){
         console.log(error);
         return;
