@@ -131,9 +131,9 @@ async function loadCategories(){
 
             <h3>${cat.name}</h3>
 
-            <img
-            class="preview"
-            src="${cat.image || 'https://placehold.co/600x400?text=No+Image'}">
+           <img
+class="preview"
+src="${cat.image ? cat.image + '?v=' + Date.now() : 'https://placehold.co/600x400?text=No+Image'}">
 
             <input
             type="file"
