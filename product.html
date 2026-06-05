@@ -291,6 +291,52 @@ color:white;
 cursor:pointer;
 }
 .lightbox-arrow{
+.whatsapp-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.whatsapp-modal.active{
+display:flex;
+}
+
+.whatsapp-box{
+background:#111827;
+padding:30px;
+border-radius:25px;
+width:90%;
+max-width:420px;
+text-align:center;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.whatsapp-box h3{
+margin-bottom:25px;
+color:#bfa175;
+}
+
+.store-btn{
+display:block;
+width:100%;
+padding:15px;
+margin-bottom:12px;
+border:none;
+border-radius:12px;
+background:#25d366;
+color:white;
+font-weight:bold;
+cursor:pointer;
+text-decoration:none;
+}
+
+.close-modal{
+background:#c0392b;
+}
 position:absolute;
 top:50%;
 transform:translateY(-50%);
@@ -411,15 +457,45 @@ ${data.description}
 
 <div class="action-buttons">
 
-<a
+<button
 class="btn"
-href="https://wa.me/994552000080?text=Salam,%20${encodeURIComponent(data.name)}%20məhsulu ilə maraqlanıram"
-target="_blank">
+id="whatsappBtn">
 💬 WhatsApp
-</a>
-
+</button>
 <button
 class="share-btn"
+document
+.getElementById("whatsappBtn")
+.addEventListener("click",()=>{
+
+const message =
+`Salam, ${data.name} məhsulu ilə maraqlanıram`;
+
+document
+.getElementById("tempraBtn")
+.href =
+`https://wa.me/994552000080?text=${encodeURIComponent(message)}`;
+
+document
+.getElementById("condoBtn")
+.href =
+`https://wa.me/994559000909?text=${encodeURIComponent(message)}`;
+
+document
+.getElementById("whatsappModal")
+.classList.add("active");
+
+});
+
+document
+.getElementById("closeWhatsappModal")
+.addEventListener("click",()=>{
+
+document
+.getElementById("whatsappModal")
+.classList.remove("active");
+
+});
 id="shareBtn">
 🔗 Paylaş
 </button>
@@ -696,6 +772,33 @@ class="lightbox-arrow lightbox-next"
 id="nextImage">
 ❯
 </span>
+<div class="whatsapp-modal" id="whatsappModal">
+
+<div class="whatsapp-box">
+
+<h3>
+Müraciət etmək istədiyiniz mağazanı seçin
+</h3>
+
+<a
+id="tempraBtn"
+class="store-btn"
+target="_blank">
+🟢 TEMPRA HOME
+</a>
+
+<a
+id="condoBtn"
+class="store-btn"
+target="_blank">
+🟢 CONDO
+</a>
+
+<button
+class="store-btn close-modal"
+id="closeWhatsappModal">
+Bağla
+</button>
 
 </div>
 </body>
