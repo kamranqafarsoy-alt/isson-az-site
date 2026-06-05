@@ -582,58 +582,7 @@ Məhsullar
 <h2 class="section-title">
 Premium Kateqoriyalar
 </h2>
-
-<div class="products-grid">
-
-<a href="category.html?cat=kombi" class="product-card">
-   <img src="images/kombi/kombi- (1).jpg" alt="Kombi">
-    <div class="product-overlay">
-        <h3>Kombilər</h3>
-        <p>Premium kombi modelləri</p>
-    </div>
-</a>
-
-<a href="category.html?cat=kondisioner" class="product-card">
-   <img src="images/kondisioner/kondisioner- (1).jpg" alt="Kondisioner">
-    <div class="product-overlay">
-        <h3>Kondisionerlər</h3>
-        <p>Premium kondisioner modelləri</p>
-    </div>
-</a>
-
-<a href="category.html?cat=laminat" class="product-card">
-   <img src="images/laminat/laminat- (1).jpg" alt="Laminat">
-    <div class="product-overlay">
-        <h3>Laminat</h3>
-        <p>Premium laminat kolleksiyası</p>
-    </div>
-</a>
-<a href="category.html?cat=qapi" class="product-card">
-   <img src="images/qapi/qapi- (1).jpg" alt="Qapılar">
-    <div class="product-overlay">
-        <h3>Otaq Qapıları</h3>
-        <p>Bütün modellərə bax</p>
-    </div>
-</a>
-<a href="category.html?cat=moydadir" class="product-card">
-   <img src="images/moydadir/moydadir- (1).jpg" alt="Moydadır">
-    <div class="product-overlay">
-        <h3>Moydadırlar</h3>
-        <p>Bütün modellərə bax</p>
-    </div>
-</a>
-
-<a href="category.html?cat=seyfqapilar" class="product-card">
-   <img src="images/seyfqapilar/seyfqapi- (1).jpg" alt="Seyf Qapıları">
-    <div class="product-overlay">
-        <h3>Seyf Qapıları</h3>
-        <p>Bütün modellərə bax</p>
-    </div>
-</a>
-</div>
-
-</div>
-
+<div class="products-grid" id="categoriesGrid"></div>
 </section>
 
 <section class="showrooms" id="contact">
@@ -748,5 +697,51 @@ premium interyer həlləri təqdim edirik.
 <a href="https://wa.me/994552000080" class="whatsapp">
 <i class="fab fa-whatsapp"></i>
 </a>
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+async function loadCategories(){
+
+    const { data, error } =
+    await supabase
+    .from("categories")
+    .select("*")
+    .order("id");
+console.log("INDEX DATA:", data);
+console.log("INDEX ERROR:", error);
+    if(error){
+        console.log(error);
+        return;
+    }
+
+    const grid =
+    document.getElementById("categoriesGrid");
+
+    grid.innerHTML = "";
+
+    data.forEach(cat => {
+
+        grid.innerHTML += `
+        <a href="category.html?cat=${cat.slug}"
+           class="product-card">
+
+            <img
+            src="${cat.image || 'https://placehold.co/800x600'}"
+            alt="${cat.name}">
+
+            <div class="product-overlay">
+                <h3>${cat.name}</h3>
+                <p>Bütün modellərə bax</p>
+            </div>
+
+        </a>
+        `;
+    });
+}
+
+loadCategories();
+
+</script>
 </body>
 </html>
