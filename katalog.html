@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
 .catalog-search{
 max-width:1200px;
@@ -17,6 +16,7 @@ padding:0 20px;
 }
 
 .catalog-search input{
+box-sizing:border-box;
 width:100%;
 padding:18px 22px;
 border:none;
@@ -75,12 +75,7 @@ box-shadow:0 0 20px rgba(191,161,117,.15);
 
        <script src="script.js"></script>
 <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-const supabase = createClient(
-  'https://qcnkjmnywapgnkbttznv.supabase.co',
-  'SENIN_ANON_KEY'
-)
+import { supabase } from './js/supabase.js'
 
 const kataloqKonteyner =
 document.getElementById('umumi-kataloq')
@@ -104,7 +99,8 @@ function showProducts(products){
     card.innerHTML = `
       <img
       src="${product.image_url || product.image || 'images/no-image.jpg'}"
-      alt="${product.title || product.name}">
+      alt="${product.title || product.name}"
+      loading="lazy">
 
       <div class="product-overlay">
         <h3>${product.title || product.name}</h3>

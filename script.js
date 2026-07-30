@@ -15,17 +15,21 @@ function closeMenu() {
     document.body.style.overflow = ''; 
 }
 
-menuBtn.addEventListener('click', openMenu);
-closeBtn.addEventListener('click', closeMenu);
-overlay.addEventListener('click', closeMenu);
+if (menuBtn && drawer && overlay && closeBtn) {
+    menuBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+}
 
 // Hər hansı bir kateqoriyaya klikləyəndə menyu avtomatik bağlansın və həmin hissəyə düşsün
-document.querySelectorAll('.category-item a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-});
+if (drawer && overlay) {
+    document.querySelectorAll('.category-item a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+}
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && drawer && overlay) {
         closeMenu();
     }
 });
