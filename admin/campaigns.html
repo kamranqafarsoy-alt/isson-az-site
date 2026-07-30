@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kampaniyalar — ISSON Admin</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0f14;color:white;font-family:Arial,sans-serif;padding:30px}
+h1,h2{color:#d7b98c}.back{color:#d7b98c;text-decoration:none}
+.panel{background:#111827;border:1px solid rgba(191,161,117,.15);padding:22px;border-radius:14px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:13px;color:#d1d5db}input,textarea,select{width:100%;padding:12px;border:0;border-radius:8px;background:#1f2937;color:white}
+textarea{min-height:90px;resize:vertical}button{padding:11px 17px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}
+.save{background:#d7b98c;color:#111}.cancel{background:#374151;color:white}.delete{background:#991b1b;color:white}.edit{background:#f59e0b;color:#111}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}table{width:100%;border-collapse:collapse;min-width:850px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid #273142}th{color:#d7b98c}.table-wrap{overflow:auto}
+.thumb{width:110px;height:60px;object-fit:cover;border-radius:8px}.status{padding:5px 9px;border-radius:50px;background:#153d2d;color:#86efac;font-size:12px}
+.status.off{background:#3f1d1d;color:#fca5a5}.help{font-size:12px;color:#9ca3af;margin:0}
+@media(max-width:700px){body{padding:18px}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<a class="back" href="dashboard.html">← İdarə paneli</a>
+<h1>Kampaniyalar</h1>
+<section class="panel">
+<h2 id="formTitle">Yeni kampaniya</h2>
+<form id="campaignForm">
+<input type="hidden" id="campaignId"><input type="hidden" id="existingDesktop"><input type="hidden" id="existingMobile">
+<div class="grid">
+<div class="field"><label for="title">Başlıq *</label><input id="title" required placeholder="Kondisionerlər aylıq 49 ₼-dən"></div>
+<div class="field"><label for="monthlyText">Aylıq ödəniş</label><input id="monthlyText" placeholder="Aylıq 49 ₼-dən"></div>
+<div class="field full"><label for="subtitle">Qısa mətn</label><textarea id="subtitle" placeholder="18 ayadək rahat ödəniş imkanı"></textarea></div>
+<div class="field"><label for="desktopImage">Desktop banner *</label><input id="desktopImage" type="file" accept="image/*"><p class="help">Tövsiyə: 1600×650 px</p></div>
+<div class="field"><label for="mobileImage">Mobil banner</label><input id="mobileImage" type="file" accept="image/*"><p class="help">Tövsiyə: 800×1000 px</p></div>
+<div class="field"><label for="linkUrl">Keçid</label><input id="linkUrl" value="#" placeholder="category.html?cat=kondisioner"></div>
+<div class="field"><label for="productIds">Məhsul ID-ləri</label><input id="productIds" placeholder="12, 24, 36, 48"><p class="help">Maksimum 4 ID, vergüllə ayırın.</p></div>
+<div class="field"><label for="startsAt">Başlama tarixi</label><input id="startsAt" type="date"></div>
+<div class="field"><label for="endsAt">Bitmə tarixi</label><input id="endsAt" type="date"></div>
+<div class="field"><label for="sortOrder">Sıra</label><input id="sortOrder" type="number" value="0"></div>
+<div class="field"><label for="active">Status</label><select id="active"><option value="true">Aktiv</option><option value="false">Deaktiv</option></select></div>
+</div>
+<div class="actions"><button class="save" id="saveButton" type="submit">Yadda saxla</button><button class="cancel" id="cancelButton" type="button" hidden>Ləğv et</button></div>
+</form>
+</section>
+<section class="panel table-wrap">
+<table><thead><tr><th>Banner</th><th>Başlıq</th><th>Tarix</th><th>Status</th><th>Əməliyyat</th></tr></thead>
+<tbody id="campaignRows"><tr><td colspan="5">Yüklənir...</td></tr></tbody></table>
+</section>
+<script type="module">
+import { supabase } from "../js/supabase.js";
+import { requireAdmin } from "./auth.js";
+import { optimizeImage } from "./image-utils.js";
+await requireAdmin();
+const form=document.getElementById("campaignForm"),rows=document.getElementById("campaignRows");
+let campaigns=[];
+const safe=value=>String(value||"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
+async function uploadBanner(file,type){
+if(!file)return null;
+const optimized=await optimizeImage(file);
+const path=`campaigns/${Date.now()}-${type}-${optimized.name}`;
+const {error}=await supabase.storage.from("products").upload(path,optimized,{upsert:false});
+if(error)throw error;
+return supabase.storage.from("products").getPublicUrl(path).data.publicUrl;
+}
+function render(){
+rows.innerHTML=campaigns.length?campaigns.map(item=>`<tr>
+<td><img class="thumb" src="${safe(item.desktop_image)}" alt=""></td>
+<td><strong>${safe(item.title)}</strong><br><small>${safe(item.monthly_text)}</small></td>
+<td>${safe(item.starts_at||"—")} — ${safe(item.ends_at||"—")}</td>
+<td><span class="status ${item.active?"":"off"}">${item.active?"Aktiv":"Deaktiv"}</span></td>
+<td><div class="actions"><button class="edit" type="button" data-edit="${item.id}">Redaktə</button><button class="delete" type="button" data-delete="${item.id}">Sil</button></div></td>
+</tr>`).join(""):'<tr><td colspan="5">Kampaniya yoxdur.</td></tr>';
+}
+async function load(){
+const {data,error}=await supabase.from("campaigns").select("*").order("sort_order").order("id",{ascending:false});
+if(error){rows.innerHTML=`<tr><td colspan="5">${safe(error.message)}</td></tr>`;return}
+campaigns=data||[];render();
+}
+function reset(){
+form.reset();document.getElementById("campaignId").value="";document.getElementById("existingDesktop").value="";
+document.getElementById("existingMobile").value="";document.getElementById("formTitle").textContent="Yeni kampaniya";
+document.getElementById("sortOrder").value="0";document.getElementById("active").value="true";document.getElementById("cancelButton").hidden=true;
+}
+rows.addEventListener("click",async event=>{
+const edit=event.target.closest("[data-edit]"),remove=event.target.closest("[data-delete]");
+if(edit){
+const item=campaigns.find(c=>String(c.id)===edit.dataset.edit);
+document.getElementById("campaignId").value=item.id;document.getElementById("title").value=item.title||"";
+document.getElementById("subtitle").value=item.subtitle||"";document.getElementById("monthlyText").value=item.monthly_text||"";
+document.getElementById("linkUrl").value=item.link_url||"#";document.getElementById("productIds").value=(item.product_ids||[]).join(", ");
+document.getElementById("startsAt").value=item.starts_at||"";document.getElementById("endsAt").value=item.ends_at||"";
+document.getElementById("sortOrder").value=item.sort_order||0;document.getElementById("active").value=String(item.active);
+document.getElementById("existingDesktop").value=item.desktop_image||"";document.getElementById("existingMobile").value=item.mobile_image||"";
+document.getElementById("formTitle").textContent="Kampaniyanı redaktə et";document.getElementById("cancelButton").hidden=false;scrollTo({top:0,behavior:"smooth"});
+}
+if(remove){
+const item=campaigns.find(c=>String(c.id)===remove.dataset.delete);
+if(!confirm(`"${item.title}" kampaniyası silinsin?`))return;
+const {error}=await supabase.from("campaigns").delete().eq("id",item.id);if(error)return alert(error.message);
+campaigns=campaigns.filter(c=>c.id!==item.id);render();
+}});
+form.addEventListener("submit",async event=>{
+event.preventDefault();const button=document.getElementById("saveButton");button.disabled=true;button.textContent="Yüklənir...";
+try{
+const desktopFile=document.getElementById("desktopImage").files[0],mobileFile=document.getElementById("mobileImage").files[0];
+const desktopImage=desktopFile?await uploadBanner(desktopFile,"desktop"):document.getElementById("existingDesktop").value;
+const mobileImage=mobileFile?await uploadBanner(mobileFile,"mobile"):document.getElementById("existingMobile").value||null;
+if(!desktopImage)throw new Error("Desktop banner seçin");
+const productIds=document.getElementById("productIds").value.split(",").map(x=>Number(x.trim())).filter(Number.isFinite).slice(0,4);
+const payload={title:document.getElementById("title").value.trim(),subtitle:document.getElementById("subtitle").value.trim()||null,
+monthly_text:document.getElementById("monthlyText").value.trim()||null,desktop_image:desktopImage,mobile_image:mobileImage,
+link_url:document.getElementById("linkUrl").value.trim()||"#",product_ids:productIds,starts_at:document.getElementById("startsAt").value||null,
+ends_at:document.getElementById("endsAt").value||null,sort_order:Number(document.getElementById("sortOrder").value)||0,active:document.getElementById("active").value==="true"};
+const id=document.getElementById("campaignId").value;
+const query=id?supabase.from("campaigns").update(payload).eq("id",id).select().single():supabase.from("campaigns").insert(payload).select().single();
+const {data,error}=await query;if(error)throw error;
+if(id)campaigns=campaigns.map(c=>c.id===data.id?data:c);else campaigns.push(data);
+campaigns.sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));render();reset();
+}catch(error){alert(error.message||"Əməliyyat baş tutmadı")}finally{button.disabled=false;button.textContent="Yadda saxla"}
+});
+document.getElementById("cancelButton").addEventListener("click",reset);
+load();
+</script>
+</body>
+</html>

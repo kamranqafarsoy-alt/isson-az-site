@@ -8,6 +8,7 @@
 <title>ISSON GROUP | TEMPRA HOME & CONDO</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="./js/display-name.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -176,6 +177,74 @@ nav a:hover{
 .btn:hover{
     transform:translateY(-5px);
 }
+
+/* CAMPAIGNS */
+.campaigns{
+    display:none;
+    padding-top:100px;
+    padding-bottom:100px;
+    background:linear-gradient(to bottom,#080b10,#0d1117);
+}
+
+.campaigns.active{display:block}
+
+.campaign-slider{
+    position:relative;
+    margin-top:45px;
+    border-radius:35px;
+    overflow:hidden;
+    border:1px solid rgba(191,161,117,.12);
+    box-shadow:0 25px 70px rgba(0,0,0,.45);
+}
+
+.campaign-slide{display:none;position:relative}
+.campaign-slide.active{display:block}
+.campaign-slide picture,.campaign-slide img{display:block;width:100%}
+.campaign-slide img{height:min(520px,42vw);min-height:300px;object-fit:cover}
+
+.campaign-copy{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    padding:clamp(25px,5vw,65px);
+    background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.06));
+}
+
+.campaign-copy h3{
+    max-width:700px;
+    font-family:'Marcellus',serif;
+    font-size:clamp(2rem,4vw,4rem);
+}
+
+.campaign-copy p{max-width:600px;color:rgba(255,255,255,.78);margin:12px 0}
+.campaign-monthly{color:var(--gold)!important;font-weight:700;font-size:1.15rem}
+
+.campaign-dots{display:flex;justify-content:center;gap:9px;margin-top:20px}
+.campaign-dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#4b5563;cursor:pointer}
+.campaign-dot.active{background:var(--gold)}
+
+.campaign-products{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:20px;
+}
+
+.campaign-product{
+    overflow:hidden;
+    border-radius:22px;
+    background:#111827;
+    color:white;
+    text-decoration:none;
+    border:1px solid rgba(191,161,117,.12);
+}
+
+.campaign-product img{width:100%;height:220px;object-fit:contain;padding:12px}
+.campaign-product div{padding:17px}
+.campaign-product h4{font-size:1rem;margin-bottom:8px}
+.campaign-product span{color:var(--gold);font-size:.9rem}
 
 /* STATS */
 
@@ -484,6 +553,14 @@ footer{
     grid-template-columns:1fr;
 }
 
+.campaign-products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.campaign-slide img{
+    height:520px;
+}
+
 .hero h1,
 .section-title{
     font-size:3.2rem;
@@ -501,6 +578,12 @@ header{
     padding:25px 7%;
 }
 
+}
+
+@media(max-width:600px){
+.campaign-products{grid-template-columns:1fr}
+.campaign-slide img{height:430px}
+.campaign-copy{background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
 }
 
 </style>
@@ -555,6 +638,14 @@ Məhsullara Bax
 
 </div>
 
+</section>
+
+<section class="campaigns" id="campaignSection">
+<span class="section-tag">KAMPANİYALAR</span>
+<h2 class="section-title">Seçilmiş Fürsətlər</h2>
+<div class="campaign-slider" id="campaignSlider"></div>
+<div class="campaign-dots" id="campaignDots"></div>
+<div class="campaign-products" id="campaignProducts"></div>
 </section>
 
 <section class="stats">
@@ -709,6 +800,66 @@ premium interyer həlləri təqdim edirik.
 
 import { supabase } from "./js/supabase.js";
 
+const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+
+async function loadCampaigns(){
+const {data,error}=await supabase
+.from("campaigns")
+.select("*")
+.order("sort_order")
+.limit(3);
+
+if(error || !data?.length) return;
+
+const section=document.getElementById("campaignSection");
+const slider=document.getElementById("campaignSlider");
+const dots=document.getElementById("campaignDots");
+const products=document.getElementById("campaignProducts");
+section.classList.add("active");
+
+slider.innerHTML=data.map((item,index)=>`
+<a class="campaign-slide ${index===0?"active":""}" href="${safe(item.link_url || "#")}">
+<picture>
+${item.mobile_image?`<source media="(max-width:600px)" srcset="${safe(item.mobile_image)}">`:""}
+<img src="${safe(item.desktop_image)}" alt="${safe(item.title)}" loading="${index===0?"eager":"lazy"}">
+</picture>
+<div class="campaign-copy">
+<h3>${safe(item.title)}</h3>
+${item.subtitle?`<p>${safe(item.subtitle)}</p>`:""}
+${item.monthly_text?`<p class="campaign-monthly">${safe(item.monthly_text)}</p>`:""}
+</div>
+</a>`).join("");
+
+dots.innerHTML=data.map((_,index)=>`<button class="campaign-dot ${index===0?"active":""}" type="button" data-slide="${index}" aria-label="${index+1}-ci kampaniya"></button>`).join("");
+
+let current=0;
+function show(index){
+current=index;
+document.querySelectorAll(".campaign-slide").forEach((slide,i)=>slide.classList.toggle("active",i===index));
+document.querySelectorAll(".campaign-dot").forEach((dot,i)=>dot.classList.toggle("active",i===index));
+}
+dots.addEventListener("click",event=>{
+const button=event.target.closest("[data-slide]");
+if(button)show(Number(button.dataset.slide));
+});
+if(data.length>1)setInterval(()=>show((current+1)%data.length),6000);
+
+const productIds=[...new Set(data.flatMap(item=>item.product_ids || []))].slice(0,4);
+if(!productIds.length)return;
+const {data:items}=await supabase.from("products").select("*").in("id",productIds);
+if(!items?.length)return;
+products.innerHTML=items.map(item=>{
+const name=window.formatProductName?window.formatProductName(item.name||item.title,item):(item.name||item.title);
+const monthly=data.find(c=>(c.product_ids||[]).includes(item.id))?.monthly_text || "";
+return `<a class="campaign-product" href="product.html?id=${item.id}">
+<img src="${safe(item.image||item.image_url||"images/ana-sehife.jpg")}" alt="${safe(name)}" loading="lazy">
+<div><h4>${safe(name)}</h4>${monthly?`<span>${safe(monthly)}</span>`:""}</div>
+</a>`;
+}).join("");
+}
+
 async function loadCategories(){
 
     const { data, error } =
@@ -748,6 +899,7 @@ async function loadCategories(){
 }
 
 loadCategories();
+loadCampaigns();
 
 </script>
 </body>
