@@ -1,16 +1,6 @@
 @import url("../assets/css/app.css");
 
-body {
-  --ink: #171717;
-  --muted: #6d6a64;
-  --paper: #f2efe9;
-  --surface: #ffffff;
-  --gold: #bd9656;
-  --gold-dark: #8d6933;
-  --line: #e6e0d5;
-  color: var(--ink);
-  background: #f2efe9;
-}
+body { background: #f2efe9; }
 .admin-shell { min-height: 100vh; display: grid; grid-template-columns: 250px minmax(0, 1fr); }
 .admin-sidebar { background: var(--ink); color: white; padding: 28px 20px; }
 .admin-sidebar .brand { margin-bottom: 38px; }
