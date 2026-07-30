@@ -1,213 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="az">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kateqoriyalar - ISSON Admin</title>
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#0b0f14;
-color:white;
-padding:30px;
-}
-
-h1{
-margin-bottom:25px;
-color:#d7b98c;
-}
-
-.back{
-display:inline-block;
-margin-bottom:25px;
-padding:12px 18px;
-background:#d7b98c;
-color:black;
-text-decoration:none;
-border-radius:8px;
-font-weight:bold;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:20px;
-}
-
-.card{
-background:#111827;
-padding:20px;
-border-radius:15px;
-border:1px solid rgba(191,161,117,.15);
-}
-
-.card h3{
-margin-bottom:15px;
-color:#d7b98c;
-}
-
-.preview{
-width:100%;
-height:220px;
-object-fit:cover;
-border-radius:10px;
-background:#1f2937;
-margin-bottom:15px;
-}
-
-input[type=file]{
-width:100%;
-padding:10px;
-background:#1f2937;
-border-radius:8px;
-color:white;
-margin-bottom:15px;
-}
-
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-background:#d7b98c;
-color:black;
-font-weight:bold;
-cursor:pointer;
-}
-</style>
-</head>
-
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Kateqoriyalar | ISSON Admin</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="admin.css"></head>
 <body>
-
-<a href="dashboard.html" class="back">
-← Dashboard
-</a>
-
-<h1>Kateqoriyaları İdarə Et</h1>
-
-<div id="categoriesGrid" class="grid"></div>
-
-<script type="module">
-
-import { supabase } from "../js/supabase.js";
-
-const {
-    data:{user}
-} = await supabase.auth.getUser();
-
-if(!user){
-    location.href="index.html";
-}
-
-async function loadCategories(){
-
-    const { data,error } =
-    await supabase
-    .from("categories")
-    .select("*")
-    .order("id");
-console.log(data);
-    if(error){
-        console.log(error);
-        return;
+  <div class="admin-shell">
+    <aside class="admin-sidebar"><a class="brand" href="dashboard.html">ISSON GROUP<span>ADMIN PANEL</span></a><nav class="admin-nav"><a href="dashboard.html">İcmal</a><a href="products.html">Məhsullar</a><a class="active" href="categories.html">Kateqoriyalar</a><button type="button" data-logout>Çıxış</button></nav></aside>
+    <main class="admin-main">
+      <div class="admin-head"><div><span class="eyebrow">Kataloq</span><h1>Kateqoriyalar</h1></div></div>
+      <section class="admin-card">
+        <h2 id="formTitle" style="margin-top:0">Yeni kateqoriya</h2>
+        <form id="categoryForm"><input type="hidden" id="categoryId"><div class="form-grid"><div class="form-group"><label for="name">Ad *</label><input class="field" id="name" required maxlength="80"></div><div class="form-group"><label for="slug">Slug *</label><input class="field" id="slug" required pattern="[a-z0-9-]+" placeholder="meselen-qapi"></div><div class="form-group full"><label for="image">Şəkil</label><input class="field" id="image" type="file" accept="image/*"><p class="help">Yeni şəkil seçilməsə, mövcud şəkil qorunacaq.</p></div></div><div id="notice" class="notice" style="margin-top:16px" hidden></div><div class="actions"><button class="button" id="saveButton" type="submit">Yadda saxla</button><button class="button button-secondary" style="color:#171717" id="cancelButton" type="button" hidden>Ləğv et</button></div></form>
+      </section>
+      <section class="admin-card" style="margin-top:20px"><div class="table-wrap"><table class="admin-table"><thead><tr><th>Şəkil</th><th>Ad</th><th>Slug</th><th>Əməliyyat</th></tr></thead><tbody id="categoryRows"><tr><td colspan="4">Yüklənir...</td></tr></tbody></table></div></section>
+    </main>
+  </div>
+  <script type="module">
+    import { supabase, requireAdmin, setupLogout, setBusy, uploadImage, removeStorageUrls } from "./admin.js";
+    import { escapeHtml } from "../assets/js/site.js";
+    await requireAdmin(); setupLogout();
+    const form = document.getElementById("categoryForm"), rows = document.getElementById("categoryRows"), notice = document.getElementById("notice");
+    let categories = [], editing = null;
+    function render() {
+      rows.innerHTML = categories.length ? categories.map(item => `<tr><td><img class="table-image" src="${escapeHtml(item.image || "../images/ana-sehife.jpg")}" alt=""></td><td><strong>${escapeHtml(item.name)}</strong></td><td>${escapeHtml(item.slug)}</td><td><div class="table-actions"><button class="button button-small button-dark" data-edit="${item.id}" type="button">Redaktə</button><button class="button button-small button-danger" data-delete="${item.id}" type="button">Sil</button></div></td></tr>`).join("") : '<tr><td colspan="4">Kateqoriya yoxdur.</td></tr>';
     }
-
-    const grid =
-    document.getElementById("categoriesGrid");
-
-    grid.innerHTML = "";
-
-    data.forEach(cat=>{
-
-        grid.innerHTML += `
-        <div class="card">
-
-            <h3>${cat.name}</h3>
-
-           <img
-class="preview"
-src="${cat.image ? cat.image + '?v=' + Date.now() : 'https://placehold.co/600x400?text=No+Image'}">
-
-            <input
-            type="file"
-            id="file-${cat.id}"
-            accept="image/*">
-
-            <button
-            onclick="updateCategoryImage(${cat.id})">
-            Şəkli Yenilə
-            </button>
-
-        </div>
-        `;
+    async function load() {
+      const { data, error } = await supabase.from("categories").select("*").order("id");
+      if (error) { rows.innerHTML = '<tr><td colspan="4">Məlumatı yükləmək mümkün olmadı.</td></tr>'; return; }
+      categories = data || []; render();
+    }
+    function reset() { editing = null; form.reset(); document.getElementById("categoryId").value = ""; document.getElementById("formTitle").textContent = "Yeni kateqoriya"; document.getElementById("cancelButton").hidden = true; notice.hidden = true; }
+    rows.addEventListener("click", async event => {
+      const edit = event.target.closest("[data-edit]"), remove = event.target.closest("[data-delete]");
+      if (edit) {
+        editing = categories.find(item => String(item.id) === edit.dataset.edit);
+        document.getElementById("name").value = editing.name; document.getElementById("slug").value = editing.slug;
+        document.getElementById("formTitle").textContent = "Kateqoriyanı redaktə et"; document.getElementById("cancelButton").hidden = false; scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (remove) {
+        const item = categories.find(cat => String(cat.id) === remove.dataset.delete);
+        const { count } = await supabase.from("products").select("*", { count: "exact", head: true }).eq("category", item.slug);
+        if (count > 0) { alert(`Bu kateqoriyada ${count} məhsul var. Əvvəlcə onları başqa kateqoriyaya keçirin.`); return; }
+        if (!confirm(`"${item.name}" kateqoriyası silinsin?`)) return;
+        const { error } = await supabase.from("categories").delete().eq("id", item.id);
+        if (error) return alert(error.message);
+        await removeStorageUrls([item.image]); categories = categories.filter(cat => cat.id !== item.id); render();
+      }
     });
-}
-
-window.updateCategoryImage = async function(id){
-
-    const file =
-    document.getElementById(`file-${id}`)
-    .files[0];
-
-    if(!file){
-        alert("Şəkil seçin");
-        return;
-    }
-
-    const fileName =
-    "category-" +
-    Date.now() +
-    "-" +
-    file.name;
-
-    const { error:uploadError } =
-    await supabase.storage
-    .from("products")
-    .upload(fileName,file,{
-        upsert:true
+    document.getElementById("cancelButton").addEventListener("click", reset);
+    document.getElementById("name").addEventListener("input", () => {
+      if (editing) return;
+      document.getElementById("slug").value = document.getElementById("name").value.toLocaleLowerCase("az").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ə/g, "e").replace(/ı/g, "i").replace(/ş/g, "s").replace(/ç/g, "c").replace(/ö/g, "o").replace(/ü/g, "u").replace(/ğ/g, "g").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     });
-
-    if(uploadError){
-        alert(uploadError.message);
-        return;
-    }
-
-    const { data:urlData } =
-    supabase.storage
-    .from("products")
-    .getPublicUrl(fileName);
-
-    const imageUrl =
-    urlData.publicUrl;
-
-    const { error } =
-    await supabase
-    .from("categories")
-    .update({
-        image:imageUrl
-    })
-    .eq("id",id);
-
-    if(error){
-        alert(error.message);
-        return;
-    }
-
-    alert("Şəkil yeniləndi");
-
-    loadCategories();
-}
-
-loadCategories();
-
-</script>
-
+    form.addEventListener("submit", async event => {
+      event.preventDefault(); const button = document.getElementById("saveButton"); setBusy(button, true);
+      try {
+        const file = document.getElementById("image").files[0];
+        const image = file ? await uploadImage(file, "categories") : editing?.image || null;
+        const payload = { name: document.getElementById("name").value.trim(), slug: document.getElementById("slug").value.trim(), image };
+        const query = editing ? supabase.from("categories").update(payload).eq("id", editing.id).select().single() : supabase.from("categories").insert(payload).select().single();
+        const { data, error } = await query; if (error) throw error;
+        if (file && editing?.image) await removeStorageUrls([editing.image]);
+        if (editing) categories = categories.map(item => item.id === data.id ? data : item); else categories.push(data);
+        categories.sort((a,b) => a.id - b.id); render(); reset();
+      } catch (error) { notice.textContent = error.message || "Əməliyyat baş tutmadı."; notice.className = "notice error"; notice.hidden = false; }
+      finally { setBusy(button, false); }
+    });
+    await load();
+  </script>
 </body>
 </html>
