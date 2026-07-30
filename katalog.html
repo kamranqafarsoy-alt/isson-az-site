@@ -7,6 +7,7 @@
 <title>Ümumi Kataloq — ISSON GROUP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="./js/display-name.js"></script>
 
 <style>
 :root{
@@ -227,7 +228,7 @@ return;
 const visible = products.slice(0,visibleCount);
 container.innerHTML = visible.map(product => {
 const image = product.image_url || product.image || "images/ana-sehife.jpg";
-const name = product.title || product.name || "Məhsul";
+const name = window.formatProductName(product.title || product.name || "Məhsul",product);
 const price = product.price ? `${escapeHtml(product.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
 
 return `

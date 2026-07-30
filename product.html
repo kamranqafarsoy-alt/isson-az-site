@@ -8,6 +8,7 @@
 <title>Məhsul</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="./js/display-name.js"></script>
 
 <style>
 
@@ -444,9 +445,10 @@ const { data,error } = await supabase
 
 if(data){
 
-document.title = `${data.name || data.title || "Məhsul"} | ISSON GROUP`;
+const displayName = window.formatProductName(data.name || data.title || "Məhsul",data);
+document.title = `${displayName} | ISSON GROUP`;
 document.querySelector('meta[name="description"]').content =
-(data.description || `${data.name || data.title || "Məhsul"} haqqında ətraflı məlumat`).slice(0,155);
+(data.description || `${displayName} haqqında ətraflı məlumat`).slice(0,155);
 
 const image =
 data.image ||
@@ -489,7 +491,7 @@ ${data.image4 ?
 </div>
 
 
-<h1>${data.name}</h1>
+<h1>${displayName}</h1>
 
 ${data.price ?
 `<div class="price">${data.price} ₼</div>`
@@ -708,7 +710,7 @@ document
 .addEventListener("click",()=>{
 
 const message =
-`Salam, ${data.name} məhsulu ilə maraqlanıram`;
+`Salam, ${displayName} məhsulu ilə maraqlanıram`;
 
 document.getElementById("tempraBtn").href =
 `https://wa.me/994552000080?text=${encodeURIComponent(message + " " + window.location.href)}`;
@@ -741,7 +743,7 @@ window.location.href;
 if(navigator.share){
 
 await navigator.share({
-title:data.name,
+title:displayName,
 url:shareUrl
 });
 
@@ -786,10 +788,10 @@ class="related-card">
 
 <img
 src="${item.image || item.image_url}"
-alt="${item.name}"
+alt="${window.formatProductName(item.name || item.title || "Məhsul",item)}"
 loading="lazy">
 
-<h3>${item.name}</h3>
+<h3>${window.formatProductName(item.name || item.title || "Məhsul",item)}</h3>
 
 </a>
 
