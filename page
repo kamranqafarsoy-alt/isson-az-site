@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Məhsullar - ISSON Admin</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0b0f14;
+color:white;
+padding:30px;
+}
+
+h1{
+margin-bottom:20px;
+color:#d7b98c;
+}
+
+.top{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+input,select{
+padding:12px;
+border:none;
+border-radius:8px;
+background:#1f2937;
+color:white;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.add{
+background:#d7b98c;
+color:black;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#111827;
+border-radius:10px;
+overflow:hidden;
+}
+
+th,td{
+padding:15px;
+text-align:left;
+border-bottom:1px solid #222;
+}
+
+th{
+color:#d7b98c;
+}
+
+img{
+width:60px;
+height:60px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.edit{
+background:#f39c12;
+}
+
+.delete{
+background:#c0392b;
+color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Məhsulların İdarə Edilməsi</h1>
+
+<div class="top">
+
+<input
+type="text"
+id="search"
+placeholder="Məhsul axtar..."
+onkeyup="loadProducts()">
+
+<select id="filter" onchange="loadProducts()">
+<option value="">Bütün kateqoriyalar</option>
+<option value="kombi">Kombi</option>
+<option value="kondisioner">Kondisioner</option>
+<option value="laminat">Laminat</option>
+<option value="qapi">Qapı</option>
+<option value="moydadir">Moydadır</option>
+<option value="seyfqapilar">Seyf Qapı</option>
+</select>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Şəkil</th>
+<th>Ad</th>
+<th>Qiymət</th>
+<th>Kateqoriya</th>
+<th>Əməliyyat</th>
+</tr>
+</thead>
+
+<tbody id="productsTable"></tbody>
+
+</table>
+
+<script type="module">
+
+import { supabase } from "../js/supabase.js";
+
+if(
+localStorage.getItem("isson_admin")
+!== "true"
+){
+location.href="index.html";
+}
+
+window.loadProducts = async function(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const filter =
+document.getElementById("filter")
+.value;
+
+const { data } =
+await supabase
+.from("products")
+.select("*")
+.order("id",{ascending:false});
+
+const table =
+document.getElementById("productsTable");
+
+table.innerHTML="";
+
+data.forEach(item=>{
+
+if(
+search &&
+!(item.name || "")
+.toLowerCase()
+.includes(search)
+){
+return;
+}
+
+if(
+filter &&
+item.category !== filter
+){
+return;
+}
+
+table.innerHTML += `
+<tr>
+
+<td>
+<img src="${
+item.image ||
+item.image_url ||
+''
+}">
+</td>
+
+<td>
+${item.name || item.title}
+</td>
+
+<td>
+${item.price}
+</td>
+
+<td>
+${item.category || '-'}
+</td>
+
+<td>
+
+<button
+class="edit"
+onclick="editProduct(${item.id})">
+Redaktə
+</button>
+
+<button
+class="delete"
+onclick="deleteProduct(${item.id})">
+Sil
+</button>
+
+</td>
+
+</tr>
+`;
+});
+}
+
+window.deleteProduct =
+async function(id){
+
+if(!confirm("Silinsin?"))
+return;
+
+await supabase
+.from("products")
+.delete()
+.eq("id",id);
+
+loadProducts();
+}
+
+window.editProduct =
+async function(id){
+
+const ad =
+prompt("Yeni ad");
+
+if(!ad) return;
+
+const qiymet =
+prompt("Yeni qiymət");
+
+if(!qiymet) return;
+
+await supabase
+.from("products")
+.update({
+name:ad,
+title:ad,
+price:qiymet
+})
+.eq("id",id);
+
+loadProducts();
+}
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

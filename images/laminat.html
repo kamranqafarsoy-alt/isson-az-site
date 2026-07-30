@@ -26,7 +26,7 @@
         .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
         .product-card { background-color: var(--white); border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 5px 20px rgba(0,0,0,0.02); transition: all 0.3s ease; overflow: hidden; display: flex; flex-direction: column; border-radius: 4px; }
         .product-img-box { width: 100%; height: 350px; background-color: #ffffff; overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 15px; }
-        .product-img-box picture img { max-width: 100%; max-height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-info { padding: 15px; text-align: center; background-color: #fafafa; border-top: 1px solid #f1f2f6; }
         .product-info h3 { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px; color: var(--dark-luxury); }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); border-color: var(--accent-gold); }
@@ -63,85 +63,7 @@
         <p>Yüksək dözümlülük və estetik döşəmə örtükləri</p>
     </section>
     <section class="catalog-section">
-        <div class="products-grid">
-            <!-- 1 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (1).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (1).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (1).jpg" alt="Laminat Model 1" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №1</h3></div>
-            </div>
-            <!-- 2 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (2).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (2).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (2).jpg" alt="Laminat Model 2" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №2</h3></div>
-            </div>
-            <!-- 3 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (3).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (3).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (3).jpg" alt="Laminat Model 3" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №3</h3></div>
-            </div>
-            <!-- 4 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (4).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (4).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (4).jpg" alt="Laminat Model 4" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №4</h3></div>
-            </div>
-            <!-- 5 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (5).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (5).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (5).jpg" alt="Laminat Model 5" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №5</h3></div>
-            </div>
-            <!-- 6 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (6).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (6).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (6).jpg" alt="Laminat Model 6" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №6</h3></div>
-            </div>
-            <!-- 7 -->
-            <div class="product-card">
-                <div class="product-img-box">
-                    <picture>
-                        <source srcset="images/laminat/laminat- (7).png" type="image/png">
-                        <source srcset="images/laminat/laminat- (7).jpeg" type="image/jpeg">
-                        <img src="images/laminat/laminat- (7).jpg" alt="Laminat Model 7" loading="lazy">
-                    </picture>
-                </div>
-                <div class="product-info"><h3>Laminat Model №7</h3></div>
-            </div>
-        </div>
+        <div class="products-grid" id="laminat-kataloq"></div>
     </section>
     <footer>
         <div class="footer-grid">
@@ -150,5 +72,19 @@
         </div>
         <div class="footer-bottom"><p>&copy; 2026 ISSON GROUP. Bütün hüquqlar qorunur.</p></div>
     </footer>
+    <script>
+        const kataloqKonteyner = document.getElementById('laminat-kataloq');
+        const toplamLaminat = 7;
+        for (let i = 1; i <= toplamLaminat; i++) {
+            const kart = document.createElement('div');
+            kart.className = 'product-card';
+            const sekilYolu = `images/laminat- (${i}).jpg`;
+            kart.innerHTML = `
+                <div class="product-img-box"><img src="${sekilYolu}" alt="Laminat Model ${i}" loading="lazy"></div>
+                <div class="product-info"><h3>Laminat Model №${i}</h3></div>
+            `;
+            kataloqKonteyner.appendChild(kart);
+        }
+    </script>
 </body>
 </html>

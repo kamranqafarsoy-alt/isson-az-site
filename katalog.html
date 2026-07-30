@@ -1,22 +1,183 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ümumi kataloq | ISSON GROUP</title>
-  <meta name="description" content="ISSON GROUP ümumi məhsul kataloqu. Bütün kateqoriyalarda axtarış və qiymətə görə sıralama.">
-  <meta name="theme-color" content="#171717">
-  <link rel="canonical" href="/katalog.html">
-  <link rel="stylesheet" href="assets/css/app.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kataloq — ISSON GROUP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+.catalog-search{
+max-width:1200px;
+margin:0 auto 30px;
+padding:0 20px;
+}
+
+.catalog-search input{
+width:100%;
+padding:18px 22px;
+border:none;
+border-radius:50px;
+background:#111827;
+color:white;
+font-size:16px;
+outline:none;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.catalog-search input:focus{
+border-color:#bfa175;
+box-shadow:0 0 20px rgba(191,161,117,.15);
+}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Əsas məzmuna keç</a>
-  <header class="site-header"><nav class="container nav" aria-label="Əsas naviqasiya"><a class="brand" href="index.html">ISSON GROUP<span>TEMPRA · CONDO</span></a><button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-menu" aria-label="Menyunu aç">☰</button><div class="nav-links" id="main-menu" data-menu><a href="index.html">Ana səhifə</a><a href="katalog.html" aria-current="page">Kataloq</a><a href="index.html#showrooms">Showroomlar</a></div></nav></header>
-  <main id="main">
-    <section class="page-hero"><div class="container"><span class="eyebrow">ISSON Kataloq</span><h1 data-catalog-title>Ümumi kataloq</h1><p>Bütün kolleksiyaları bir yerdə axtarın və müqayisə edin.</p></div></section>
-    <section class="section"><div class="container"><div class="toolbar"><label><span class="skip-link">Məhsul axtar</span><input class="field" type="search" data-search placeholder="Məhsul adı ilə axtar..." autocomplete="off"></label><label><span class="skip-link">Sıralama</span><select class="field" data-sort><option value="newest">Ən yenilər</option><option value="price-asc">Qiymət: aşağıdan</option><option value="price-desc">Qiymət: yuxarıdan</option></select></label></div><div class="section-head"><p data-count aria-live="polite">Məhsullar yüklənir...</p></div><div class="product-grid" data-products-grid aria-live="polite"></div></div></section>
-  </main>
-  <footer class="site-footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="index.html">ISSON GROUP<span>TEMPRA · CONDO</span></a></div><div><h3>Kateqoriyalar</h3><div class="footer-links"><a href="category.html?cat=qapi">Otaq qapıları</a><a href="category.html?cat=seyfqapilar">Seyf qapıları</a><a href="category.html?cat=moydadir">Hamam mebelləri</a></div></div><div><h3>Əlaqə</h3><div class="footer-links"><a href="tel:+994508000080">+994 50 800 00 80</a><a href="tel:+994101000909">+994 10 100 09 09</a></div></div></div><div class="footer-bottom">© <span data-year></span> ISSON GROUP.</div></div></footer>
-  <script type="module" src="assets/js/catalog.js"></script>
+    <div class="top-bar">
+        <div><i class="fa-solid fa-location-dot"></i> Bakı, Azərbaycan</div>
+        <div class="phones">
+            <div><i class="fa-solid fa-phone"></i> TEMPRA: +994 50 800 00 80</div>
+            <div><i class="fa-solid fa-phone"></i> CONDO: +994 10 100 09 09</div>
+        </div>
+    </div>
+    <header>
+        <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Ana Səhifə</a></li>
+            <li><a href="kombiler.html">Kombilər</a></li>
+            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
+            <li><a href="laminat.html">Laminat</a></li>
+            <li><a href="qapi.html">Qapılar</a></li>
+            <li><a href="seyfqapi.html">Seyf Qapılar</a></li>
+            <li><a href="moydadir.html">Moydadırlar</a></li>
+            <li><a href="katalog.html" class="active">Kataloq</a></li>
+        </ul>
+    </header>
+
+    <section class="page-header">
+        <h1>Ümumi Kataloq</h1>
+        <p>Bütün məhsullarımız tək bir məkanda</p>
+    </section>
+
+    <section class="catalog-section">
+      <div class="catalog-search">
+    <input
+        type="text"
+        id="catalogSearch"
+        placeholder="Məhsul axtar...">
+</div>
+        <div class="products-grid" id="umumi-kataloq">
+            <p style="text-align: center; color: #888; width: 100%;">Məhsullar yüklənir...</p>
+        </div>
+    </section>
+
+       <script src="script.js"></script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabase = createClient(
+  'https://qcnkjmnywapgnkbttznv.supabase.co',
+  'SENIN_ANON_KEY'
+)
+
+const kataloqKonteyner =
+document.getElementById('umumi-kataloq')
+
+function showProducts(products){
+
+  kataloqKonteyner.innerHTML = ''
+
+  if(products.length === 0){
+    kataloqKonteyner.innerHTML =
+    '<p style="text-align:center;width:100%">Məhsul tapılmadı</p>'
+    return
+  }
+
+  products.forEach(product => {
+
+    const card = document.createElement('div')
+
+    card.className = 'product-card'
+
+    card.innerHTML = `
+      <img
+      src="${product.image_url || product.image || 'images/no-image.jpg'}"
+      alt="${product.title || product.name}">
+
+      <div class="product-overlay">
+        <h3>${product.title || product.name}</h3>
+
+        <p>${product.price || ''} ₼</p>
+
+        <a
+        href="product.html?id=${product.id}"
+        class="btn btn-gold">
+        Ətraflı
+        </a>
+      </div>
+    `
+
+    kataloqKonteyner.appendChild(card)
+
+  })
+}
+
+async function loadCatalog(){
+
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('id',{ ascending:false })
+
+  if(error){
+    kataloqKonteyner.innerHTML =
+    '<p>Xəta baş verdi</p>'
+    return
+  }
+
+  window.allProducts = data || []
+
+  showProducts(window.allProducts)
+
+  const searchInput =
+  document.getElementById('catalogSearch')
+
+  searchInput.addEventListener('input', () => {
+
+    const value =
+    searchInput.value.toLowerCase()
+
+    const filtered =
+    window.allProducts.filter(product =>
+
+      (product.name || '')
+      .toLowerCase()
+      .includes(value)
+
+      ||
+
+      (product.title || '')
+      .toLowerCase()
+      .includes(value)
+
+      ||
+
+      (product.category || '')
+      .toLowerCase()
+      .includes(value)
+
+    )
+
+    showProducts(filtered)
+
+  })
+
+}
+
+loadCatalog()
+</script>
+
 </body>
 </html>

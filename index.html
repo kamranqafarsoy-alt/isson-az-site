@@ -1,126 +1,754 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ISSON GROUP | Eviniz üçün seçilmiş həllər</title>
-  <meta name="description" content="ISSON GROUP — qapı, laminat, kombi, kondisioner və hamam mebellərini Tempra Home və Condo Luxury Concept salonlarında kəşf edin.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="ISSON GROUP | Eviniz üçün seçilmiş həllər">
-  <meta property="og:description" content="Keyfiyyətli interyer və iqlim məhsulları, iki fərqli showroom təcrübəsi.">
-  <meta property="og:image" content="/images/ana-sehife.jpg">
-  <meta name="theme-color" content="#171717">
-  <link rel="canonical" href="/">
-  <link rel="stylesheet" href="assets/css/app.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ISSON GROUP | TEMPRA HOME & CONDO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+:root{
+    --gold:#bfa175;
+    --dark:#07090d;
+    --dark2:#10141a;
+    --text:rgba(255,255,255,0.72);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left, rgba(191,161,117,0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(191,161,117,0.05), transparent 25%),
+    var(--dark);
+
+    color:white;
+    overflow-x:hidden;
+}
+
+section{
+    padding:120px 10%;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:999;
+    padding:28px 10%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(7,9,13,0.82);
+    backdrop-filter:blur(12px);
+
+    border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:2.2rem;
+    font-family:'Marcellus',serif;
+    letter-spacing:6px;
+}
+
+.logo span{
+    color:var(--gold);
+}
+
+nav{
+    display:flex;
+    gap:35px;
+}
+
+nav a{
+    color:rgba(255,255,255,0.7);
+    text-decoration:none;
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:2px;
+    transition:0.4s;
+}
+
+nav a:hover{
+    color:var(--gold);
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.72),rgba(0,0,0,0.86)),
+    url('images/ana-sehife.jpg') center/cover;
+
+    transform:scale(1.04);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+}
+
+.hero-sub{
+    color:var(--gold);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:6rem;
+    line-height:1;
+    font-family:'Marcellus',serif;
+    margin-bottom:30px;
+}
+
+.hero p{
+    color:var(--text);
+    line-height:2;
+    font-size:1.1rem;
+    margin-bottom:45px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 34px;
+    border-radius:100px;
+    text-decoration:none;
+    transition:0.4s ease;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+.btn-gold{
+    background:linear-gradient(135deg,#d7b98c,#bfa175);
+    color:black;
+    font-weight:600;
+
+    box-shadow:0 10px 35px rgba(191,161,117,0.25);
+}
+
+.btn-dark{
+    border:1px solid rgba(255,255,255,0.15);
+    color:white;
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.03);
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+}
+
+/* STATS */
+
+.stats{
+    background:var(--dark2);
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.stat-card{
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02));
+
+    border:1px solid rgba(191,161,117,0.12);
+
+    border-radius:30px;
+
+    padding:45px;
+
+    text-align:center;
+
+    transition:0.5s ease;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.35);
+}
+
+.stat-card:hover{
+    transform:translateY(-12px);
+}
+
+.stat-card h2{
+    color:var(--gold);
+    font-size:3rem;
+    margin-bottom:12px;
+    font-family:'Marcellus',serif;
+}
+
+.stat-card p{
+    color:rgba(255,255,255,0.6);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+/* TITLES */
+
+.section-tag{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:4px;
+    font-size:12px;
+}
+
+.section-title{
+    font-size:4.5rem;
+    font-family:'Marcellus',serif;
+    margin:25px 0;
+}
+
+/* PRODUCTS */
+
+.products{
+    background:
+    linear-gradient(to bottom,#0d1117,#080b10);
+}
+
+.products-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.product-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:35px;
+    min-height:500px;
+
+    border:1px solid rgba(191,161,117,0.08);
+
+    box-shadow:
+    0 15px 45px rgba(0,0,0,0.35);
+
+    transition:0.5s ease;
+}
+
+.product-card:hover{
+    transform:translateY(-12px);
+}
+
+.product-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    transition:0.7s ease;
+}
+
+.product-card:hover img{
+    transform:scale(1.08);
+}
+
+.product-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(transparent,rgba(0,0,0,0.95));
+
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+
+    padding:40px;
+}
+
+.product-overlay h3{
+    font-size:2rem;
+    font-family:'Marcellus',serif;
+    margin-bottom:15px;
+}
+
+.product-overlay p{
+    color:rgba(255,255,255,0.72);
+    margin-bottom:25px;
+}
+
+/* SHOWROOMS */
+
+.showrooms{
+    background:var(--dark2);
+}
+
+.showroom-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:35px;
+}
+
+.showroom-card{
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02));
+
+    border:1px solid rgba(191,161,117,0.12);
+
+    border-radius:35px;
+
+    padding:35px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.35);
+}
+
+.showroom-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.showroom-top h3{
+    font-size:2rem;
+    font-family:'Marcellus',serif;
+    color:var(--gold);
+}
+
+.badge{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+}
+
+.showroom-card p{
+    margin-bottom:10px;
+    color:rgba(255,255,255,0.72);
+}
+
+.showroom-card iframe{
+    width:100%;
+    height:240px;
+    border:0;
+    border-radius:22px;
+    margin-top:20px;
+}
+
+.whatsapp-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    margin-top:20px;
+
+    padding:15px 30px;
+
+    background:#25d366;
+
+    color:white;
+    text-decoration:none;
+
+    border-radius:100px;
+
+    font-size:12px;
+    font-weight:600;
+
+    box-shadow:
+    0 10px 30px rgba(37,211,102,0.25);
+}
+
+/* FOOTER */
+
+footer{
+    background:#050608;
+    padding:90px 10%;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:70px;
+}
+
+.footer-grid h3{
+    color:var(--gold);
+    margin-bottom:25px;
+}
+
+.footer-grid p{
+    color:rgba(255,255,255,0.6);
+    line-height:2;
+}
+.footer-grid a{
+    color:rgba(255,255,255,0.6);
+    text-decoration:none;
+    transition:.3s;
+}
+
+.footer-grid a:hover{
+    color:#bfa175;
+}
+.footer-bottom{
+    margin-top:60px;
+    padding-top:30px;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+
+    text-align:center;
+
+    color:rgba(255,255,255,0.4);
+}
+
+/* FLOATING */
+
+.whatsapp{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+
+    width:65px;
+    height:65px;
+
+    background:#25d366;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+    font-size:1.7rem;
+
+    text-decoration:none;
+
+    z-index:999;
+
+    box-shadow:
+    0 15px 45px rgba(37,211,102,0.35);
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+.stats,
+.products-grid,
+.showroom-grid,
+.footer-grid{
+    grid-template-columns:1fr;
+}
+
+.hero h1,
+.section-title{
+    font-size:3.2rem;
+}
+
+nav{
+    display:none;
+}
+
+section{
+    padding:90px 7%;
+}
+
+header{
+    padding:25px 7%;
+}
+
+}
+
+</style>
+
 </head>
 <body>
-  <a class="skip-link" href="#main">Əsas məzmuna keç</a>
-  <header class="site-header">
-    <nav class="container nav" aria-label="Əsas naviqasiya">
-      <a class="brand" href="index.html" aria-label="ISSON GROUP ana səhifə">ISSON GROUP<span>TEMPRA · CONDO</span></a>
-      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-menu" aria-label="Menyunu aç">☰</button>
-      <div class="nav-links" id="main-menu" data-menu>
-        <a href="index.html" aria-current="page">Ana səhifə</a>
-        <a href="katalog.html">Kataloq</a>
-        <a href="#showrooms">Showroomlar</a>
-        <a href="#about">Haqqımızda</a>
-      </div>
-    </nav>
-  </header>
 
-  <main id="main">
-    <section class="hero">
-      <div class="container hero-inner">
-        <span class="eyebrow">ISSON GROUP təqdim edir</span>
-        <h1>Evinizin hər detalında zövq.</h1>
-        <p>İnteryer və iqlim həllərini seçilmiş kolleksiyalar, peşəkar məsləhət və iki fərqli showroom təcrübəsi ilə təqdim edirik.</p>
-        <div class="actions">
-          <a class="button" href="#categories">Kolleksiyalara bax</a>
-          <a class="button button-secondary" href="#showrooms">Bizimlə əlaqə</a>
-        </div>
-      </div>
-    </section>
+<header>
 
-    <section class="stats" aria-label="Göstəricilər">
-      <div class="container stats-grid">
-        <div class="stat"><strong>5000+</strong><span>Məhsul seçimi</span></div>
-        <div class="stat"><strong>2</strong><span>Showroom</span></div>
-        <div class="stat"><strong>24/7</strong><span>Onlayn kataloq</span></div>
-        <div class="stat"><strong>Premium</strong><span>Seçilmiş keyfiyyət</span></div>
-      </div>
-    </section>
+<a href="#" class="logo">
+ISS<span>ON</span>
+</a>
 
-    <section class="section" id="categories">
-      <div class="container">
-        <div class="section-head">
-          <div><span class="eyebrow">Kataloq</span><h2>Kateqoriyalar</h2></div>
-          <p>Eviniz üçün lazım olan məhsulları bir kataloqda rahatlıqla araşdırın.</p>
-        </div>
-        <div class="category-grid" id="categoriesGrid" aria-live="polite">
-          <div class="card skeleton" aria-hidden="true"></div><div class="card skeleton" aria-hidden="true"></div><div class="card skeleton" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
+<nav>
+<a href="#">Ana Səhifə</a>
+<a href="#products">Məhsullar</a>
+<a href="#contact">Əlaqə</a>
+</nav>
 
-    <section class="section" id="about" style="background:#fff">
-      <div class="container section-head">
-        <div><span class="eyebrow">Haqqımızda</span><h2>Seçimdən quraşdırmaya qədər yanınızdayıq.</h2></div>
-        <p>ISSON GROUP, Tempra Home və Condo Luxury Concept brendləri ilə funksional, uzunömürlü və estetik məhsulları bir araya gətirir.</p>
-      </div>
-    </section>
+</header>
 
-    <section class="section" id="showrooms">
-      <div class="container">
-        <div class="section-head">
-          <div><span class="eyebrow">Əlaqə</span><h2>Showroomlarımız</h2></div>
-          <p>Məhsulları yaxından görmək və mütəxəssis məsləhəti almaq üçün bizi ziyarət edin.</p>
-        </div>
-        <div class="showroom-grid">
-          <article class="showroom">
-            <h3>Tempra Home</h3>
-            <p>Məmməd Cəfər Cəfərov küçəsi</p>
-            <p><a href="tel:+994508000080">+994 50 800 00 80</a></p>
-            <a class="button button-dark" href="https://wa.me/994552000080" target="_blank" rel="noopener">WhatsApp-da yaz</a>
-          </article>
-          <article class="showroom">
-            <h3>Condo Luxury Concept</h3>
-            <p>Zivərbəy Əhmədbəyov küçəsi</p>
-            <p><a href="tel:+994101000909">+994 10 100 09 09</a></p>
-            <a class="button button-dark" href="https://wa.me/994559000909" target="_blank" rel="noopener">WhatsApp-da yaz</a>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
+<section class="hero">
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div><a class="brand" href="index.html">ISSON GROUP<span>TEMPRA · CONDO</span></a><p style="color:rgba(255,255,255,.62)">Eviniz üçün seçilmiş interyer və iqlim həlləri.</p></div>
-        <div><h3>Kataloq</h3><div class="footer-links"><a href="category.html?cat=qapi">Otaq qapıları</a><a href="category.html?cat=seyfqapilar">Seyf qapıları</a><a href="category.html?cat=laminat">Laminat</a><a href="katalog.html">Bütün məhsullar</a></div></div>
-        <div><h3>Əlaqə</h3><div class="footer-links"><a href="tel:+994508000080">+994 50 800 00 80</a><a href="tel:+994101000909">+994 10 100 09 09</a><a href="admin/">Admin panel</a></div></div>
-      </div>
-      <div class="footer-bottom">© <span data-year></span> ISSON GROUP. Bütün hüquqlar qorunur.</div>
-    </div>
-  </footer>
+<div class="hero-content">
 
-  <script type="module">
-    import "./assets/js/site.js";
-    import { supabase } from "./js/supabase.js";
-    import { escapeHtml } from "./assets/js/site.js";
+<div class="hero-sub">
+TEMPRA HOME & CONDO
+</div>
 
-    const grid = document.getElementById("categoriesGrid");
-    const { data, error } = await supabase.from("categories").select("*").order("id");
-    if (error) {
-      console.error(error);
-      grid.innerHTML = '<div class="state">Kateqoriyaları yükləmək mümkün olmadı.</div>';
-    } else {
-      grid.innerHTML = (data || []).map(cat => `
-        <a class="card" href="category.html?cat=${encodeURIComponent(cat.slug)}">
-          <div class="card-image"><img src="${escapeHtml(cat.image || "images/ana-sehife.jpg")}" alt="${escapeHtml(cat.name)}" loading="lazy" width="600" height="450"></div>
-          <div class="card-body"><h3>${escapeHtml(cat.name)}</h3><p>Bütün modellərə bax →</p></div>
-        </a>`).join("") || '<div class="state">Hələ kateqoriya əlavə edilməyib.</div>';
+<h1>
+Premium Ev və İnteryer Həlləri
+</h1>
+
+<p>
+Kombi, kondisioner, laminat,
+hamam aksesuarları,
+otaq qapıları və seyf qapıları üzrə
+premium məhsullar təqdim edirik.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#products" class="btn btn-gold">
+Məhsullara Bax
+</a>
+
+<a href="#contact" class="btn btn-dark">
+Əlaqə
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat-card">
+<h2>5000+</h2>
+<p>Müştəri</p>
+</div>
+
+<div class="stat-card">
+<h2>2</h2>
+<p>Premium Showroom</p>
+</div>
+
+<div class="stat-card">
+<h2>24/7</h2>
+<p>Dəstək</p>
+</div>
+
+<div class="stat-card">
+<h2>Premium</h2>
+<p>Xidmət</p>
+</div>
+
+</section>
+
+<section class="products" id="products">
+
+<span class="section-tag">
+Məhsullar
+</span>
+
+<h2 class="section-title">
+Premium Kateqoriyalar
+</h2>
+<div class="products-grid" id="categoriesGrid"></div>
+</section>
+
+<section class="showrooms" id="contact">
+
+<span class="section-tag">
+SHOWROOMLAR
+</span>
+
+<h2 class="section-title">
+TEMPRA HOME & CONDO
+</h2>
+
+<div class="showroom-grid">
+
+<div class="showroom-card">
+
+<div class="showroom-top">
+
+<h3>TEMPRA HOME</h3>
+
+<span class="badge">
+Premium
+</span>
+
+</div>
+
+<p><strong>Əlaqə:</strong> +994 50 800 00 80</p>
+<p><strong>WhatsApp:</strong> +994 55 200 00 80</p>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.0317295265572!2d49.810067675325946!3d40.408147871440974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403087ef57382225%3A0x57aa837c37afb2c8!2sTempra%20Home!5e0!3m2!1saz!2saz!4v1779873471389!5m2!1saz!2saz"></iframe>
+
+<a href="https://wa.me/994552000080" class="whatsapp-btn">
+<i class="fab fa-whatsapp"></i>
+WhatsAppda Yaz
+</a>
+
+</div>
+
+<div class="showroom-card">
+
+<div class="showroom-top">
+
+<h3>CONDO</h3>
+
+<span class="badge">
+Premium
+</span>
+
+</div>
+
+<p><strong>Əlaqə:</strong> +994 10 100 09 09</p>
+<p><strong>WhatsApp:</strong> +994 55 900 09 09</p>
+
+<iframe src="https://www.google.com/maps?q=40.4095,49.8671&hl=az&z=16&output=embed"></iframe>
+
+<a href="https://wa.me/994559000909" class="whatsapp-btn">
+<i class="fab fa-whatsapp"></i>
+WhatsAppda Yaz
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h3>ISSON GROUP</h3>
+
+<p>
+TEMPRA HOME və CONDO mağazaları ilə
+premium interyer həlləri təqdim edirik.
+</p>
+
+</div>
+
+<div>
+
+<h3>Kateqoriyalar</h3>
+
+<p><a href="category.html?cat=kombi">Kombi</a></p>
+<p><a href="category.html?cat=kondisioner">Kondisioner</a></p>
+<p><a href="category.html?cat=laminat">Laminat</a></p>
+<p><a href="category.html?cat=qapi">Otaq Qapıları</a></p>
+<p><a href="category.html?cat=seyfqapilar">Seyf Qapıları</a></p>
+</div>
+
+<div>
+
+<h3>Sosial Şəbəkə</h3>
+
+<p><a href="https://www.instagram.com/tempra_az" target="_blank">Instagram</a></p>
+
+<p><a href="https://www.facebook.com/people/Tempra-Home/61555837542614/?mibextid=wwXIfr&rdid=Xqm3xBEo4hrvKKPt&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CvuZKa9zM%2F%3Fmibextid%3DwwXIfr" target="_blank">Facebook</a></p>
+
+<p><a href="https://www.tiktok.com/@temprahome?_r=1&_t=ZS-96x9qnKCNYv" target="_blank">TikTok</a></p>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 ISSON GROUP — All Rights Reserved
+</div>
+
+</footer>
+
+<a href="https://wa.me/994552000080" class="whatsapp">
+<i class="fab fa-whatsapp"></i>
+</a>
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+async function loadCategories(){
+
+    const { data, error } =
+    await supabase
+    .from("categories")
+    .select("*")
+    .order("id");
+
+    if(error){
+        console.log(error);
+        return;
     }
-  </script>
+
+    const grid =
+    document.getElementById("categoriesGrid");
+
+    grid.innerHTML = "";
+
+    data.forEach(cat => {
+
+        grid.innerHTML += `
+        <a href="category.html?cat=${cat.slug}"
+           class="product-card">
+
+            <img
+            src="${cat.image || 'https://placehold.co/800x600'}"
+            alt="${cat.name}">
+
+            <div class="product-overlay">
+                <h3>${cat.name}</h3>
+                <p>Bütün modellərə bax</p>
+            </div>
+
+        </a>
+        `;
+    });
+}
+
+loadCategories();
+
+</script>
 </body>
 </html>

@@ -1,119 +1,853 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Məhsul | ISSON GROUP</title>
-  <meta name="description" content="ISSON GROUP məhsulu haqqında ətraflı məlumat və showroom əlaqəsi.">
-  <meta name="theme-color" content="#171717">
-  <link rel="stylesheet" href="assets/css/app.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Məhsul</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--gold:#bfa175;
+--dark:#07090d;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:var(--dark);
+color:white;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.product{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+
+.product > div:first-child > img{
+width:100%;
+border-radius:25px;
+}
+
+h1{
+font-family:'Marcellus',serif;
+font-size:3rem;
+margin-bottom:20px;
+}
+
+.price{
+font-size:2rem;
+color:#bfa175;
+margin-bottom:20px;
+}
+
+.meta{
+margin-bottom:15px;
+color:#bbb;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:15px 30px;
+background:linear-gradient(135deg,#25d366,#1faa52);
+color:white;
+text-decoration:none;
+border-radius:50px;
+font-weight:700;
+transition:.35s;
+box-shadow:0 10px 25px rgba(37,211,102,.25);
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 15px 35px rgba(37,211,102,.45);
+}
+
+.share-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+padding:15px 28px;
+background:linear-gradient(135deg,#bfa175,#d7b98c);
+color:#07090d;
+font-weight:700;
+border:none;
+border-radius:50px;
+cursor:pointer;
+transition:.35s;
+box-shadow:0 10px 25px rgba(191,161,117,.25);
+}
+
+.share-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 15px 35px rgba(191,161,117,.45);
+}
+
+.share-btn:active{
+transform:scale(.97);
+}
+
+.action-buttons{
+display:flex;
+gap:12px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.action-buttons .btn,
+.action-buttons .share-btn{
+margin:0;
+flex:1;
+min-width:180px;
+justify-content:center;
+}
+@media(max-width:900px){
+.product{
+grid-template-columns:1fr;
+}
+}
+.gallery{
+display:flex;
+gap:12px;
+margin-top:15px;
+flex-wrap:wrap;
+}
+.image-counter{
+position:absolute;
+top:20px;
+right:20px;
+background:rgba(0,0,0,.7);
+color:white;
+padding:8px 14px;
+border-radius:20px;
+font-size:14px;
+z-index:2;
+}
+
+.image-wrapper{
+position:relative;
+}
+.thumb{
+width:90px;
+height:90px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+cursor:pointer;
+
+border:2px solid rgba(191,161,117,.15);
+
+transition:.3s;
+}
+
+.thumb:hover{
+transform:scale(1.05);
+
+border-color:#bfa175;
+}
+.thumb.active{
+border-color:#bfa175;
+box-shadow:0 0 15px rgba(191,161,117,.5);
+transform:scale(1.05);
+}
+.image-wrapper{
+overflow:hidden;
+border-radius:30px;
+}
+
+.image-wrapper:hover #mainImage{
+transform:scale(1.08);
+}
+#mainImage{
+width:100%;
+height:600px;
+object-fit:contain;
+background:#111827;
+border-radius:30px;
+padding:10px;
+transition:transform .35s ease;
+cursor:zoom-in;
+}
+.header{
+position:sticky;
+top:0;
+z-index:999;
+
+padding:20px 8%;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+background:rgba(7,9,13,.9);
+
+backdrop-filter:blur(12px);
+
+border-bottom:1px solid rgba(191,161,117,.08);
+}
+
+.logo{
+text-decoration:none;
+font-size:2rem;
+font-family:'Marcellus',serif;
+color:white;
+}
+
+.logo span{
+color:#bfa175;
+}
+
+.back-btn{
+text-decoration:none;
+color:#bfa175;
+font-weight:600;
+}
+.related-title{
+font-size:2rem;
+font-family:'Marcellus',serif;
+margin:80px 0 30px;
+color:#bfa175;
+}
+
+.related-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.related-card{
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+text-decoration:none;
+color:white;
+border:1px solid rgba(191,161,117,.08);
+transition:.3s;
+}
+
+.related-card:hover{
+transform:translateY(-8px);
+}
+
+.related-card img{
+width:100%;
+height:220px;
+object-fit:contain;
+background:#111827;
+padding:10px;
+}
+
+.related-card h3{
+padding:15px;
+font-size:16px;
+}
+.lightbox{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.lightbox.active{
+display:flex;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+object-fit:contain;
+}
+
+.close-lightbox{
+position:absolute;
+top:25px;
+right:35px;
+font-size:45px;
+color:white;
+cursor:pointer;
+}
+.lightbox-arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+font-size:60px;
+color:white;
+cursor:pointer;
+user-select:none;
+padding:20px;
+}
+
+.lightbox-prev{
+left:20px;
+}
+
+.lightbox-next{
+right:20px;
+}
+
+.whatsapp-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.whatsapp-modal.active{
+display:flex;
+}
+
+.whatsapp-box{
+background:#111827;
+padding:30px;
+border-radius:25px;
+width:90%;
+max-width:420px;
+text-align:center;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.whatsapp-box h3{
+margin-bottom:25px;
+color:#bfa175;
+}
+
+.store-btn{
+display:block;
+width:100%;
+padding:15px;
+margin-bottom:12px;
+border:none;
+border-radius:12px;
+background:#25d366;
+color:white;
+font-weight:bold;
+cursor:pointer;
+text-decoration:none;
+}
+
+.close-modal{
+background:#c0392b;
+}
+.lightbox-next{
+.whatsapp-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.whatsapp-modal.active{
+display:flex;
+}
+
+.whatsapp-box{
+background:#111827;
+padding:30px;
+border-radius:25px;
+width:90%;
+max-width:420px;
+text-align:center;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.whatsapp-box h3{
+margin-bottom:25px;
+color:#bfa175;
+}
+
+.store-btn{
+display:block;
+width:100%;
+padding:15px;
+margin-bottom:12px;
+border:none;
+border-radius:12px;
+background:#25d366;
+color:white;
+font-weight:bold;
+cursor:pointer;
+text-decoration:none;
+}
+
+.close-modal{
+background:#c0392b;
+}
+right:20px;
+}
+</style>
+
 </head>
+
 <body>
-  <a class="skip-link" href="#main">Əsas məzmuna keç</a>
-  <header class="site-header"><nav class="container nav" aria-label="Əsas naviqasiya"><a class="brand" href="index.html">ISSON GROUP<span>TEMPRA · CONDO</span></a><button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-menu" aria-label="Menyunu aç">☰</button><div class="nav-links" id="main-menu" data-menu><a href="index.html">Ana səhifə</a><a href="katalog.html">Kataloq</a><a href="index.html#showrooms">Showroomlar</a></div></nav></header>
 
-  <main id="main">
-    <section class="section">
-      <div class="container" id="product" aria-live="polite">
-        <div class="product-layout"><div class="skeleton" style="border-radius:18px"></div><div><div class="skeleton" style="min-height:280px;border-radius:18px"></div></div></div>
-      </div>
-    </section>
-    <section class="section" id="relatedSection" hidden>
-      <div class="container"><div class="section-head"><div><span class="eyebrow">Kəşf edin</span><h2>Oxşar məhsullar</h2></div></div><div class="product-grid" id="relatedGrid"></div></div>
-    </section>
-  </main>
+<header class="header">
 
-  <div class="modal" id="storeModal" role="dialog" aria-modal="true" aria-labelledby="storeTitle">
-    <div class="modal-card"><h2 id="storeTitle">Showroom seçin</h2><p>Məhsul haqqında WhatsApp vasitəsilə məlumat alın.</p><div class="store-list" id="storeList"></div><button class="button button-secondary" style="color:#171717;margin-top:16px;width:100%" type="button" data-close-modal>Bağla</button></div>
-  </div>
-  <div class="modal lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Məhsul şəklinin böyük görünüşü"><div class="modal-card"><img id="lightboxImage" alt=""><button class="skip-link" type="button" data-close-lightbox>Bağla</button></div></div>
+<a href="index.html" class="logo">
+ISS<span>ON</span>
+</a>
 
-  <footer class="site-footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="index.html">ISSON GROUP<span>TEMPRA · CONDO</span></a></div><div><h3>Kataloq</h3><div class="footer-links"><a href="katalog.html">Bütün məhsullar</a><a href="index.html#categories">Kateqoriyalar</a></div></div><div><h3>Əlaqə</h3><div class="footer-links"><a href="tel:+994508000080">+994 50 800 00 80</a><a href="tel:+994101000909">+994 10 100 09 09</a></div></div></div><div class="footer-bottom">© <span data-year></span> ISSON GROUP.</div></div></footer>
+<a href="javascript:history.back()" class="back-btn">
+← Geri
+</a>
 
-  <script type="module">
-    import "./assets/js/site.js";
-    import { supabase } from "./js/supabase.js";
-    import { STORES, escapeHtml, formatPrice, productCard } from "./assets/js/site.js";
+</header>
 
-    const id = new URLSearchParams(location.search).get("id");
-    const root = document.getElementById("product");
-    let currentProduct;
-    let activeImage = "";
+<div class="container">
 
-    function categoryLink(product) {
-      if (product.category === "qapi" && product.subcategory === "seyf-qapisi") return "seyfqapilar";
-      return product.category || "";
-    }
+<div id="product"></div>
+<div id="relatedProducts"></div>
+</div>
 
-    function openModal(modal) {
-      modal.classList.add("active");
-      modal.querySelector("button, a")?.focus();
-    }
-    function closeModal(modal) { modal.classList.remove("active"); }
+<script type="module">
 
-    if (!id) {
-      root.innerHTML = '<div class="state"><strong>Məhsul seçilməyib.</strong><br><a class="button" href="katalog.html" style="margin-top:16px">Kataloqa qayıt</a></div>';
-    } else {
-      const { data, error } = await supabase.from("products").select("*").eq("id", id).single();
-      if (error || !data) {
-        console.error(error);
-        root.innerHTML = '<div class="state"><strong>Məhsul tapılmadı.</strong><br><a class="button" href="katalog.html" style="margin-top:16px">Kataloqa qayıt</a></div>';
-      } else {
-        currentProduct = data;
-        const images = [data.image || data.image_url, data.image2, data.image3, data.image4].filter(Boolean);
-        activeImage = images[0] || "images/ana-sehife.jpg";
-        const name = data.name || data.title || "Məhsul";
-        document.title = `${name} | ISSON GROUP`;
-        document.querySelector('meta[name="description"]').content = (data.description || `${name} — ISSON GROUP kataloqu`).slice(0, 155);
-        root.innerHTML = `
-          <div class="product-layout">
-            <div>
-              <img class="product-main-image" id="mainImage" src="${escapeHtml(activeImage)}" alt="${escapeHtml(name)}" width="800" height="800">
-              ${images.length > 1 ? `<div class="thumbs">${images.map((image, index) => `<button class="thumb ${index === 0 ? "active" : ""}" type="button" data-image="${escapeHtml(image)}" aria-label="${index + 1}-ci şəkli göstər"><img src="${escapeHtml(image)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-            </div>
-            <div class="product-copy">
-              <a class="eyebrow" href="category.html?cat=${encodeURIComponent(categoryLink(data))}">← Kateqoriyaya qayıt</a>
-              <h1>${escapeHtml(name)}</h1>
-              <div class="product-price">${formatPrice(data.price)}</div>
-              <p class="product-description">${escapeHtml(data.description || "Bu məhsul haqqında ətraflı məlumat üçün showroomlarımızla əlaqə saxlayın.")}</p>
-              <div class="actions"><button class="button" type="button" id="whatsappButton">WhatsApp-da soruş</button><a class="button button-secondary" style="color:#171717" href="tel:+994508000080">Zəng et</a></div>
-            </div>
-          </div>`;
+import { supabase } from "./js/supabase.js";
 
-        document.querySelectorAll(".thumb").forEach(button => button.addEventListener("click", () => {
-          activeImage = button.dataset.image;
-          document.getElementById("mainImage").src = activeImage;
-          document.querySelectorAll(".thumb").forEach(item => item.classList.toggle("active", item === button));
-        }));
-        document.getElementById("mainImage").addEventListener("click", () => {
-          const image = document.getElementById("lightboxImage");
-          image.src = activeImage;
-          image.alt = name;
-          openModal(document.getElementById("lightbox"));
-        });
-        document.getElementById("whatsappButton").addEventListener("click", () => openModal(document.getElementById("storeModal")));
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-        let relatedQuery = supabase.from("products").select("*").neq("id", id);
-        if (data.category) relatedQuery = relatedQuery.eq("category", data.category);
-        if (data.subcategory) relatedQuery = relatedQuery.eq("subcategory", data.subcategory);
-        relatedQuery = relatedQuery.limit(3);
-        const { data: related } = await relatedQuery;
-        if (related?.length) {
-          document.getElementById("relatedSection").hidden = false;
-          document.getElementById("relatedGrid").innerHTML = related.map(productCard).join("");
-        }
-      }
-    }
+const { data,error } = await supabase
+.from("products")
+.select("*")
+.eq("id",id)
+.single();
 
-    document.getElementById("storeList").innerHTML = STORES.map(store => {
-      const name = currentProduct?.name || currentProduct?.title || "məhsul";
-      const text = `Salam. ${name} haqqında ətraflı məlumat almaq istəyirəm. ${location.href}`;
-      return `<a class="store-option" href="https://wa.me/${store.phone}?text=${encodeURIComponent(text)}" target="_blank" rel="noopener"><span><strong>${store.name}</strong><br><small>${store.address}</small></span><span aria-hidden="true">→</span></a>`;
-    }).join("");
-    document.querySelectorAll("[data-close-modal]").forEach(button => button.addEventListener("click", () => closeModal(document.getElementById("storeModal"))));
-    document.querySelectorAll("[data-close-lightbox]").forEach(button => button.addEventListener("click", () => closeModal(document.getElementById("lightbox"))));
-    document.querySelectorAll(".modal").forEach(modal => modal.addEventListener("click", event => event.target === modal && closeModal(modal)));
-    document.addEventListener("keydown", event => event.key === "Escape" && document.querySelectorAll(".modal.active").forEach(closeModal));
-  </script>
+if(data){
+
+const image =
+data.image ||
+data.image_url ||
+"images/no-image.jpg";
+
+document.getElementById("product").innerHTML = `
+<div class="product">
+
+<div class="image-wrapper">
+
+<div class="image-counter" id="imageCounter">
+1 / 1
+</div>
+
+<img
+id="mainImage"
+src="${image}">
+
+<div class="gallery">
+
+${data.image ?
+`<img class="thumb" src="${data.image}">`
+: ''}
+
+${data.image2 ?
+`<img class="thumb" src="${data.image2}">`
+: ''}
+
+${data.image3 ?
+`<img class="thumb" src="${data.image3}">`
+: ''}
+
+${data.image4 ?
+`<img class="thumb" src="${data.image4}">`
+: ''}
+
+</div>
+
+</div>
+
+
+<h1>${data.name}</h1>
+
+${data.price ?
+`<div class="price">${data.price} ₼</div>`
+:
+`<div class="price">Qiymət üçün əlaqə saxlayın</div>`
+}
+<div class="meta">
+Kateqoriya: ${data.category || '-'}
+</div>
+<div class="meta">
+Alt Kateqoriya: ${data.subcategory || '-'}
+</div>
+
+${data.description ? `
+<div class="meta">
+${data.description}
+</div>
+` : ''}
+<div class="action-buttons">
+
+<button
+class="btn"
+id="whatsappBtn">
+💬 WhatsApp
+</button>
+
+<button
+class="share-btn"
+id="shareBtn">
+🔗 Paylaş
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+const images = [
+data.image,
+data.image2,
+data.image3,
+data.image4
+].filter(Boolean);
+function updateLightbox(){
+
+lightboxImage.src =
+images[currentIndex];
+
+mainImage.src =
+images[currentIndex];
+
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
+
+thumbs.forEach(t =>
+t.classList.remove("active")
+);
+
+if(thumbs[currentIndex]){
+thumbs[currentIndex]
+.classList.add("active");
+}
+
+}
+const imageCounter =
+document.getElementById("imageCounter");
+const thumbs =
+document.querySelectorAll(".thumb");
+let currentIndex = 0;
+
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
+if(thumbs[0]){
+thumbs[0].classList.add("active");
+}
+document
+.querySelectorAll(".thumb")
+.forEach(img=>{
+
+img.addEventListener("click",()=>{
+
+document
+.getElementById("mainImage")
+.src = img.src;
+currentIndex =
+images.indexOf(img.src);
+
+imageCounter.innerHTML =
+`${currentIndex + 1} / ${images.length}`;
+});
+
+});
+const mainImage =
+document.getElementById("mainImage");
+
+const lightbox =
+document.getElementById("lightbox");
+
+const lightboxImage =
+document.getElementById("lightboxImage");
+
+mainImage.addEventListener("click",()=>{
+
+currentIndex = 0;
+
+const currentSrc = mainImage.src;
+
+const foundIndex =
+images.findIndex(img =>
+currentSrc.includes(img)
+);
+
+if(foundIndex >= 0){
+currentIndex = foundIndex;
+}
+
+lightbox.classList.add("active");
+
+updateLightbox();
+
+});
+
+document
+.getElementById("closeLightbox")
+.addEventListener("click",()=>{
+
+lightbox.classList.remove("active");
+
+});
+
+lightbox.addEventListener("click",(e)=>{
+
+if(e.target === lightbox){
+
+lightbox.classList.remove("active");
+
+}
+
+});
+document
+.getElementById("prevImage")
+.addEventListener("click",()=>{
+
+currentIndex--;
+
+if(currentIndex < 0){
+
+currentIndex =
+images.length - 1;
+
+}
+
+updateLightbox();
+
+});
+
+document
+.getElementById("nextImage")
+.addEventListener("click",()=>{
+
+currentIndex++;
+
+if(currentIndex >= images.length){
+
+currentIndex = 0;
+
+}
+
+updateLightbox();
+
+});
+document.addEventListener("keydown",(e)=>{
+
+if(!lightbox.classList.contains("active"))
+return;
+
+if(e.key === "ArrowLeft"){
+
+currentIndex--;
+
+if(currentIndex < 0){
+
+currentIndex =
+images.length - 1;
+
+}
+
+updateLightbox();
+
+}
+
+if(e.key === "ArrowRight"){
+
+currentIndex++;
+
+if(currentIndex >= images.length){
+
+currentIndex = 0;
+
+}
+
+updateLightbox();
+
+}
+
+if(e.key === "Escape"){
+
+lightbox.classList.remove("active");
+
+}
+
+});
+document
+.getElementById("whatsappBtn")
+.addEventListener("click",()=>{
+
+const message =
+`Salam, ${data.name} məhsulu ilə maraqlanıram`;
+
+document.getElementById("tempraBtn").href =
+`https://wa.me/994552000080?text=${encodeURIComponent(message)}`;
+
+document.getElementById("condoBtn").href =
+`https://wa.me/994559000909?text=${encodeURIComponent(message)}`;
+
+document
+.getElementById("whatsappModal")
+.classList.add("active");
+
+});
+
+document
+.getElementById("closeWhatsappModal")
+.addEventListener("click",()=>{
+
+document
+.getElementById("whatsappModal")
+.classList.remove("active");
+
+});
+document
+.getElementById("shareBtn")
+.addEventListener("click", async ()=>{
+
+const shareUrl =
+window.location.href;
+
+if(navigator.share){
+
+await navigator.share({
+title:data.name,
+url:shareUrl
+});
+
+}else{
+
+navigator.clipboard.writeText(
+shareUrl
+);
+
+alert("Link kopyalandı");
+
+}
+
+});
+const { data: related } = await supabase
+.from("products")
+.select("*")
+.eq("category", data.category)
+.neq("id", data.id)
+.limit(4);
+
+if(related && related.length){
+
+document.getElementById("relatedProducts").innerHTML = `
+
+<h2 class="related-title">
+Oxşar Məhsullar
+</h2>
+
+<div class="related-grid">
+
+${related.map(item => `
+
+<a
+href="product.html?id=${item.id}"
+class="related-card">
+
+<img
+src="${item.image || item.image_url}"
+alt="${item.name}">
+
+<h3>${item.name}</h3>
+
+</a>
+
+`).join("")}
+
+</div>
+`;
+}
+}
+</script>
+
+<footer style="
+text-align:center;
+padding:40px 20px;
+color:#777;
+border-top:1px solid rgba(191,161,117,.08);
+margin-top:80px;">
+© 2026 ISSON. Bütün hüquqlar qorunur.
+</footer>
+<div class="lightbox" id="lightbox">
+
+<span
+class="close-lightbox"
+id="closeLightbox">
+×
+</span>
+
+<span
+class="lightbox-arrow lightbox-prev"
+id="prevImage">
+❮
+</span>
+
+<img id="lightboxImage">
+
+<span
+class="lightbox-arrow lightbox-next"
+id="nextImage">
+❯
+</span>
+</div>
+<div class="whatsapp-modal" id="whatsappModal">
+
+<div class="whatsapp-box">
+
+<h3>
+Müraciət etmək istədiyiniz mağazanı seçin
+</h3>
+
+<a
+id="tempraBtn"
+class="store-btn"
+target="_blank">
+🟢 TEMPRA HOME
+</a>
+
+<a
+id="condoBtn"
+class="store-btn"
+target="_blank">
+🟢 CONDO
+</a>
+
+<button
+class="store-btn close-modal"
+id="closeWhatsappModal">
+Bağla
+</button>
+</div>
+</div>
 </body>
 </html>

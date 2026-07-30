@@ -1,131 +1,661 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="az">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Məhsullar | ISSON Admin</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="admin.css"></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Məhsullar - ISSON Admin</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0b0f14;
+color:white;
+padding:30px;
+}
+
+h1{
+margin-bottom:20px;
+color:#d7b98c;
+}
+
+.top{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+input,select{
+padding:12px;
+border:none;
+border-radius:8px;
+background:#1f2937;
+color:white;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.add{
+background:#d7b98c;
+color:black;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#111827;
+border-radius:10px;
+overflow:hidden;
+}
+
+th,td{
+padding:15px;
+text-align:left;
+border-bottom:1px solid #222;
+}
+
+th{
+color:#d7b98c;
+}
+
+img{
+width:60px;
+height:60px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.edit{
+background:#f39c12;
+}
+
+.delete{
+background:#c0392b;
+color:white;
+}
+</style>
+</head>
+
 <body>
-  <div class="admin-shell">
-    <aside class="admin-sidebar"><a class="brand" href="dashboard.html">ISSON GROUP<span>ADMIN PANEL</span></a><nav class="admin-nav"><a href="dashboard.html">İcmal</a><a class="active" href="products.html">Məhsullar</a><a href="categories.html">Kateqoriyalar</a><button type="button" data-logout>Çıxış</button></nav></aside>
-    <main class="admin-main">
-      <div class="admin-head"><div><span class="eyebrow">Kataloq</span><h1>Məhsullar</h1></div><button class="button" type="button" id="newButton">Yeni məhsul</button></div>
 
-      <section class="admin-card" id="form" hidden>
-        <div class="admin-head"><h2 id="formTitle" style="margin:0">Yeni məhsul</h2><button class="button button-secondary button-small" style="color:#171717" type="button" id="cancelButton">Bağla</button></div>
-        <form id="productForm">
-          <input type="hidden" id="productId">
-          <div class="form-grid">
-            <div class="form-group"><label for="name">Məhsul adı *</label><input class="field" id="name" required maxlength="120"></div>
-            <div class="form-group"><label for="price">Qiymət (₼)</label><input class="field" id="price" type="number" min="0" step="0.01"></div>
-            <div class="form-group"><label for="category">Kateqoriya *</label><select class="field" id="category" required></select></div>
-            <div class="form-group"><label for="subcategory">Alt kateqoriya</label><select class="field" id="subcategory"><option value="">Yoxdur</option><option value="otaq-qapisi">Otaq qapısı</option><option value="seyf-qapisi">Seyf qapısı</option></select></div>
-            <div class="form-group full"><label for="description">Təsvir</label><textarea class="field" id="description" maxlength="2500"></textarea></div>
-            <div class="form-group full"><label for="images">Şəkillər (maksimum 4)</label><input class="field" id="images" type="file" accept="image/*" multiple><p class="help">Hər şəkil maksimum 8 MB. Redaktə zamanı yeni seçim mövcud qalereyanı əvəz edir.</p><div id="currentImages" class="thumbs"></div></div>
-          </div>
-          <div id="formNotice" class="notice" style="margin-top:16px" hidden></div>
-          <div class="actions"><button class="button" id="saveButton" type="submit">Yadda saxla</button></div>
-        </form>
-      </section>
+<h1>Məhsulların İdarə Edilməsi</h1>
 
-      <section class="admin-card" style="margin-top:20px">
-        <div class="admin-toolbar"><input class="field" id="search" type="search" placeholder="Məhsul axtar..."><select class="field" id="filterCategory"><option value="">Bütün kateqoriyalar</option></select></div>
-        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Şəkil</th><th>Ad</th><th>Kateqoriya</th><th>Qiymət</th><th>Əməliyyat</th></tr></thead><tbody id="productRows"><tr><td colspan="5">Yüklənir...</td></tr></tbody></table></div>
-      </section>
-    </main>
-  </div>
-  <script type="module">
-    import { supabase, requireAdmin, setupLogout, setBusy, uploadImage, removeStorageUrls } from "./admin.js";
-    import { escapeHtml, formatPrice } from "../assets/js/site.js";
-    await requireAdmin(); setupLogout();
+<div style="background:#111827;padding:20px;border-radius:12px;margin-bottom:25px;">
 
-    const formSection = document.getElementById("form");
-    const form = document.getElementById("productForm");
-    const rows = document.getElementById("productRows");
-    const notice = document.getElementById("formNotice");
-    let products = [], categories = [], editing = null;
+<h3 style="margin-bottom:15px;color:#d7b98c">
+Yeni Məhsul
+<hr style="margin:30px 0;border-color:#333;">
 
-    function imageUrls(product) { return [product.image || product.image_url, product.image2, product.image3, product.image4].filter(Boolean); }
-    function categoryOptions() {
-      const options = categories.map(item => `<option value="${escapeHtml(item.slug)}">${escapeHtml(item.name)}</option>`).join("");
-      document.getElementById("category").innerHTML = `<option value="">Seçin</option>${options}`;
-      document.getElementById("filterCategory").innerHTML = `<option value="">Bütün kateqoriyalar</option>${options}`;
+<h3 style="margin-bottom:15px;color:#d7b98c">
+Toplu Məhsul Əlavə Et
+</h3>
+
+<select id="bulkCategory">
+    <option value="moydadir">Moydadır</option>
+    <option value="laminat">Laminat</option>
+    <option value="kombi">Kombi</option>
+    <option value="kondisioner">Kondisioner</option>
+    <option value="qapi">Qapı</option>
+</select>
+
+<br><br>
+
+<input
+type="file"
+id="bulkImages"
+multiple
+accept="image/*">
+
+<br><br>
+
+<select id="bulkSubcategory">
+    <option value="">Alt Kateqoriya Seçin</option>
+    <option value="otaq-qapisi">Otaq Qapısı</option>
+    <option value="seyf-qapisi">Seyf Qapısı</option>
+</select>
+
+<br><br>
+
+<button
+class="add"
+onclick="bulkUploadProducts()">
+Toplu Yüklə
+</button>
+</h3>
+
+<input
+type="text"
+id="name"
+placeholder="Məhsul adı">
+
+<br><br>
+
+<select id="category">
+<option value="kombi">Kombi</option>
+<option value="kondisioner">Kondisioner</option>
+<option value="laminat">Laminat</option>
+<option value="qapi">Qapı</option>
+<option value="moydadir">Moydadır</option>
+</select>
+
+<br><br>
+
+<select id="subcategory">
+<option value="">Alt Kateqoriya Seçin</option>
+<option value="otaq-qapisi">Otaq Qapısı</option>
+<option value="seyf-qapisi">Seyf Qapısı</option>
+</select>
+<br><br>
+
+<input
+type="number"
+id="price"
+placeholder="Qiymət (istəyə bağlı)">
+<br><br>
+
+<input
+type="file"
+id="productImage">
+
+<br><br>
+
+<input
+type="file"
+id="productImage2">
+
+<br><br>
+
+<input
+type="file"
+id="productImage3">
+
+<br><br>
+
+<input
+type="file"
+id="productImage4">
+
+<br><br>
+
+<textarea
+id="description"
+placeholder="Məhsul haqqında məlumat"
+style="
+width:100%;
+height:120px;
+padding:12px;
+background:#1f2937;
+color:white;
+border:none;
+border-radius:8px;">
+</textarea>
+
+<br><br>
+
+<button
+class="add"
+id="addBtn">
+Məhsul əlavə et
+</button>
+</div>
+
+<div class="top">
+
+<input
+type="text"
+id="search"
+placeholder="Məhsul axtar...">
+
+<select id="filter">
+<option value="">Bütün kateqoriyalar</option>
+<option value="kombi">Kombi</option>
+<option value="kondisioner">Kondisioner</option>
+<option value="laminat">Laminat</option>
+<option value="qapi">Qapı</option>
+<option value="moydadir">Moydadır</option>
+</select>
+
+<button
+class="delete"
+onclick="deleteCategoryProducts()">
+Kateqoriyanı Sil
+</button>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Şəkil</th>
+<th>Ad</th>
+<th>Kateqoriya</th>
+<th>Alt Kateqoriya</th>
+<th>Əməliyyat</th>
+</tr>
+</thead>
+
+<tbody id="productsTable"></tbody>
+
+</table>
+
+<script type="module">
+
+import { supabase } from "../js/supabase.js";
+
+if(localStorage.getItem("isson_admin") !== "true"){
+location.href="index.html";
+}
+
+async function loadProducts(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const filter =
+document.getElementById("filter")
+.value;
+
+const { data,error } =
+await supabase
+.from("products")
+.select("*")
+.order("id",{ascending:false});
+
+if(error) return;
+
+const table =
+document.getElementById("productsTable");
+
+table.innerHTML="";
+
+data.forEach(item=>{
+
+if(
+search &&
+!(item.name || "")
+.toLowerCase()
+.includes(search)
+){
+return;
+}
+
+if(
+filter &&
+item.category !== filter
+){
+return;
+}
+
+table.innerHTML += `
+<tr>
+
+<td>
+<img src="${item.image || item.image_url || ''}">
+</td>
+
+<td>${item.name || ''}</td>
+
+<td>${item.category || ''}</td>
+
+<td>${item.subcategory || '-'}</td>
+
+<td>
+
+<button
+class="edit"
+onclick="editProduct(${item.id})">
+Redaktə
+</button>
+
+<button
+class="delete"
+onclick="deleteProduct(${item.id})">
+Sil
+</button>
+
+</td>
+
+</tr>
+`;
+
+});
+
+}
+
+window.addProduct = async function(){
+
+const name =
+document.getElementById("name").value;
+const category =
+document.getElementById("category").value;
+
+const subcategory =
+document.getElementById("subcategory").value;
+
+const price =
+document.getElementById("price").value;
+
+const description =
+document.getElementById("description").value;
+
+const file =
+document.getElementById("productImage").files[0];
+
+const file2 =
+document.getElementById("productImage2").files[0];
+
+const file3 =
+document.getElementById("productImage3").files[0];
+
+const file4 =
+document.getElementById("productImage4").files[0];
+if(!name){
+alert("Məhsul adı daxil edin");
+return;
+}
+
+let imageUrl="";
+let imageUrl2="";
+let imageUrl3="";
+let imageUrl4="";
+if(file){
+
+const fileName =
+Date.now() + "-" + file.name;
+
+const { error: uploadError } =
+await supabase
+.storage
+.from("products")
+.upload(fileName,file,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase
+.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl =
+data.publicUrl;
+}
+if(file2){
+
+const fileName =
+Date.now() + "-2-" + file2.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file2,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl2 = data.publicUrl;
+}
+
+if(file3){
+
+const fileName =
+Date.now() + "-3-" + file3.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file3,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl3 = data.publicUrl;
+}
+
+if(file4){
+
+const fileName =
+Date.now() + "-4-" + file4.name;
+
+const { error: uploadError } =
+await supabase.storage
+.from("products")
+.upload(fileName,file4,{
+upsert:true
+});
+
+if(uploadError){
+alert(uploadError.message);
+return;
+}
+
+const { data } =
+supabase.storage
+.from("products")
+.getPublicUrl(fileName);
+
+imageUrl4 = data.publicUrl;
+}
+const { error } =
+await supabase
+.from("products")
+.insert([{
+name:name,
+title:name,
+category:category,
+subcategory:subcategory,
+price: price || null,
+description:description,
+image:imageUrl,
+image_url:imageUrl,
+
+image2:imageUrl2,
+image3:imageUrl3,
+image4:imageUrl4
+}]);
+
+if(error){
+alert(error.message);
+return;
+}
+
+alert("Məhsul əlavə edildi");
+
+document.getElementById("name").value="";
+document.getElementById("price").value="";
+document.getElementById("description").value="";
+document.getElementById("productImage").value="";
+document.getElementById("productImage2").value="";
+document.getElementById("productImage3").value="";
+document.getElementById("productImage4").value="";
+loadProducts();
+}
+
+window.deleteProduct = async function(id){
+
+if(!confirm("Silinsin?"))
+return;
+
+await supabase
+.from("products")
+.delete()
+.eq("id",id);
+
+loadProducts();
+}
+
+window.editProduct = async function(id){
+
+const ad =
+prompt("Yeni ad");
+
+if(!ad) return;
+
+await supabase
+.from("products")
+.update({
+name:ad,
+title:ad
+})
+.eq("id",id);
+
+loadProducts();
+}
+
+document
+.getElementById("addBtn")
+.addEventListener("click", window.addProduct);
+
+document
+.getElementById("search")
+.addEventListener("input", loadProducts);
+
+document
+.getElementById("filter")
+.addEventListener("change", loadProducts);
+
+loadProducts();
+
+window.deleteCategoryProducts = async function(){
+
+    const category =
+    document.getElementById("filter").value;
+
+    if(!category){
+        alert("Əvvəl kateqoriya seçin");
+        return;
     }
-    function render() {
-      const term = document.getElementById("search").value.trim().toLocaleLowerCase("az");
-      const cat = document.getElementById("filterCategory").value;
-      const shown = products.filter(item => (!cat || item.category === cat) && `${item.name || ""} ${item.title || ""}`.toLocaleLowerCase("az").includes(term));
-      rows.innerHTML = shown.length ? shown.map(item => `
-        <tr><td><img class="table-image" src="${escapeHtml(imageUrls(item)[0] || "../images/ana-sehife.jpg")}" alt=""></td>
-        <td><strong>${escapeHtml(item.name || item.title)}</strong></td><td>${escapeHtml(item.category || "—")}</td><td>${formatPrice(item.price)}</td>
-        <td><div class="table-actions"><button class="button button-small button-dark" type="button" data-edit="${item.id}">Redaktə</button><button class="button button-small button-danger" type="button" data-delete="${item.id}">Sil</button></div></td></tr>`).join("") : '<tr><td colspan="5">Nəticə tapılmadı.</td></tr>';
-    }
-    async function load() {
-      const [productResult, categoryResult] = await Promise.all([
-        supabase.from("products").select("*").order("id", { ascending: false }),
-        supabase.from("categories").select("*").order("id")
-      ]);
-      if (productResult.error || categoryResult.error) { rows.innerHTML = '<tr><td colspan="5">Məlumatı yükləmək mümkün olmadı.</td></tr>'; return; }
-      products = productResult.data || []; categories = categoryResult.data || []; categoryOptions(); render();
-    }
-    function openForm(product = null) {
-      editing = product;
-      form.reset();
-      document.getElementById("productId").value = product?.id || "";
-      document.getElementById("name").value = product?.name || product?.title || "";
-      document.getElementById("price").value = product?.price ?? "";
-      document.getElementById("category").value = product?.category || "";
-      document.getElementById("subcategory").value = product?.subcategory || "";
-      document.getElementById("description").value = product?.description || "";
-      document.getElementById("formTitle").textContent = product ? "Məhsulu redaktə et" : "Yeni məhsul";
-      document.getElementById("currentImages").innerHTML = imageUrls(product || {}).map(url => `<img src="${escapeHtml(url)}" alt="" style="aspect-ratio:1;object-fit:cover;border-radius:10px">`).join("");
-      notice.hidden = true; formSection.hidden = false; formSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    document.getElementById("newButton").addEventListener("click", () => openForm());
-    document.getElementById("cancelButton").addEventListener("click", () => { formSection.hidden = true; editing = null; });
-    document.getElementById("search").addEventListener("input", render);
-    document.getElementById("filterCategory").addEventListener("change", render);
 
-    rows.addEventListener("click", async event => {
-      const editButton = event.target.closest("[data-edit]");
-      const deleteButton = event.target.closest("[data-delete]");
-      if (editButton) openForm(products.find(item => String(item.id) === editButton.dataset.edit));
-      if (deleteButton) {
-        const product = products.find(item => String(item.id) === deleteButton.dataset.delete);
-        if (!product || !confirm(`"${product.name || product.title}" məhsulu silinsin?`)) return;
-        deleteButton.disabled = true;
-        const { error } = await supabase.from("products").delete().eq("id", product.id);
-        if (error) { alert(error.message); deleteButton.disabled = false; return; }
-        await removeStorageUrls(imageUrls(product));
-        products = products.filter(item => item.id !== product.id); render();
-      }
-    });
+    if(!confirm(category + " kateqoriyasındakı bütün məhsullar silinsin?")){
+        return;
+    }
 
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
-      const button = document.getElementById("saveButton");
-      const files = [...document.getElementById("images").files];
-      if (files.length > 4) { notice.textContent = "Maksimum 4 şəkil seçə bilərsiniz."; notice.className = "notice error"; notice.hidden = false; return; }
-      setBusy(button, true);
-      try {
-        let urls = imageUrls(editing || {});
-        if (files.length) urls = await Promise.all(files.map(file => uploadImage(file)));
-        const payload = {
-          name: document.getElementById("name").value.trim(),
-          title: document.getElementById("name").value.trim(),
-          price: document.getElementById("price").value || null,
-          category: document.getElementById("category").value,
-          subcategory: document.getElementById("subcategory").value || null,
-          description: document.getElementById("description").value.trim(),
-          image: urls[0] || null, image_url: urls[0] || null, image2: urls[1] || null, image3: urls[2] || null, image4: urls[3] || null
-        };
-        const query = editing ? supabase.from("products").update(payload).eq("id", editing.id).select().single() : supabase.from("products").insert(payload).select().single();
-        const { data, error } = await query;
-        if (error) throw error;
-        if (files.length && editing) await removeStorageUrls(imageUrls(editing));
-        if (editing) products = products.map(item => item.id === data.id ? data : item); else products.unshift(data);
-        render(); formSection.hidden = true; editing = null;
-      } catch (error) {
-        notice.textContent = error.message || "Əməliyyat baş tutmadı."; notice.className = "notice error"; notice.hidden = false;
-      } finally { setBusy(button, false); }
-    });
-    await load();
-  </script>
+    const { error } =
+    await supabase
+    .from("products")
+    .delete()
+    .eq("category", category);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    alert("Kateqoriyadakı məhsullar silindi");
+
+    loadProducts();
+}
+
+window.bulkUploadProducts = async function(){
+
+    const files =
+    document.getElementById("bulkImages").files;
+
+    const category =
+    document.getElementById("bulkCategory").value;
+
+const subcategory =
+document.getElementById("bulkSubcategory").value;
+
+    if(files.length === 0){
+        alert("Şəkil seçin");
+        return;
+    }
+
+    let successCount = 0;
+
+    for(const file of files){
+
+        const fileName =
+        Date.now() + "-" + file.name;
+
+        const { error: uploadError } =
+        await supabase.storage
+        .from("products")
+        .upload(fileName,file,{
+            upsert:true
+        });
+
+        if(uploadError){
+            console.log(uploadError);
+            continue;
+        }
+
+        const { data } =
+        supabase.storage
+        .from("products")
+        .getPublicUrl(fileName);
+
+        const imageUrl =
+        data.publicUrl;
+
+        const productName =
+        file.name
+        .replace(".jpg","")
+        .replace(".jpeg","")
+        .replace(".png","");
+
+        const { error } =
+        await supabase
+        .from("products")
+        .insert([{
+            name: productName,
+            title: productName,
+            category: category,
+            subcategory: subcategory,
+            image: imageUrl,
+            image_url: imageUrl
+        }]);
+
+        if(!error){
+            successCount++;
+        }
+    }
+
+    alert(successCount + " məhsul əlavə edildi");
+
+    loadProducts();
+}
+
+</script>
+
 </body>
 </html>
