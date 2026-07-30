@@ -97,6 +97,9 @@ cursor:pointer;
 <script type="module">
 
 import { supabase } from "../js/supabase.js";
+import { requireAdmin } from "./auth.js";
+
+await requireAdmin();
 
 const {
     data:{user}

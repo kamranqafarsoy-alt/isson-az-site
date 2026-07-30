@@ -125,6 +125,49 @@ padding:80px;
 color:#999;
 }
 
+.catalog-tools{
+padding:0 10%;
+display:grid;
+gap:14px;
+}
+
+.catalog-tools input{
+width:100%;
+padding:17px 22px;
+border-radius:50px;
+background:#111827;
+color:white;
+font-size:16px;
+outline:none;
+border:1px solid rgba(191,161,117,.15);
+}
+
+.catalog-tools input:focus{
+border-color:var(--gold);
+box-shadow:0 0 20px rgba(191,161,117,.15);
+}
+
+.catalog-status{
+color:rgba(255,255,255,.55);
+font-size:.9rem;
+}
+
+.load-more-wrap{
+grid-column:1/-1;
+text-align:center;
+padding-top:15px;
+}
+
+.load-more{
+border:0;
+border-radius:50px;
+padding:14px 28px;
+background:linear-gradient(135deg,#d7b98c,#bfa175);
+color:#111;
+font-weight:600;
+cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -138,6 +181,11 @@ color:#999;
 <section class="hero">
 <h1 id="pageTitle">Məhsullar</h1>
 </section>
+
+<div class="catalog-tools">
+<input type="search" id="categorySearch" placeholder="Məhsul axtar..." aria-label="Məhsul axtar">
+<p class="catalog-status" id="categoryStatus">Məhsullar yüklənir...</p>
+</div>
 
 <div class="products-grid" id="productsGrid"></div>
 
@@ -200,7 +248,7 @@ return;
 
 grid.innerHTML = "";
 
-data.forEach(item=>{
+data.slice(0,24).forEach(item=>{
 
 const image =
 item.image ||
@@ -210,7 +258,7 @@ item.image_url ||
 grid.innerHTML += `
 <a href="product.html?id=${item.id}" class="product-card">
 
-<img src="${image}" alt="${item.name}">
+<img src="${image}" alt="${item.name}" loading="lazy">
 
 <div class="product-info">
 <h3>${item.name}</h3>
@@ -225,10 +273,70 @@ ${item.price
 `;
 });
 
+window.dispatchEvent(new CustomEvent("category-products-loaded",{
+detail:data || []
+}));
+
 }
 
 loadProducts();
 
+</script>
+
+<script>
+window.addEventListener("category-products-loaded",(event)=>{
+const allProducts = event.detail || [];
+const grid = document.getElementById("productsGrid");
+const search = document.getElementById("categorySearch");
+const status = document.getElementById("categoryStatus");
+const pageSize = 24;
+let visibleCount = pageSize;
+
+const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+
+function render(){
+const value = search.value.trim().toLocaleLowerCase("az");
+const filtered = allProducts.filter(item =>
+`${item.name || ""} ${item.title || ""} ${item.description || ""}`
+.toLocaleLowerCase("az")
+.includes(value)
+);
+const visible = filtered.slice(0,visibleCount);
+status.textContent = `${filtered.length} məhsul`;
+
+if(!visible.length){
+grid.innerHTML = '<div class="empty">Məhsul tapılmadı</div>';
+return;
+}
+
+grid.innerHTML = visible.map(item=>{
+const image = item.image || item.image_url || "images/ana-sehife.jpg";
+const name = item.name || item.title || "Məhsul";
+const price = item.price ? `${safe(item.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
+return `
+<a href="product.html?id=${encodeURIComponent(item.id)}" class="product-card">
+<img src="${safe(image)}" alt="${safe(name)}" loading="lazy">
+<div class="product-info"><h3>${safe(name)}</h3><p>${price}</p></div>
+</a>`;
+}).join("");
+
+if(visible.length < filtered.length){
+grid.innerHTML += '<div class="load-more-wrap"><button type="button" class="load-more" id="loadMore">Daha çox göstər</button></div>';
+document.getElementById("loadMore").addEventListener("click",()=>{
+visibleCount += pageSize;
+render();
+});
+}
+}
+
+search.addEventListener("input",()=>{
+visibleCount = pageSize;
+render();
+});
+render();
+});
 </script>
 
 </body>

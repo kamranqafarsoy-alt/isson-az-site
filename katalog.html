@@ -1,25 +1,81 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kataloq — ISSON GROUP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght=300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ümumi Kataloq — ISSON GROUP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--gold:#bfa175;
+--dark:#07090d;
+--dark2:#10141a;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top left, rgba(191,161,117,.08), transparent 30%),
+radial-gradient(circle at bottom right, rgba(191,161,117,.05), transparent 25%),
+var(--dark);
+color:white;
+min-height:100vh;
+}
+
+header{
+padding:30px 10%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+text-decoration:none;
+font-size:2rem;
+color:white;
+font-family:'Marcellus',serif;
+}
+
+.logo span{color:var(--gold)}
+
+.back-btn{
+color:var(--gold);
+text-decoration:none;
+}
+
+.hero{
+padding:70px 10% 20px;
+}
+
+.hero h1{
+font-size:3rem;
+font-family:'Marcellus',serif;
+color:var(--gold);
+}
+
+.hero p{
+color:rgba(255,255,255,.6);
+margin-top:12px;
+}
+
 .catalog-search{
-max-width:1200px;
-margin:0 auto 30px;
-padding:0 20px;
+padding:10px 10% 0;
 }
 
 .catalog-search input{
 box-sizing:border-box;
 width:100%;
-padding:18px 22px;
-border:none;
+padding:17px 22px;
 border-radius:50px;
 background:#111827;
 color:white;
@@ -29,150 +85,199 @@ border:1px solid rgba(191,161,117,.15);
 }
 
 .catalog-search input:focus{
-border-color:#bfa175;
+border-color:var(--gold);
 box-shadow:0 0 20px rgba(191,161,117,.15);
+}
+
+.catalog-status{
+padding:20px 10% 0;
+color:rgba(255,255,255,.55);
+font-size:.9rem;
+}
+
+.products-grid{
+padding:30px 10% 80px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.product-card{
+min-width:0;
+background:rgba(255,255,255,.03);
+border-radius:30px;
+overflow:hidden;
+border:1px solid rgba(191,161,117,.12);
+box-shadow:0 15px 45px rgba(0,0,0,.35);
+transition:.4s;
+text-decoration:none;
+color:white;
+}
+
+.product-card:hover{
+transform:translateY(-10px);
+box-shadow:
+0 25px 60px rgba(0,0,0,.5),
+0 0 30px rgba(191,161,117,.08);
+}
+
+.product-card img{
+display:block;
+width:100%;
+height:320px;
+object-fit:contain;
+background:#111827;
+padding:15px;
+}
+
+.product-info{
+padding:20px;
+}
+
+.product-info h3{
+font-size:1.2rem;
+margin-bottom:10px;
+}
+
+.product-info p{
+color:rgba(255,255,255,.62);
+}
+
+.empty{
+grid-column:1/-1;
+text-align:center;
+padding:80px 20px;
+color:#999;
+}
+
+.load-more-wrap{
+grid-column:1/-1;
+text-align:center;
+padding-top:15px;
+}
+
+.load-more{
+border:0;
+border-radius:50px;
+padding:14px 28px;
+background:linear-gradient(135deg,#d7b98c,#bfa175);
+color:#111;
+font-weight:600;
+cursor:pointer;
+}
+
+@media(max-width:600px){
+header{padding:24px 6%}
+.logo{font-size:1.65rem}
+.hero{padding:50px 6% 16px}
+.hero h1{font-size:2.35rem}
+.catalog-search,.catalog-status{padding-left:6%;padding-right:6%}
+.products-grid{
+padding:25px 6% 60px;
+grid-template-columns:1fr;
+gap:24px;
+}
 }
 </style>
 </head>
+
 <body>
-    <div class="top-bar">
-        <div><i class="fa-solid fa-location-dot"></i> Bakı, Azərbaycan</div>
-        <div class="phones">
-            <div><i class="fa-solid fa-phone"></i> TEMPRA: +994 50 800 00 80</div>
-            <div><i class="fa-solid fa-phone"></i> CONDO: +994 10 100 09 09</div>
-        </div>
-    </div>
-    <header>
-        <a href="index.html" class="logo">ISSON<span>GROUP</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html">Ana Səhifə</a></li>
-            <li><a href="kombiler.html">Kombilər</a></li>
-            <li><a href="kondisionerler.html">Kondisionerlər</a></li>
-            <li><a href="laminat.html">Laminat</a></li>
-            <li><a href="qapi.html">Qapılar</a></li>
-            <li><a href="seyfqapi.html">Seyf Qapılar</a></li>
-            <li><a href="moydadir.html">Moydadırlar</a></li>
-            <li><a href="katalog.html" class="active">Kataloq</a></li>
-        </ul>
-    </header>
 
-    <section class="page-header">
-        <h1>Ümumi Kataloq</h1>
-        <p>Bütün məhsullarımız tək bir məkanda</p>
-    </section>
+<header>
+<a href="index.html" class="logo">ISS<span>ON</span></a>
+<a href="index.html" class="back-btn">← Ana Səhifə</a>
+</header>
 
-    <section class="catalog-section">
-      <div class="catalog-search">
-    <input
-        type="text"
-        id="catalogSearch"
-        placeholder="Məhsul axtar...">
+<section class="hero">
+<h1>Ümumi Kataloq</h1>
+<p>Bütün məhsullarımız tək bir məkanda</p>
+</section>
+
+<div class="catalog-search">
+<input type="search" id="catalogSearch" placeholder="Məhsul axtar..." aria-label="Məhsul axtar">
 </div>
-        <div class="products-grid" id="umumi-kataloq">
-            <p style="text-align: center; color: #888; width: 100%;">Məhsullar yüklənir...</p>
-        </div>
-    </section>
 
-       <script src="script.js"></script>
+<p class="catalog-status" id="catalogStatus">Məhsullar yüklənir...</p>
+<div class="products-grid" id="umumi-kataloq"></div>
+
 <script type="module">
-import { supabase } from './js/supabase.js'
+import { supabase } from "./js/supabase.js";
 
-const kataloqKonteyner =
-document.getElementById('umumi-kataloq')
+const container = document.getElementById("umumi-kataloq");
+const searchInput = document.getElementById("catalogSearch");
+const status = document.getElementById("catalogStatus");
+let allProducts = [];
+const pageSize = 24;
+let visibleCount = pageSize;
+
+function escapeHtml(value = ""){
+return String(value).replace(/[&<>"']/g, char => ({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+}
 
 function showProducts(products){
+status.textContent = `${products.length} məhsul`;
 
-  kataloqKonteyner.innerHTML = ''
+if(products.length === 0){
+container.innerHTML = '<div class="empty">Məhsul tapılmadı</div>';
+return;
+}
 
-  if(products.length === 0){
-    kataloqKonteyner.innerHTML =
-    '<p style="text-align:center;width:100%">Məhsul tapılmadı</p>'
-    return
-  }
+const visible = products.slice(0,visibleCount);
+container.innerHTML = visible.map(product => {
+const image = product.image_url || product.image || "images/ana-sehife.jpg";
+const name = product.title || product.name || "Məhsul";
+const price = product.price ? `${escapeHtml(product.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
 
-  products.forEach(product => {
+return `
+<a href="product.html?id=${encodeURIComponent(product.id)}" class="product-card">
+<img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
+<div class="product-info">
+<h3>${escapeHtml(name)}</h3>
+<p>${price}</p>
+</div>
+</a>`;
+}).join("");
 
-    const card = document.createElement('div')
-
-    card.className = 'product-card'
-
-    card.innerHTML = `
-      <img
-      src="${product.image_url || product.image || 'images/no-image.jpg'}"
-      alt="${product.title || product.name}"
-      loading="lazy">
-
-      <div class="product-overlay">
-        <h3>${product.title || product.name}</h3>
-
-        <p>${product.price || ''} ₼</p>
-
-        <a
-        href="product.html?id=${product.id}"
-        class="btn btn-gold">
-        Ətraflı
-        </a>
-      </div>
-    `
-
-    kataloqKonteyner.appendChild(card)
-
-  })
+if(visible.length < products.length){
+container.innerHTML += '<div class="load-more-wrap"><button type="button" class="load-more" id="loadMore">Daha çox göstər</button></div>';
+document.getElementById("loadMore").addEventListener("click",()=>{
+visibleCount += pageSize;
+showProducts(products);
+});
+}
 }
 
 async function loadCatalog(){
+const { data, error } = await supabase
+.from("products")
+.select("*")
+.order("id",{ascending:false});
 
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('id',{ ascending:false })
-
-  if(error){
-    kataloqKonteyner.innerHTML =
-    '<p>Xəta baş verdi</p>'
-    return
-  }
-
-  window.allProducts = data || []
-
-  showProducts(window.allProducts)
-
-  const searchInput =
-  document.getElementById('catalogSearch')
-
-  searchInput.addEventListener('input', () => {
-
-    const value =
-    searchInput.value.toLowerCase()
-
-    const filtered =
-    window.allProducts.filter(product =>
-
-      (product.name || '')
-      .toLowerCase()
-      .includes(value)
-
-      ||
-
-      (product.title || '')
-      .toLowerCase()
-      .includes(value)
-
-      ||
-
-      (product.category || '')
-      .toLowerCase()
-      .includes(value)
-
-    )
-
-    showProducts(filtered)
-
-  })
-
+if(error){
+console.error(error);
+status.textContent = "";
+container.innerHTML = '<div class="empty">Məhsulları yükləmək mümkün olmadı</div>';
+return;
 }
 
-loadCatalog()
+allProducts = data || [];
+showProducts(allProducts);
+}
+
+searchInput.addEventListener("input", () => {
+visibleCount = pageSize;
+const value = searchInput.value.trim().toLocaleLowerCase("az");
+const filtered = allProducts.filter(product =>
+`${product.name || ""} ${product.title || ""} ${product.category || ""}`
+.toLocaleLowerCase("az")
+.includes(value)
+);
+showProducts(filtered);
+});
+
+loadCatalog();
 </script>
 
 </body>

@@ -254,10 +254,9 @@ Kateqoriyanı Sil
 <script type="module">
 
 import { supabase } from "../js/supabase.js";
+import { requireAdmin } from "./auth.js";
 
-if(localStorage.getItem("isson_admin") !== "true"){
-location.href="index.html";
-}
+await requireAdmin();
 
 async function loadProducts(){
 

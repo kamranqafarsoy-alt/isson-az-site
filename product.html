@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ISSON GROUP məhsulu haqqında ətraflı məlumat">
 
 <title>Məhsul</title>
 
@@ -443,6 +444,10 @@ const { data,error } = await supabase
 
 if(data){
 
+document.title = `${data.name || data.title || "Məhsul"} | ISSON GROUP`;
+document.querySelector('meta[name="description"]').content =
+(data.description || `${data.name || data.title || "Məhsul"} haqqında ətraflı məlumat`).slice(0,155);
+
 const image =
 data.image ||
 data.image_url ||
@@ -706,10 +711,10 @@ const message =
 `Salam, ${data.name} məhsulu ilə maraqlanıram`;
 
 document.getElementById("tempraBtn").href =
-`https://wa.me/994552000080?text=${encodeURIComponent(message)}`;
+`https://wa.me/994552000080?text=${encodeURIComponent(message + " " + window.location.href)}`;
 
 document.getElementById("condoBtn").href =
-`https://wa.me/994559000909?text=${encodeURIComponent(message)}`;
+`https://wa.me/994559000909?text=${encodeURIComponent(message + " " + window.location.href)}`;
 
 document
 .getElementById("whatsappModal")
@@ -751,12 +756,17 @@ alert("Link kopyalandı");
 }
 
 });
-const { data: related } = await supabase
+let relatedQuery = supabase
 .from("products")
 .select("*")
 .eq("category", data.category)
-.neq("id", data.id)
-.limit(4);
+.neq("id", data.id);
+
+if(data.subcategory){
+relatedQuery = relatedQuery.eq("subcategory",data.subcategory);
+}
+
+const { data: related } = await relatedQuery.limit(4);
 
 if(related && related.length){
 
@@ -776,7 +786,8 @@ class="related-card">
 
 <img
 src="${item.image || item.image_url}"
-alt="${item.name}">
+alt="${item.name}"
+loading="lazy">
 
 <h3>${item.name}</h3>
 
