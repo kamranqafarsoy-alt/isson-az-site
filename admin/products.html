@@ -85,6 +85,20 @@ background:#f39c12;
 background:#c0392b;
 color:white;
 }
+
+.bulk-actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+align-items:center;
+margin:15px 0;
+}
+
+input[type="checkbox"]{
+width:18px;
+height:18px;
+accent-color:#d7b98c;
+}
 </style>
 </head>
 
@@ -165,6 +179,14 @@ id="price"
 placeholder="Qiymət (istəyə bağlı)">
 <br><br>
 
+<select id="status">
+<option value="available">Mövcuddur</option>
+<option value="new">Yeni</option>
+<option value="sold">Satılıb</option>
+</select>
+
+<br><br>
+
 <input
 type="file"
 id="productImage">
@@ -235,14 +257,26 @@ Kateqoriyanı Sil
 
 </div>
 
+<div class="bulk-actions">
+<select id="bulkStatus">
+<option value="available">Mövcuddur</option>
+<option value="new">Yeni</option>
+<option value="sold">Satılıb</option>
+</select>
+<button class="edit" onclick="bulkSetStatus()">Seçilənlərin statusunu dəyiş</button>
+<button class="delete" onclick="bulkDeleteSelected()">Seçilənləri sil</button>
+</div>
+
 <table>
 
 <thead>
 <tr>
+<th><input type="checkbox" id="selectAll" aria-label="Hamısını seç"></th>
 <th>Şəkil</th>
 <th>Ad</th>
 <th>Kateqoriya</th>
 <th>Alt Kateqoriya</th>
+<th>Status</th>
 <th>Əməliyyat</th>
 </tr>
 </thead>
@@ -255,6 +289,7 @@ Kateqoriyanı Sil
 
 import { supabase } from "../js/supabase.js";
 import { requireAdmin } from "./auth.js";
+import { optimizeImage } from "./image-utils.js";
 
 await requireAdmin();
 
@@ -303,6 +338,8 @@ return;
 table.innerHTML += `
 <tr>
 
+<td><input type="checkbox" class="product-select" value="${item.id}" aria-label="${item.name || "Məhsul"} seç"></td>
+
 <td>
 <img src="${item.image || item.image_url || ''}">
 </td>
@@ -312,6 +349,8 @@ table.innerHTML += `
 <td>${item.category || ''}</td>
 
 <td>${item.subcategory || '-'}</td>
+
+<td>${item.status === "new" ? "Yeni" : item.status === "sold" ? "Satılıb" : "Mövcuddur"}</td>
 
 <td>
 
@@ -352,17 +391,20 @@ document.getElementById("price").value;
 const description =
 document.getElementById("description").value;
 
+const status =
+document.getElementById("status").value;
+
 const file =
-document.getElementById("productImage").files[0];
+await optimizeImage(document.getElementById("productImage").files[0]);
 
 const file2 =
-document.getElementById("productImage2").files[0];
+await optimizeImage(document.getElementById("productImage2").files[0]);
 
 const file3 =
-document.getElementById("productImage3").files[0];
+await optimizeImage(document.getElementById("productImage3").files[0]);
 
 const file4 =
-document.getElementById("productImage4").files[0];
+await optimizeImage(document.getElementById("productImage4").files[0]);
 if(!name){
 alert("Məhsul adı daxil edin");
 return;
@@ -488,7 +530,8 @@ image_url:imageUrl,
 
 image2:imageUrl2,
 image3:imageUrl3,
-image4:imageUrl4
+image4:imageUrl4,
+status:status
 }]);
 
 if(error){
@@ -601,7 +644,9 @@ document.getElementById("bulkSubcategory").value;
 
     let successCount = 0;
 
-    for(const file of files){
+    for(const originalFile of files){
+
+        const file = await optimizeImage(originalFile);
 
         const fileName =
         Date.now() + "-" + file.name;
@@ -627,7 +672,7 @@ document.getElementById("bulkSubcategory").value;
         data.publicUrl;
 
         const productName =
-        file.name
+        originalFile.name
         .replace(".jpg","")
         .replace(".jpeg","")
         .replace(".png","");
@@ -640,6 +685,7 @@ document.getElementById("bulkSubcategory").value;
             title: productName,
             category: category,
             subcategory: subcategory,
+            status: "available",
             image: imageUrl,
             image_url: imageUrl
         }]);
@@ -653,6 +699,63 @@ document.getElementById("bulkSubcategory").value;
 
     loadProducts();
 }
+
+function selectedProductIds(){
+return [...document.querySelectorAll(".product-select:checked")]
+.map(input=>Number(input.value))
+.filter(Number.isFinite);
+}
+
+document.getElementById("selectAll").addEventListener("change",(event)=>{
+document.querySelectorAll(".product-select").forEach(input=>{
+input.checked = event.target.checked;
+});
+});
+
+window.bulkSetStatus = async function(){
+const ids = selectedProductIds();
+if(!ids.length){
+alert("Ən azı bir məhsul seçin");
+return;
+}
+
+const status = document.getElementById("bulkStatus").value;
+const { error } = await supabase
+.from("products")
+.update({status})
+.in("id",ids);
+
+if(error){
+alert(error.message);
+return;
+}
+
+document.getElementById("selectAll").checked = false;
+loadProducts();
+};
+
+window.bulkDeleteSelected = async function(){
+const ids = selectedProductIds();
+if(!ids.length){
+alert("Ən azı bir məhsul seçin");
+return;
+}
+
+if(!confirm(`${ids.length} məhsul silinsin?`)) return;
+
+const { error } = await supabase
+.from("products")
+.delete()
+.in("id",ids);
+
+if(error){
+alert(error.message);
+return;
+}
+
+document.getElementById("selectAll").checked = false;
+loadProducts();
+};
 
 </script>
 

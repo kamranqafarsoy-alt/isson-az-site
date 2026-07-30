@@ -446,6 +446,10 @@ const { data,error } = await supabase
 if(data){
 
 const displayName = window.formatProductName(data.name || data.title || "Məhsul",data);
+supabase.rpc("track_product_event",{
+p_product_id:data.id,
+p_event_type:"view"
+}).then(({error})=>error && console.warn("Statistika yazılmadı"));
 document.title = `${displayName} | ISSON GROUP`;
 document.querySelector('meta[name="description"]').content =
 (data.description || `${displayName} haqqında ətraflı məlumat`).slice(0,155);
@@ -510,6 +514,8 @@ ${data.description ? `
 ${data.description}
 </div>
 ` : ''}
+${data.status === "new" ? '<div class="meta">Status: Yeni</div>' : ''}
+${data.status === "sold" ? '<div class="meta">Status: Satılıb</div>' : ''}
 <div class="action-buttons">
 
 <button
@@ -732,6 +738,20 @@ document
 .getElementById("whatsappModal")
 .classList.remove("active");
 
+});
+
+document.getElementById("tempraBtn").addEventListener("click",()=>{
+supabase.rpc("track_product_event",{
+p_product_id:data.id,
+p_event_type:"whatsapp_tempra"
+});
+});
+
+document.getElementById("condoBtn").addEventListener("click",()=>{
+supabase.rpc("track_product_event",{
+p_product_id:data.id,
+p_event_type:"whatsapp_condo"
+});
 });
 document
 .getElementById("shareBtn")

@@ -114,6 +114,21 @@ ISSON ADMIN PANEL
 <h1 id="kondisionerCount">0</h1>
 </div>
 
+<div class="card">
+<h3>Məhsul baxışları</h3>
+<h1 id="viewCount">0</h1>
+</div>
+
+<div class="card">
+<h3>Tempra WhatsApp klikləri</h3>
+<h1 id="tempraClicks">0</h1>
+</div>
+
+<div class="card">
+<h3>Condo WhatsApp klikləri</h3>
+<h1 id="condoClicks">0</h1>
+</div>
+
 </div>
 
 <div class="menu">
@@ -156,14 +171,18 @@ window.logout = async function () {
 
 async function loadStats() {
 
-    const { data, error } = await supabase
-        .from("products")
-        .select("*");
+    const [productResult,eventResult] = await Promise.all([
+        supabase.from("products").select("*"),
+        supabase.from("analytics_events").select("event_type")
+    ]);
 
-    if (error) {
-        console.error(error);
+    if (productResult.error) {
+        console.error(productResult.error);
         return;
     }
+
+    const data = productResult.data || [];
+    const events = eventResult.data || [];
 
     document.getElementById("totalProducts").innerText =
         data.length;
@@ -177,6 +196,15 @@ async function loadStats() {
         data.filter(
             x => x.category === "kondisioner"
         ).length;
+
+    if(!eventResult.error){
+        document.getElementById("viewCount").innerText =
+            events.filter(x=>x.event_type === "view").length;
+        document.getElementById("tempraClicks").innerText =
+            events.filter(x=>x.event_type === "whatsapp_tempra").length;
+        document.getElementById("condoClicks").innerText =
+            events.filter(x=>x.event_type === "whatsapp_condo").length;
+    }
 }
 
 loadStats();
