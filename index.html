@@ -200,7 +200,8 @@ nav a:hover{
 .campaign-slide{display:none;position:relative}
 .campaign-slide.active{display:block}
 .campaign-slide picture,.campaign-slide img{display:block;width:100%}
-.campaign-slide img{height:min(520px,42vw);min-height:300px;object-fit:cover}
+.campaign-slide picture{aspect-ratio:16/7;min-height:300px;max-height:520px}
+.campaign-slide img{height:100%;object-fit:cover}
 
 .campaign-copy{
     position:absolute;
@@ -558,7 +559,7 @@ footer{
 }
 
 .campaign-slide img{
-    height:520px;
+    min-height:420px;
 }
 
 .hero h1,
@@ -582,7 +583,8 @@ header{
 
 @media(max-width:600px){
 .campaign-products{grid-template-columns:1fr}
-.campaign-slide img{height:430px}
+.campaign-slide picture{aspect-ratio:4/5;min-height:0;max-height:520px}
+.campaign-slide img{min-height:0}
 .campaign-copy{background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
 }
 
@@ -808,8 +810,7 @@ async function loadCampaigns(){
 const {data,error}=await supabase
 .from("campaigns")
 .select("*")
-.order("sort_order")
-.limit(3);
+.order("sort_order");
 
 if(error || !data?.length) return;
 
