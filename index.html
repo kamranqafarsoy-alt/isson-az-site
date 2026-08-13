@@ -230,6 +230,27 @@ nav a:hover{
 .campaign-copy p{max-width:600px;color:rgba(255,255,255,.78);margin:12px 0}
 .campaign-monthly{color:var(--gold)!important;font-weight:700;font-size:1.15rem}
 
+.campaign-arrow{
+    position:absolute;
+    z-index:3;
+    top:50%;
+    width:48px;
+    height:48px;
+    border:1px solid rgba(255,255,255,.24);
+    border-radius:50%;
+    color:#fff;
+    background:rgba(8,11,16,.68);
+    font-size:1.7rem;
+    line-height:1;
+    cursor:pointer;
+    transform:translateY(-50%);
+    backdrop-filter:blur(8px);
+    transition:.2s ease;
+}
+.campaign-arrow:hover{background:var(--gold);color:#080b10}
+.campaign-arrow.prev{left:18px}
+.campaign-arrow.next{right:18px}
+
 .campaign-dots{display:flex;justify-content:center;gap:9px;margin-top:20px}
 .campaign-dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#4b5563;cursor:pointer}
 .campaign-dot.active{background:var(--gold)}
@@ -594,6 +615,9 @@ header{
 .campaign-slide picture{aspect-ratio:4/5;min-height:0;max-height:520px}
 .campaign-slide img{width:100%;min-height:0;margin-left:0}
 .campaign-copy{inset:0;width:100%;background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
+.campaign-arrow{width:40px;height:40px;font-size:1.35rem}
+.campaign-arrow.prev{left:10px}
+.campaign-arrow.next{right:10px}
 }
 
 </style>
@@ -841,19 +865,42 @@ ${item.monthly_text?`<p class="campaign-monthly">${safe(item.monthly_text)}</p>`
 </div>
 </a>`).join("");
 
+if(data.length>1){
+slider.insertAdjacentHTML("beforeend",`
+<button class="campaign-arrow prev" type="button" aria-label="Əvvəlki kampaniya">&#8249;</button>
+<button class="campaign-arrow next" type="button" aria-label="Növbəti kampaniya">&#8250;</button>`);
+}
+
 dots.innerHTML=data.map((_,index)=>`<button class="campaign-dot ${index===0?"active":""}" type="button" data-slide="${index}" aria-label="${index+1}-ci kampaniya"></button>`).join("");
 
 let current=0;
+let timer;
 function show(index){
-current=index;
-document.querySelectorAll(".campaign-slide").forEach((slide,i)=>slide.classList.toggle("active",i===index));
-document.querySelectorAll(".campaign-dot").forEach((dot,i)=>dot.classList.toggle("active",i===index));
+current=(index+data.length)%data.length;
+document.querySelectorAll(".campaign-slide").forEach((slide,i)=>slide.classList.toggle("active",i===current));
+document.querySelectorAll(".campaign-dot").forEach((dot,i)=>dot.classList.toggle("active",i===current));
+}
+function restartAutoPlay(){
+if(data.length<2)return;
+clearInterval(timer);
+timer=setInterval(()=>show(current+1),6000);
 }
 dots.addEventListener("click",event=>{
 const button=event.target.closest("[data-slide]");
-if(button)show(Number(button.dataset.slide));
+if(button){show(Number(button.dataset.slide));restartAutoPlay();}
 });
-if(data.length>1)setInterval(()=>show((current+1)%data.length),6000);
+slider.querySelector(".prev")?.addEventListener("click",()=>{show(current-1);restartAutoPlay();});
+slider.querySelector(".next")?.addEventListener("click",()=>{show(current+1);restartAutoPlay();});
+
+let touchStartX=0;
+slider.addEventListener("touchstart",event=>{touchStartX=event.changedTouches[0].clientX},{passive:true});
+slider.addEventListener("touchend",event=>{
+const distance=event.changedTouches[0].clientX-touchStartX;
+if(Math.abs(distance)<45)return;
+show(current+(distance<0?1:-1));
+restartAutoPlay();
+},{passive:true});
+restartAutoPlay();
 
 const productIds=[...new Set(data.flatMap(item=>item.product_ids || []))].slice(0,4);
 if(!productIds.length)return;
