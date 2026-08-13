@@ -203,24 +203,28 @@ nav a:hover{
 .campaign-slide picture{aspect-ratio:16/7;min-height:300px;max-height:520px}
 .campaign-slide img{
     height:100%;
+    width:56%;
+    margin-left:auto;
     object-fit:contain;
     background:#080b10;
 }
 
 .campaign-copy{
     position:absolute;
-    inset:0;
+    inset:0 auto 0 0;
+    width:44%;
     display:flex;
     flex-direction:column;
     justify-content:end;
-    padding:clamp(25px,5vw,65px);
-    background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.06));
+    padding:clamp(25px,4vw,55px);
+    background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.16));
 }
 
 .campaign-copy h3{
-    max-width:700px;
+    max-width:100%;
     font-family:'Marcellus',serif;
-    font-size:clamp(2rem,4vw,4rem);
+    font-size:clamp(1.8rem,3vw,3.2rem);
+    line-height:1.12;
 }
 
 .campaign-copy p{max-width:600px;color:rgba(255,255,255,.78);margin:12px 0}
@@ -588,8 +592,8 @@ header{
 @media(max-width:600px){
 .campaign-products{grid-template-columns:1fr}
 .campaign-slide picture{aspect-ratio:4/5;min-height:0;max-height:520px}
-.campaign-slide img{min-height:0}
-.campaign-copy{background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
+.campaign-slide img{width:100%;min-height:0;margin-left:0}
+.campaign-copy{inset:0;width:100%;background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
 }
 
 </style>
