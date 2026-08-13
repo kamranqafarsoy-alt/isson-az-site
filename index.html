@@ -201,7 +201,11 @@ nav a:hover{
 .campaign-slide.active{display:block}
 .campaign-slide picture,.campaign-slide img{display:block;width:100%}
 .campaign-slide picture{aspect-ratio:16/7;min-height:300px;max-height:520px}
-.campaign-slide img{height:100%;object-fit:cover}
+.campaign-slide img{
+    height:100%;
+    object-fit:contain;
+    background:#080b10;
+}
 
 .campaign-copy{
     position:absolute;
