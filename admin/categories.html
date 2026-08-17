@@ -153,6 +153,28 @@ src="${cat.image ? cat.image + '?v=' + Date.now() : 'https://placehold.co/600x40
     });
 }
 
+async function ensureKeramoqranitCategory(){
+    const {data:existing,error:selectError} = await supabase
+    .from("categories")
+    .select("id")
+    .eq("slug","keramoqranit")
+    .maybeSingle();
+
+    if(selectError){
+        console.error(selectError);
+        return;
+    }
+
+    if(existing) return;
+
+    const image = "https://www.isson.az/catalog-web/Sumqay%C4%B1t%20istehsal%C4%B1%20Kataloq%20%28%C3%87anaqqala%20Seramik%29_003.jpg";
+    const {error:insertError} = await supabase
+    .from("categories")
+    .insert({name:"Keramoqranit",slug:"keramoqranit",image});
+
+    if(insertError) console.error(insertError);
+}
+
 window.updateCategoryImage = async function(id){
 
     const file =
@@ -208,6 +230,7 @@ window.updateCategoryImage = async function(id){
     loadCategories();
 }
 
+await ensureKeramoqranitCategory();
 loadCategories();
 
 </script>

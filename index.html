@@ -938,8 +938,12 @@ async function loadCategories(){
 
     data.forEach(cat => {
 
+        const categoryUrl = cat.slug === "keramoqranit"
+            ? "keramoqranit-kataloqu.html"
+            : `category.html?cat=${cat.slug}`;
+
         grid.innerHTML += `
-        <a href="category.html?cat=${cat.slug}"
+        <a href="${categoryUrl}"
            class="product-card">
 
             <img
@@ -955,7 +959,7 @@ async function loadCategories(){
         `;
     });
 
-    grid.innerHTML += `
+    if(!data.some(cat => cat.slug === "keramoqranit")) grid.innerHTML += `
     <a href="keramoqranit-kataloqu.html" class="product-card">
         <img
         src="catalog-web/Sumqay%C4%B1t%20istehsal%C4%B1%20Kataloq%20%28%C3%87anaqqala%20Seramik%29_003.jpg"
