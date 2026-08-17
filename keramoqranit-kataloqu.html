@@ -7,30 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--gold:#bfa175;--dark:#07090d;--panel:#10141a}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(191,161,117,.08),transparent 30%),var(--dark);color:#fff;font-family:'Montserrat',sans-serif}
-header{padding:26px 8%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Montserrat',sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at top left,rgba(191,161,117,.08),transparent 30%),radial-gradient(circle at bottom right,rgba(191,161,117,.05),transparent 25%),var(--dark);color:#fff}
+header{padding:30px 10%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}
 .logo{font:2rem 'Marcellus',serif;color:#fff;text-decoration:none}.logo span,.back{color:var(--gold)}.back{text-decoration:none}
-main{width:min(1500px,88%);margin:auto;padding:55px 0 80px}
-.intro{display:flex;gap:30px;justify-content:space-between;align-items:end;margin-bottom:28px}
-h1{margin:0;color:var(--gold);font:clamp(2.2rem,5vw,4rem) 'Marcellus',serif}.intro p{color:rgba(255,255,255,.62)}
-.search{width:min(430px,100%);padding:15px 20px;border:1px solid rgba(191,161,117,.3);border-radius:50px;background:var(--panel);color:#fff;font-size:1rem;outline:none}.search:focus{border-color:var(--gold)}
-.status{margin:22px 0;color:rgba(255,255,255,.6)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
-.card{padding:0;overflow:hidden;border:1px solid rgba(191,161,117,.14);border-radius:24px;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;box-shadow:0 15px 40px rgba(0,0,0,.3);transition:.25s}
-.card:hover{transform:translateY(-5px);border-color:rgba(191,161,117,.5)}
-.card img{display:block;width:100%;aspect-ratio:1600/1379;object-fit:cover;background:#fff}.card span{display:block;padding:14px 18px;text-align:left}
-.more-wrap{text-align:center;margin-top:35px}.more{padding:14px 30px;border:0;border-radius:50px;background:linear-gradient(135deg,#d7b98c,#bfa175);color:#111;font-weight:700;cursor:pointer}
+main{width:auto;margin:0;padding:0 0 80px}
+.intro{padding:70px 10% 30px}
+h1{color:var(--gold);font:3rem 'Marcellus',serif}
+.catalog-tools{padding:0 10%;display:grid;gap:14px}
+.search{width:100%;padding:17px 22px;border:1px solid rgba(191,161,117,.15);border-radius:50px;background:#111827;color:#fff;font-size:16px;outline:none}.search:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(191,161,117,.15)}
+.status{color:rgba(255,255,255,.55);font-size:.9rem}
+.grid{padding:30px 10% 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.card{padding:0;overflow:hidden;border:1px solid rgba(191,161,117,.12);border-radius:30px;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;box-shadow:0 15px 45px rgba(0,0,0,.35);transition:.4s}
+.card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,.5),0 0 30px rgba(191,161,117,.08)}
+.card img{display:block;width:100%;height:320px;object-fit:contain;background:#111827;padding:15px}.card span{display:block;padding:20px;text-align:left}
+.more-wrap{text-align:center;margin-top:30px}.more{padding:14px 28px;border:0;border-radius:50px;background:linear-gradient(135deg,#d7b98c,#bfa175);color:#111;font-weight:600;cursor:pointer}
 dialog{width:min(1200px,94vw);max-height:94vh;padding:0;border:1px solid rgba(191,161,117,.35);border-radius:18px;background:#0b0e13;box-shadow:0 25px 80px #000}dialog::backdrop{background:rgba(0,0,0,.88)}dialog img{display:block;width:100%;height:auto;max-height:90vh;object-fit:contain}.close{position:fixed;right:max(4vw,18px);top:max(3vh,18px);z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:#111;font-size:28px;cursor:pointer}
-@media(max-width:700px){header{padding:22px 6%}.logo{font-size:1.6rem}main{width:88%;padding-top:40px}.intro{align-items:stretch;flex-direction:column}.grid{grid-template-columns:1fr 1fr;gap:12px}.card{border-radius:15px}.card span{padding:11px;font-size:.82rem}}
-@media(max-width:430px){.grid{grid-template-columns:1fr}}
+@media(max-width:600px){header{padding:24px 6%}.logo{font-size:1.65rem}.intro{padding:50px 6% 25px}.intro h1{font-size:2.35rem}.catalog-tools{padding:0 6%}.grid{padding:25px 6% 0;grid-template-columns:1fr;gap:24px}}
 </style>
 </head>
 <body>
-<header><a href="index.html" class="logo">ISS<span>ON</span></a><a href="katalog.html" class="back">← Ümumi kataloq</a></header>
+<header><a href="index.html" class="logo">ISS<span>ON</span></a><a href="index.html" class="back">← Ana Səhifə</a></header>
 <main>
-<section class="intro"><div><h1>Keramoqranit Kataloqu</h1><p>435 məhsul səhifəsi — böyütmək üçün şəklin üzərinə toxunun</p></div><input class="search" id="search" type="search" inputmode="numeric" placeholder="Səhifə nömrəsi, məsələn: 120" aria-label="Kataloqda axtar"></section>
-<p class="status" id="status">Kataloq yüklənir...</p>
+<section class="intro"><h1>Keramoqranit</h1></section>
+<div class="catalog-tools"><input class="search" id="search" type="search" inputmode="numeric" placeholder="Məhsul axtar..." aria-label="Məhsul axtar"><p class="status" id="status">Kataloq yüklənir...</p></div>
 <section class="grid" id="grid" aria-live="polite"></section>
 <div class="more-wrap"><button class="more" id="more" type="button">Daha çox göstər</button></div>
 </main>
@@ -40,7 +40,7 @@ const prefix='Sumqayıt istehsalı Kataloq (Çanaqqala Seramik)_';
 const pages=Array.from({length:435},(_,i)=>{const page=String(i+3).padStart(3,'0');return{page,src:'catalog-web/'+encodeURIComponent(prefix+page+'.jpg')}});
 const grid=document.getElementById('grid'),status=document.getElementById('status'),search=document.getElementById('search'),more=document.getElementById('more'),preview=document.getElementById('preview'),previewImage=document.getElementById('previewImage');
 let shown=24;
-function render(){const q=search.value.trim();const filtered=pages.filter(x=>!q||x.page.includes(q));const visible=filtered.slice(0,shown);status.textContent=filtered.length+' kataloq səhifəsi';grid.innerHTML=visible.map(x=>`<button class="card" type="button" data-src="${x.src}" data-page="${x.page}"><img src="${x.src}" alt="Keramoqranit kataloqu, səhifə ${x.page}" loading="lazy" decoding="async"><span>Səhifə ${x.page}</span></button>`).join('');more.hidden=visible.length>=filtered.length}
+function render(){const q=search.value.trim();const filtered=pages.filter(x=>!q||x.page.includes(q));const visible=filtered.slice(0,shown);status.textContent=filtered.length+' məhsul';grid.innerHTML=visible.map(x=>`<button class="card" type="button" data-src="${x.src}" data-page="${x.page}"><img src="${x.src}" alt="Keramoqranit kataloqu, səhifə ${x.page}" loading="lazy" decoding="async"><span>Səhifə ${x.page}</span></button>`).join('');more.hidden=visible.length>=filtered.length}
 search.addEventListener('input',()=>{shown=24;render()});more.addEventListener('click',()=>{shown+=24;render()});grid.addEventListener('click',e=>{const card=e.target.closest('[data-src]');if(!card)return;previewImage.src=card.dataset.src;previewImage.alt='Keramoqranit kataloqu, səhifə '+card.dataset.page;preview.showModal()});document.getElementById('close').addEventListener('click',()=>preview.close());preview.addEventListener('click',e=>{if(e.target===preview)preview.close()});render();
 </script>
 </body>
