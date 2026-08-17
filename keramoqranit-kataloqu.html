@@ -18,11 +18,10 @@ h1{color:var(--gold);font:3rem 'Marcellus',serif}
 .search{width:100%;padding:17px 22px;border:1px solid rgba(191,161,117,.15);border-radius:50px;background:#111827;color:#fff;font-size:16px;outline:none}.search:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(191,161,117,.15)}
 .status{color:rgba(255,255,255,.55);font-size:.9rem}
 .grid{padding:30px 10% 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
-.card{padding:0;overflow:hidden;border:1px solid rgba(191,161,117,.12);border-radius:30px;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;box-shadow:0 15px 45px rgba(0,0,0,.35);transition:.4s}
+.card{padding:0;overflow:hidden;border:1px solid rgba(191,161,117,.12);border-radius:30px;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;box-shadow:0 15px 45px rgba(0,0,0,.35);transition:.4s;text-decoration:none}
 .card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,.5),0 0 30px rgba(191,161,117,.08)}
 .card img{display:block;width:100%;height:320px;object-fit:contain;background:#111827;padding:15px}.card span{display:block;padding:20px;text-align:left}
 .more-wrap{text-align:center;margin-top:30px}.more{padding:14px 28px;border:0;border-radius:50px;background:linear-gradient(135deg,#d7b98c,#bfa175);color:#111;font-weight:600;cursor:pointer}
-dialog{width:min(1200px,94vw);max-height:94vh;padding:0;border:1px solid rgba(191,161,117,.35);border-radius:18px;background:#0b0e13;box-shadow:0 25px 80px #000}dialog::backdrop{background:rgba(0,0,0,.88)}dialog img{display:block;width:100%;height:auto;max-height:90vh;object-fit:contain}.close{position:fixed;right:max(4vw,18px);top:max(3vh,18px);z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:#111;font-size:28px;cursor:pointer}
 @media(max-width:600px){header{padding:24px 6%}.logo{font-size:1.65rem}.intro{padding:50px 6% 25px}.intro h1{font-size:2.35rem}.catalog-tools{padding:0 6%}.grid{padding:25px 6% 0;grid-template-columns:1fr;gap:24px}}
 </style>
 </head>
@@ -34,14 +33,13 @@ dialog{width:min(1200px,94vw);max-height:94vh;padding:0;border:1px solid rgba(19
 <section class="grid" id="grid" aria-live="polite"></section>
 <div class="more-wrap"><button class="more" id="more" type="button">Daha çox göstər</button></div>
 </main>
-<dialog id="preview"><button class="close" id="close" type="button" aria-label="Bağla">×</button><img id="previewImage" alt=""></dialog>
 <script>
 const prefix='Sumqayıt istehsalı Kataloq (Çanaqqala Seramik)_';
 const pages=Array.from({length:435},(_,i)=>{const page=String(i+3).padStart(3,'0');return{page,src:'catalog-web/'+encodeURIComponent(prefix+page+'.jpg')}});
-const grid=document.getElementById('grid'),status=document.getElementById('status'),search=document.getElementById('search'),more=document.getElementById('more'),preview=document.getElementById('preview'),previewImage=document.getElementById('previewImage');
+const grid=document.getElementById('grid'),status=document.getElementById('status'),search=document.getElementById('search'),more=document.getElementById('more');
 let shown=24;
-function render(){const q=search.value.trim();const filtered=pages.filter(x=>!q||x.page.includes(q));const visible=filtered.slice(0,shown);status.textContent=filtered.length+' məhsul';grid.innerHTML=visible.map(x=>`<button class="card" type="button" data-src="${x.src}" data-page="${x.page}"><img src="${x.src}" alt="Keramoqranit kataloqu, səhifə ${x.page}" loading="lazy" decoding="async"><span>Səhifə ${x.page}</span></button>`).join('');more.hidden=visible.length>=filtered.length}
-search.addEventListener('input',()=>{shown=24;render()});more.addEventListener('click',()=>{shown+=24;render()});grid.addEventListener('click',e=>{const card=e.target.closest('[data-src]');if(!card)return;previewImage.src=card.dataset.src;previewImage.alt='Keramoqranit kataloqu, səhifə '+card.dataset.page;preview.showModal()});document.getElementById('close').addEventListener('click',()=>preview.close());preview.addEventListener('click',e=>{if(e.target===preview)preview.close()});render();
+function render(){const q=search.value.trim();const filtered=pages.filter(x=>!q||x.page.includes(q));const visible=filtered.slice(0,shown);status.textContent=filtered.length+' məhsul';grid.innerHTML=visible.map(x=>`<a class="card" href="keramoqranit-mehsul.html?page=${x.page}"><img src="${x.src}" alt="Keramoqranit kataloqu, səhifə ${x.page}" loading="lazy" decoding="async"><span>Səhifə ${x.page}</span></a>`).join('');more.hidden=visible.length>=filtered.length}
+search.addEventListener('input',()=>{shown=24;render()});more.addEventListener('click',()=>{shown+=24;render()});render();
 </script>
 </body>
 </html>
