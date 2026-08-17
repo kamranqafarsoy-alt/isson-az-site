@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Keramoqranit kataloqu - ISSON Admin</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0f14;color:#fff;font-family:Arial,sans-serif;padding:30px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:25px}.back,.open{display:inline-block;padding:12px 18px;border-radius:8px;background:#d7b98c;color:#111;text-decoration:none;font-weight:700}h1{margin:0;color:#d7b98c}.tools{display:flex;gap:15px;align-items:center;margin-bottom:25px;flex-wrap:wrap}.tools input{flex:1;min-width:240px;padding:14px 18px;border:1px solid #374151;border-radius:10px;background:#111827;color:#fff;font-size:16px}.status{color:#aaa}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}.card{overflow:hidden;border:1px solid rgba(191,161,117,.18);border-radius:15px;background:#111827;color:#fff;text-decoration:none}.card img{display:block;width:100%;height:220px;object-fit:contain;background:#182234;padding:8px}.card span{display:block;padding:13px}.more{display:block;margin:30px auto 0;padding:13px 25px;border:0;border-radius:9px;background:#d7b98c;color:#111;font-weight:700;cursor:pointer}@media(max-width:600px){body{padding:20px}.grid{grid-template-columns:1fr 1fr;gap:10px}.card img{height:170px}}
+</style>
+</head>
+<body>
+<div class="top"><div><a class="back" href="dashboard.html">← Dashboard</a></div><h1>Keramoqranit kataloqu</h1><a class="open" href="../keramoqranit-kataloqu.html" target="_blank">Saytda aç ↗</a></div>
+<div class="tools"><input id="search" type="search" inputmode="numeric" placeholder="Səhifə nömrəsi ilə axtar..."><span class="status" id="status">435 məhsul</span></div>
+<main class="grid" id="grid"></main><button class="more" id="more" type="button">Daha çox göstər</button>
+<script type="module">
+import {requireAdmin} from './auth.js';await requireAdmin();const prefix='Sumqayıt istehsalı Kataloq (Çanaqqala Seramik)_';const products=Array.from({length:435},(_,i)=>{const page=String(i+3).padStart(3,'0');return{page,src:'../catalog-web/'+encodeURIComponent(prefix+page+'.jpg')}});const grid=document.getElementById('grid'),search=document.getElementById('search'),status=document.getElementById('status'),more=document.getElementById('more');let shown=30;function render(){const q=search.value.trim();const filtered=products.filter(x=>!q||x.page.includes(q));const visible=filtered.slice(0,shown);status.textContent=filtered.length+' məhsul';grid.innerHTML=visible.map(x=>`<a class="card" href="../keramoqranit-mehsul.html?page=${x.page}" target="_blank"><img src="${x.src}" alt="Keramoqranit ${x.page}" loading="lazy"><span>Səhifə ${x.page}</span></a>`).join('');more.hidden=visible.length>=filtered.length}search.addEventListener('input',()=>{shown=30;render()});more.addEventListener('click',()=>{shown+=30;render()});render();
+</script>
+</body>
+</html>
