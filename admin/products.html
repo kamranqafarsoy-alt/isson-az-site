@@ -297,6 +297,10 @@ import { optimizeImage } from "./image-utils.js";
 
 await requireAdmin();
 
+const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+
 async function loadProducts(){
 
 const search =
@@ -342,18 +346,18 @@ return;
 table.innerHTML += `
 <tr>
 
-<td><input type="checkbox" class="product-select" value="${item.id}" aria-label="${item.name || "Məhsul"} seç"></td>
-<td>${item.id}</td>
+<td><input type="checkbox" class="product-select" value="${Number(item.id)}" aria-label="${safe(item.name || "Məhsul")} seç"></td>
+<td>${Number(item.id)}</td>
 
 <td>
-<img src="${item.image || item.image_url || ''}">
+<img src="${safe(item.image || item.image_url || '')}" alt="${safe(item.name || 'Məhsul')}">
 </td>
 
-<td>${item.name || ''}</td>
+<td>${safe(item.name || '')}</td>
 
-<td>${item.category || ''}</td>
+<td>${safe(item.category || '')}</td>
 
-<td>${item.subcategory || '-'}</td>
+<td>${safe(item.subcategory || '-')}</td>
 
 <td>${item.status === "new" ? "Yeni" : item.status === "sold" ? "Satılıb" : "Mövcuddur"}</td>
 
@@ -361,13 +365,13 @@ table.innerHTML += `
 
 <button
 class="edit"
-onclick="editProduct(${item.id})">
+onclick="editProduct(${Number(item.id)})">
 Redaktə
 </button>
 
 <button
 class="delete"
-onclick="deleteProduct(${item.id})">
+onclick="deleteProduct(${Number(item.id)})">
 Sil
 </button>
 

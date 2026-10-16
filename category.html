@@ -224,6 +224,9 @@ import { supabase } from "./js/supabase.js";
 
 const params = new URLSearchParams(window.location.search);
 const category = params.get("cat");
+const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
 
 const names = {
 kombi:"Kombilər",
@@ -305,12 +308,12 @@ const productUrl = /tempra/i.test(item.name || item.title || "")
 grid.innerHTML += `
 <a href="${productUrl}" class="product-card">
 
-<img src="${image}" alt="${item.name}" loading="lazy">
+<img src="${safe(image)}" alt="${safe(item.name)}" loading="lazy">
 
 <div class="product-info">
-<h3>${item.name}</h3>
+<h3>${safe(item.name)}</h3>
 ${item.price
-? `<p>${item.price} ₼</p>`
+? `<p>${safe(item.price)} ₼</p>`
 : `<p>Qiymət üçün əlaqə saxlayın</p>`
 }
 
@@ -339,7 +342,7 @@ const status = document.getElementById("categoryStatus");
 const pageSize = 24;
 let visibleCount = pageSize;
 
-const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+const escapeHtml = value => String(value || "").replace(/[&<>"']/g,char=>({
 "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
 })[char]);
 
@@ -361,7 +364,7 @@ return;
 grid.innerHTML = visible.map(item=>{
 const image = item.image || item.image_url || "images/ana-sehife.jpg";
 const name = window.formatProductName(item.name || item.title || "Məhsul",item);
-const price = item.price ? `${safe(item.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
+const price = item.price ? `${escapeHtml(item.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
 const productUrl = /tempra/i.test(name)
 ? "tempra-kombi.html"
 : `product.html?id=${encodeURIComponent(item.id)}`;
@@ -373,8 +376,8 @@ const badge = item.status === "new"
 return `
 <a href="${productUrl}" class="product-card">
 ${badge}
-<img src="${safe(image)}" alt="${safe(name)}" loading="lazy">
-<div class="product-info"><h3>${safe(name)}</h3><p>${price}</p></div>
+<img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
+<div class="product-info"><h3>${escapeHtml(name)}</h3><p>${price}</p></div>
 </a>`;
 }).join("");
 

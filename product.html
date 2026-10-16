@@ -458,6 +458,10 @@ ISS<span>ON</span>
 
 import { supabase } from "./js/supabase.js";
 
+const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -525,24 +529,24 @@ document.getElementById("product").innerHTML = `
 
 <img
 id="mainImage"
-src="${image}">
+src="${safe(image)}" alt="${safe(displayName)}">
 
 <div class="gallery">
 
 ${data.image ?
-`<img class="thumb" src="${data.image}">`
+`<img class="thumb" src="${safe(data.image)}" alt="${safe(displayName)}">`
 : ''}
 
 ${data.image2 ?
-`<img class="thumb" src="${data.image2}">`
+`<img class="thumb" src="${safe(data.image2)}" alt="${safe(displayName)}">`
 : ''}
 
 ${data.image3 ?
-`<img class="thumb" src="${data.image3}">`
+`<img class="thumb" src="${safe(data.image3)}" alt="${safe(displayName)}">`
 : ''}
 
 ${data.image4 ?
-`<img class="thumb" src="${data.image4}">`
+`<img class="thumb" src="${safe(data.image4)}" alt="${safe(displayName)}">`
 : ''}
 
 </div>
@@ -554,27 +558,27 @@ ${data.image4 ?
 ${isTempra ? `
 <div class="official-label">TEMPRA HOME — AZƏRBAYCANDA RƏSMİ SATIŞ</div>
 ` : ''}
-<h1>${displayName}</h1>
+<h1>${safe(displayName)}</h1>
 
 ${isTempra ? `
 <p class="official-points">2 il rəsmi zəmanət • Rəsmi servis • Ödənişsiz çatdırılma</p>
 ` : ''}
 
 ${data.price ?
-`<div class="price">${data.price} ₼</div>`
+`<div class="price">${safe(data.price)} ₼</div>`
 :
 `<div class="price">Qiymət üçün əlaqə saxlayın</div>`
 }
 <div class="meta">
-Kateqoriya: ${data.category || '-'}
+Kateqoriya: ${safe(data.category || '-')}
 </div>
 <div class="meta">
-Alt Kateqoriya: ${data.subcategory || '-'}
+Alt Kateqoriya: ${safe(data.subcategory || '-')}
 </div>
 
 ${data.description ? `
 <div class="meta">
-${data.description}
+${safe(data.description)}
 </div>
 ` : ''}
 ${data.status === "new" ? '<div class="meta">Status: Yeni</div>' : ''}
@@ -872,11 +876,11 @@ href="product.html?id=${item.id}"
 class="related-card">
 
 <img
-src="${item.image || item.image_url}"
-alt="${window.formatProductName(item.name || item.title || "Məhsul",item)}"
+src="${safe(item.image || item.image_url)}"
+alt="${safe(window.formatProductName(item.name || item.title || "Məhsul",item))}"
 loading="lazy">
 
-<h3>${window.formatProductName(item.name || item.title || "Məhsul",item)}</h3>
+<h3>${safe(window.formatProductName(item.name || item.title || "Məhsul",item))}</h3>
 
 </a>
 

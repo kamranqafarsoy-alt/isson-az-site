@@ -876,6 +876,12 @@ import { supabase } from "./js/supabase.js";
 const safe = value => String(value || "").replace(/[&<>"']/g,char=>({
 "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
 })[char]);
+const safeUrl = (value, fallback = "#") => {
+try {
+const url = new URL(String(value || fallback), window.location.origin);
+return ["http:","https:"].includes(url.protocol) ? safe(url.href) : fallback;
+} catch { return fallback; }
+};
 
 async function loadCampaigns(){
 const {data,error}=await supabase
@@ -892,7 +898,7 @@ const products=document.getElementById("campaignProducts");
 section.classList.add("active");
 
 slider.innerHTML=data.map((item,index)=>`
-<a class="campaign-slide ${index===0?"active":""}" href="${safe(item.link_url || "#")}">
+<a class="campaign-slide ${index===0?"active":""}" href="${safeUrl(item.link_url)}">
 <picture>
 ${item.mobile_image?`<source media="(max-width:600px)" srcset="${safe(item.mobile_image)}">`:""}
 <img src="${safe(item.desktop_image)}" alt="${safe(item.title)}" loading="${index===0?"eager":"lazy"}">
@@ -977,18 +983,18 @@ async function loadCategories(){
 
         const categoryUrl = cat.slug === "keramoqranit"
             ? "keramoqranit-kataloqu.html"
-            : `category.html?cat=${cat.slug}`;
+            : `category.html?cat=${encodeURIComponent(cat.slug || "")}`;
 
         grid.innerHTML += `
         <a href="${categoryUrl}"
            class="product-card">
 
             <img
-            src="${cat.image || 'https://placehold.co/800x600'}"
-            alt="${cat.name}">
+            src="${safeUrl(cat.image, 'https://placehold.co/800x600')}"
+            alt="${safe(cat.name)}">
 
             <div class="product-overlay">
-                <h3>${cat.name}</h3>
+                <h3>${safe(cat.name)}</h3>
                 <p>Bütün modellərə bax</p>
             </div>
 

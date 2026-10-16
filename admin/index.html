@@ -113,11 +113,6 @@ await supabase.auth.signInWithPassword({
         return;
     }
 
-    localStorage.setItem(
-        "isson_admin",
-        "true"
-    );
-
     window.location.href =
         "/admin/dashboard.html";
 }
