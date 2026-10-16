@@ -53,6 +53,29 @@ font-size:3rem;
 margin-bottom:20px;
 }
 
+.official-label{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-bottom:16px;
+padding:8px 14px;
+border:1px solid rgba(191,161,117,.35);
+border-radius:999px;
+background:rgba(191,161,117,.08);
+color:#d7b98c;
+font-size:.76rem;
+font-weight:700;
+letter-spacing:.12em;
+text-transform:uppercase;
+}
+
+.official-points{
+margin:-4px 0 22px;
+color:rgba(255,255,255,.68);
+font-size:.92rem;
+line-height:1.65;
+}
+
 .price{
 font-size:2rem;
 color:#bfa175;
@@ -446,13 +469,18 @@ const { data,error } = await supabase
 if(data){
 
 const displayName = window.formatProductName(data.name || data.title || "Məhsul",data);
+const isTempra = /tempra/i.test(displayName);
 supabase.rpc("track_product_event",{
 p_product_id:data.id,
 p_event_type:"view"
 }).then(({error})=>error && console.warn("Statistika yazılmadı"));
-document.title = `${displayName} | ISSON GROUP`;
+document.title = isTempra
+? "Tempra Kombi Qiymətləri və Modelləri | ISSON GROUP"
+: `${displayName} | ISSON GROUP`;
 document.querySelector('meta[name="description"]').content =
-(data.description || `${displayName} haqqında ətraflı məlumat`).slice(0,155);
+(isTempra
+? "Tempra kombi modelləri, qiymətləri, 2 il rəsmi zəmanət, rəsmi servis və ödənişsiz çatdırılma — ISSON GROUP."
+: (data.description || `${displayName} haqqında ətraflı məlumat`)).slice(0,155);
 
 const image =
 data.image ||
@@ -494,8 +522,16 @@ ${data.image4 ?
 
 </div>
 
+<div class="product-details">
 
+${isTempra ? `
+<div class="official-label">TEMPRA HOME — AZƏRBAYCANDA RƏSMİ SATIŞ</div>
+` : ''}
 <h1>${displayName}</h1>
+
+${isTempra ? `
+<p class="official-points">2 il rəsmi zəmanət • Rəsmi servis • Ödənişsiz çatdırılma</p>
+` : ''}
 
 ${data.price ?
 `<div class="price">${data.price} ₼</div>`
@@ -529,6 +565,8 @@ class="share-btn"
 id="shareBtn">
 🔗 Paylaş
 </button>
+
+</div>
 
 </div>
 

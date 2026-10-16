@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ISSON GROUP məhsul kateqoriyaları və modelləri.">
 
 <title>ISSON Məhsullar</title>
 
@@ -65,6 +66,14 @@ padding:70px 10% 30px;
 font-size:3rem;
 font-family:'Marcellus',serif;
 color:var(--gold);
+}
+
+.hero-description{
+max-width:760px;
+margin-top:14px;
+color:rgba(255,255,255,.68);
+font-size:1rem;
+line-height:1.75;
 }
 
 .products-grid{
@@ -198,6 +207,7 @@ font-weight:700;
 
 <section class="hero">
 <h1 id="pageTitle">Məhsullar</h1>
+<p class="hero-description" id="pageDescription" hidden></p>
 </section>
 
 <div class="catalog-tools">
@@ -225,6 +235,16 @@ seyfqapilar:"Seyf Qapıları"
 
 document.getElementById("pageTitle").textContent =
 names[category] || "Məhsullar";
+
+if(category === "kombi"){
+    document.title = "Tempra Kombi Qiymətləri və Modelləri | ISSON GROUP";
+    document.querySelector('meta[name="description"]').content =
+    "Tempra kombiləri və digər aparıcı kombi markaları. Rəsmi zəmanət, satış və servis xidməti — ISSON GROUP.";
+    const pageDescription = document.getElementById("pageDescription");
+    pageDescription.textContent =
+    "Tempra kombiləri və digər aparıcı kombi markaları — rəsmi zəmanət, satış və servis xidməti.";
+    pageDescription.hidden = false;
+}
 
 async function loadProducts(){
 
