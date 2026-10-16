@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="ISSON GROUP məhsulu haqqında ətraflı məlumat">
+<link rel="canonical" id="canonicalUrl" href="https://www.isson.az/product.html">
 
 <title>Məhsul</title>
 
@@ -470,6 +471,10 @@ if(data){
 
 const displayName = window.formatProductName(data.name || data.title || "Məhsul",data);
 const isTempra = /tempra/i.test(displayName);
+const canonicalUrl = isTempra
+? "https://www.isson.az/tempra-kombi.html"
+: `https://www.isson.az/product.html?id=${encodeURIComponent(data.id)}`;
+document.getElementById("canonicalUrl").href = canonicalUrl;
 supabase.rpc("track_product_event",{
 p_product_id:data.id,
 p_event_type:"view"
@@ -481,6 +486,28 @@ document.querySelector('meta[name="description"]').content =
 (isTempra
 ? "Tempra kombi modelləri, qiymətləri, 2 il rəsmi zəmanət, rəsmi servis və ödənişsiz çatdırılma — ISSON GROUP."
 : (data.description || `${displayName} haqqında ətraflı məlumat`)).slice(0,155);
+
+const structuredData = {
+"@context":"https://schema.org",
+"@type":"Product",
+"name":displayName,
+"description":data.description || `${displayName} haqqında ətraflı məlumat`,
+"image":[data.image,data.image2,data.image3,data.image4].filter(Boolean),
+"url":canonicalUrl,
+"category":data.category || "Məhsul"
+};
+if(isTempra){
+structuredData.brand = {"@type":"Brand","name":"Tempra"};
+structuredData.additionalProperty = [
+{"@type":"PropertyValue","name":"Zəmanət","value":"2 il rəsmi zəmanət"},
+{"@type":"PropertyValue","name":"Servis","value":"Rəsmi servis"},
+{"@type":"PropertyValue","name":"Çatdırılma","value":"Ödənişsiz çatdırılma"}
+];
+}
+const structuredDataScript = document.createElement("script");
+structuredDataScript.type = "application/ld+json";
+structuredDataScript.textContent = JSON.stringify(structuredData);
+document.head.appendChild(structuredDataScript);
 
 const image =
 data.image ||

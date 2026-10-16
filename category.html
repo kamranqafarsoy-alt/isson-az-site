@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="ISSON GROUP məhsul kateqoriyaları və modelləri.">
+<link rel="canonical" id="canonicalUrl" href="https://www.isson.az/category.html">
 
 <title>ISSON Məhsullar</title>
 
@@ -236,6 +237,11 @@ seyfqapilar:"Seyf Qapıları"
 document.getElementById("pageTitle").textContent =
 names[category] || "Məhsullar";
 
+const canonicalUrl = document.getElementById("canonicalUrl");
+canonicalUrl.href = category
+? `https://www.isson.az/category.html?cat=${encodeURIComponent(category)}`
+: "https://www.isson.az/category.html";
+
 if(category === "kombi"){
     document.title = "Tempra Kombi Qiymətləri və Modelləri | ISSON GROUP";
     document.querySelector('meta[name="description"]').content =
@@ -292,9 +298,12 @@ const image =
 item.image ||
 item.image_url ||
 "images/no-image.jpg";
+const productUrl = /tempra/i.test(item.name || item.title || "")
+? "tempra-kombi.html"
+: `product.html?id=${item.id}`;
 
 grid.innerHTML += `
-<a href="product.html?id=${item.id}" class="product-card">
+<a href="${productUrl}" class="product-card">
 
 <img src="${image}" alt="${item.name}" loading="lazy">
 
@@ -353,13 +362,16 @@ grid.innerHTML = visible.map(item=>{
 const image = item.image || item.image_url || "images/ana-sehife.jpg";
 const name = window.formatProductName(item.name || item.title || "Məhsul",item);
 const price = item.price ? `${safe(item.price)} ₼` : "Qiymət üçün əlaqə saxlayın";
+const productUrl = /tempra/i.test(name)
+? "tempra-kombi.html"
+: `product.html?id=${encodeURIComponent(item.id)}`;
 const badge = item.status === "new"
 ? '<span class="status-badge">Yeni</span>'
 : item.status === "sold"
 ? '<span class="status-badge sold">Satılıb</span>'
 : "";
 return `
-<a href="product.html?id=${encodeURIComponent(item.id)}" class="product-card">
+<a href="${productUrl}" class="product-card">
 ${badge}
 <img src="${safe(image)}" alt="${safe(name)}" loading="lazy">
 <div class="product-info"><h3>${safe(name)}</h3><p>${price}</p></div>
