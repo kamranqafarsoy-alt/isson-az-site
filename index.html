@@ -226,8 +226,9 @@ nav a:hover{
     margin-top:45px;
     border-radius:35px;
     overflow:hidden;
-    border:1px solid rgba(191,161,117,.12);
-    box-shadow:0 25px 70px rgba(0,0,0,.45);
+    background:linear-gradient(108deg,#111820 0%,#18212b 44%,#eee8dc 44%,#fbfaf7 100%);
+    border:1px solid rgba(215,185,140,.3);
+    box-shadow:0 25px 70px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.08) inset;
 }
 
 .campaign-slide{display:none;position:relative}
@@ -239,7 +240,7 @@ nav a:hover{
     width:56%;
     margin-left:auto;
     object-fit:contain;
-    background:#080b10;
+    background:transparent;
 }
 
 .campaign-copy{
@@ -250,7 +251,7 @@ nav a:hover{
     flex-direction:column;
     justify-content:end;
     padding:clamp(25px,4vw,55px);
-    background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.16));
+    background:linear-gradient(90deg,rgba(10,15,21,.96) 0%,rgba(17,24,32,.88) 76%,rgba(17,24,32,0) 100%);
 }
 
 .campaign-copy h3{
@@ -647,7 +648,8 @@ header{
 .campaign-products{grid-template-columns:1fr}
 .campaign-slide picture{aspect-ratio:4/5;min-height:0;max-height:520px}
 .campaign-slide img{width:100%;min-height:0;margin-left:0}
-.campaign-copy{inset:0;width:100%;background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05))}
+.campaign-slider{background:linear-gradient(180deg,#fbfaf7 0%,#eee8dc 58%,#151d26 100%)}
+.campaign-copy{inset:0;width:100%;background:linear-gradient(0deg,rgba(10,15,21,.96) 0%,rgba(10,15,21,.58) 38%,rgba(10,15,21,0) 68%)}
 .campaign-arrow{width:40px;height:40px;font-size:1.35rem}
 .campaign-arrow.prev{left:10px}
 .campaign-arrow.next{right:10px}
